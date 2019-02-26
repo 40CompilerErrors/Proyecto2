@@ -1,13 +1,13 @@
 import os
 import pickle
 
-import matplotlib.pyplot as plt
+# import pyplot as plt
 import pandas as pd
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
-from proyecto_1.ETL import Text_Procesing, File_Manager
+from ETL import Text_Procesing, File_Manager
 
 
 class Vectorizer:
@@ -143,7 +143,7 @@ class Vectorizer:
     def plot_dataframe(self, container=None):
         if container == None:
             plot = self.__data_frame['labels'].value_counts().plot('bar')
-            plt.show()
+            # plt.show()
             return plot
         else:
             self.__data_frame['labels'].value_counts().plot(kind="bar", legend=False, ax=container)

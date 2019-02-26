@@ -1,7 +1,7 @@
 from tkinter import *
 
-from proyecto_1.uix import ClassifyScreen as CS
-from proyecto_1.uix import TrainScreen as TS
+from uix import ClassifyScreen as CS
+from uix import TrainScreen as TS
 
 
 class MainController():
