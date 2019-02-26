@@ -3,9 +3,9 @@ from tkinter import ttk
 from matplotlib.figure import Figure
 import seaborn as sn
 
-import MainScreen as MS
-import TrainScreen as TS
-from parent.ETL import Models
+from uix import MainScreen as MS
+from uix import TrainScreen as TS
+from ETL import Models
 from tkinter.filedialog import askdirectory,asksaveasfilename
 
 import matplotlib

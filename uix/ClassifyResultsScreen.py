@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import ttk
 import os
 
-import MainScreen as MS
-import TrainScreen as TS
+from uix import MainScreen as MS
+from uix import TrainScreen as TS
 from ETL import Models
 from tkinter.filedialog import askdirectory,asksaveasfilename
 

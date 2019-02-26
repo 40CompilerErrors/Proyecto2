@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter.filedialog import askdirectory
 
-import MainScreen as MS
-import TrainingResultScreen as TRS
+from uix import MainScreen as MS
+from uix import TrainingResultScreen as TRS
 from ETL import Trainer
 from ETL import Models
 
