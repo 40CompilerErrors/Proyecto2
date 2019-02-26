@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9de71424-4d2a-4f6e-9f4b-b71deeb0f0c8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ETL/Trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ETL/Trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ETL/Vectorizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ETL/Vectorizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ETL/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/ETL/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uix/ClassifyResultsScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/uix/ClassifyResultsScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uix/ClassifyScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/uix/ClassifyScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uix/MainScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/uix/MainScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uix/TrainScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/uix/TrainScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uix/TrainingResultScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/uix/TrainingResultScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uix/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/uix/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Proyecto2$main.coverage" NAME="main Coverage Results" MODIFIED="1551172463836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uix" />
+    <SUITE FILE_PATH="coverage/Proyecto2$main.coverage" NAME="main Coverage Results" MODIFIED="1551173183136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uix" />
   </component>
   <component name="FileEditorManager">
     <leaf>
@@ -29,18 +22,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
               <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassifyResultsScreen.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/uix/ClassifyResultsScreen.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -91,14 +72,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Vectorizer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Vectorizer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ETL/Vectorizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+            <state relative-caret-position="414">
+              <caret line="159" column="30" lean-forward="true" selection-start-line="159" selection-start-column="30" selection-end-line="159" selection-end-column="30" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -149,6 +139,7 @@
         <option value="$PROJECT_DIR$/ETL/Trainer.py" />
         <option value="$PROJECT_DIR$/ETL/Models.py" />
         <option value="$PROJECT_DIR$/ETL/Vectorizer.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -263,7 +254,7 @@
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.32937366" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947917" weight="0.32937366" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -374,11 +365,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ETL/Vectorizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+        <state relative-caret-position="414">
+          <caret line="159" column="30" lean-forward="true" selection-start-line="159" selection-start-column="30" selection-end-line="159" selection-end-column="30" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
         </state>
       </provider>
     </entry>
