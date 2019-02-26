@@ -2,7 +2,7 @@ import itertools
 import os
 import pickle
 import pandas as pd
-import graphviz
+#import graphviz
 import matplotlib.pyplot as plt
 import numpy as np
 import sklearn.tree as tree
@@ -423,7 +423,7 @@ class Models:
                                         class_names=['good', 'bad', 'neutral'],
                                         filled=True, rounded=True,
                                         special_characters=True)
-        graph = graphviz.Source(dot_data)
+        #graph = graphviz.Source(dot_data)
         #return graph
 
     def export_model(self, path, model_name):

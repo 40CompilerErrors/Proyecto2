@@ -1,4 +1,8 @@
-from ETL import Models, Vectorizer, File_Manager
+try:
+    from ETL import Models, Vectorizer, File_Manager
+except Exception as e: 
+    import Models, Vectorizer, File_Manager
+
 
 def train(path_good, path_neutral, path_bad, key1, key2):
 

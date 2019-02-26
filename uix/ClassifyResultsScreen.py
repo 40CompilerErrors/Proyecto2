@@ -2,9 +2,18 @@ from tkinter import *
 from tkinter import ttk
 import os
 
-from uix import MainScreen as MS
-from uix import TrainScreen as TS
-from ETL import Models
+try:
+    from uix import MainScreen as MS
+    from uix import TrainScreen as TS
+    from ETL import Models
+except Exception as e: 
+    import MainScreen as MS
+    import TrainScreen as TS
+    import Models
+
+
+
+
 from tkinter.filedialog import askdirectory,asksaveasfilename
 
 import matplotlib

@@ -1,4 +1,8 @@
-from ETL import Models, Vectorizer, File_Manager
+try:
+    from ETL import Models, Vectorizer, File_Manager
+except Exception as e: 
+    import Models, Vectorizer, File_Manager
+
 
 if __name__ == '__main__':
     fm = File_Manager.File_Manager()

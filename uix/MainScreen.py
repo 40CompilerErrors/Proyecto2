@@ -1,8 +1,11 @@
 from tkinter import *
 
-from uix import ClassifyScreen as CS
-from uix import TrainScreen as TS
-
+try:
+    from uix import ClassifyScreen as CS
+    from uix import TrainScreen as TS
+except Exception as e: 
+    import ClassifyScreen as CS
+    import TrainScreen as TS
 
 class MainController():
 

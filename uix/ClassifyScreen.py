@@ -1,10 +1,15 @@
 from tkinter import *
-
-from uix import MainScreen as MS
-from uix import ClassifyResultsScreen as CRS
-from tkinter.filedialog import askdirectory
-from ETL import Models, Vectorizer, File_Manager
 from tkinter.filedialog import askdirectory,askopenfilename
+from tkinter.filedialog import askdirectory
+try:
+    from uix import MainScreen as MS
+    from uix import ClassifyResultsScreen as CRS
+    from ETL import Models, Vectorizer, File_Manager
+except Exception as e: 
+    import MainScreen as MS
+    import ClassifyResultsScreen as CRS
+    import Models, Vectorizer, File_Manager
+
 
 
 class ClassifyController():
