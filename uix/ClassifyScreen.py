@@ -1,9 +1,9 @@
 from tkinter import *
 
-from proyecto_1.uix import MainScreen as MS
-from proyecto_1.uix import ClassifyResultsScreen as CRS
+import MainScreen as MS
+import ClassifyResultsScreen as CRS
 from tkinter.filedialog import askdirectory
-from proyecto_1.ETL import Models, Vectorizer, File_Manager
+import Models, Vectorizer, File_Manager
 from tkinter.filedialog import askdirectory,askopenfilename
 
 

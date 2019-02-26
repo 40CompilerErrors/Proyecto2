@@ -1,6 +1,6 @@
 from tkinter import *
 
-from proyecto_1.uix import MainScreen as MS
+import MainScreen as MS
 
 
 class MainApp(Tk):

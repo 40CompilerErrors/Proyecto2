@@ -1,4 +1,4 @@
-from proyecto_1.ETL import Models, Vectorizer, File_Manager
+from ETL import Models, Vectorizer, File_Manager
 
 if __name__ == '__main__':
     fm = File_Manager.File_Manager()

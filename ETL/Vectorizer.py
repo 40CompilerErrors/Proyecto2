@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
-from proyecto_1.ETL import Text_Procesing, File_Manager
+from ETL import Text_Procesing, File_Manager
 
 
 class Vectorizer:

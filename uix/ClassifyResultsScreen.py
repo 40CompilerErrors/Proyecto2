@@ -2,9 +2,9 @@ from tkinter import *
 from tkinter import ttk
 import os
 
-from proyecto_1.uix import MainScreen as MS
-from proyecto_1.uix import TrainScreen as TS
-from proyecto_1.ETL import Models
+import MainScreen as MS
+import TrainScreen as TS
+from ETL import Models
 from tkinter.filedialog import askdirectory,asksaveasfilename
 
 import matplotlib

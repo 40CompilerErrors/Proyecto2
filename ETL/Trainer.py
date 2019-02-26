@@ -1,4 +1,4 @@
-from proyecto_1.ETL import Models, Vectorizer, File_Manager
+from ETL import Models, Vectorizer, File_Manager
 
 def train(path_good, path_neutral, path_bad, key1, key2):
 

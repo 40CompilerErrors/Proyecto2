@@ -1,10 +1,10 @@
 from tkinter import *
 from tkinter.filedialog import askdirectory
 
-from proyecto_1.uix import MainScreen as MS
-from proyecto_1.uix import TrainingResultScreen as TRS
-from proyecto_1.ETL import Trainer
-from proyecto_1.ETL import Models
+import MainScreen as MS
+import TrainingResultScreen as TRS
+from ETL import Trainer
+from ETL import Models
 
 class TrainController():
 
