@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QFileDialog, QTableWidgetItem
 import pickle
 import shutil
 from nltk.stem.porter import *
+from textblob import TextBlob
 
 
 class ControladorVClasificador_class:
@@ -165,6 +166,8 @@ class ControladorVClasificador_class:
                 archivo = f'{self.ruta}/{i}'
                 with open(archivo, 'r', encoding='utf-8') as myfile:
                     data = myfile.read().replace('\n', '')
+                    test = TextBlob(data)
+                    print(test.sentiment)
                     datos_archivos.append(data)
             print(datos_archivos)
             ''' 
