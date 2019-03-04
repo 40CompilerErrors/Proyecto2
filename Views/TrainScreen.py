@@ -2,10 +2,9 @@ from tkinter import *
 from tkinter.filedialog import askdirectory
 
 try:
-    from uix import MainScreen as MS
-    from uix import TrainingResultScreen as TRS
-    from ETL import Trainer
-    from ETL import Classifiers
+    from Views import TrainingResultScreen as TRS, MainScreen as MS
+    from Model import Trainer
+    from Model import Classifiers
 except Exception as e: 
     import MainScreen as MS
     import TrainingResultScreen as TRS

@@ -4,21 +4,19 @@ from matplotlib.figure import Figure
 import seaborn as sn
 
 try:
-    from uix import MainScreen as MS
-    from uix import TrainScreen as TS
-    from ETL import Classifiers
+    from Views import TrainScreen as TS, MainScreen as MS
+    from Model import Classifiers
 except Exception as e: 
     import MainScreen as MS
     import TrainScreen as TS
     import Classifiers
 
 
-from tkinter.filedialog import askdirectory,asksaveasfilename
+from tkinter.filedialog import askdirectory
 
 import matplotlib
 matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class TrainingResultController:

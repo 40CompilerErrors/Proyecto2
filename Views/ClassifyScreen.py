@@ -1,10 +1,9 @@
 from tkinter import *
-from tkinter.filedialog import askdirectory,askopenfilename
+from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import askdirectory
 try:
-    from uix import MainScreen as MS
-    from uix import ClassifyResultsScreen as CRS
-    from ETL import Classifiers, Vectorizer, File_Manager
+    from Views import ClassifyResultsScreen as CRS, MainScreen as MS
+    from Model import Classifiers, Vectorizer, File_Manager
 except Exception as e: 
     import MainScreen as MS
     import ClassifyResultsScreen as CRS

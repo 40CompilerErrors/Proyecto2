@@ -1,8 +1,7 @@
 from tkinter import *
 
 try:
-    from uix import ClassifyScreen as CS
-    from uix import TrainScreen as TS
+    from Views import ClassifyScreen as CS, TrainScreen as TS
 except Exception as e: 
     import ClassifyScreen as CS
     import TrainScreen as TS

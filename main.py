@@ -1,7 +1,7 @@
 from tkinter import *
 
 try:
-    from uix import MainScreen as MS
+    from Views import MainScreen as MS
 except Exception as e: 
     import MainScreen as MS
 

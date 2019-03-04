@@ -1,5 +1,5 @@
 try:
-    from ETL import Classifiers, Vectorizer, File_Manager
+    from Model import Classifiers, Vectorizer, File_Manager
 except Exception as e: 
     import Classifiers, Vectorizer, File_Manager
 
