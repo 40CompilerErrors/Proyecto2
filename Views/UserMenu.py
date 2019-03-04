@@ -18,10 +18,10 @@ class UserMenu:
             user_input = input();
 
             if user_input == "1":
-                pass
+                self.controller.perform_classification()
             elif user_input == "2":
-                self.perform_sentiment_analysis()
-            elif user_input == "X":
+                self.controller.perform_sentiment_analysis()
+            elif user_input == "X" or user_input == "x":
                 self.controller.go_back()
             else:
                 print("\nThat command does not exist.\n")

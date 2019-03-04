@@ -19,7 +19,7 @@ class AdminMenu:
 
             if user_input == "1":
                 self.controller.train_classifier()
-            elif user_input == "X":
+            elif user_input == "X" or user_input == "x":
                 self.controller.go_back()
             else:
                 print("\nThat command does not exist.\n")

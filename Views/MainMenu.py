@@ -23,7 +23,7 @@ class MainMenu:
                 self.controller.user_access("user","")
             elif user_input == "2":
                 self.controller.user_access("admin","")
-            elif user_input == "X":
+            elif user_input == "X" or user_input == "x":
                 sys.exit(0)
             else:
                 print("\nThat command does not exist.\n")

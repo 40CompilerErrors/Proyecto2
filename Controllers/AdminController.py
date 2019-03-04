@@ -47,7 +47,7 @@ class AdminController:
             user_input = input()
 
             #check if out of bounds
-            if int(user_input) < 1 or int(user_input) >= len(key1_list):
+            if int(user_input) < 0 or int(user_input) >= len(key1_list):
                 print("Number out of bounds\n")
             else:
                 running = False;
@@ -71,7 +71,8 @@ class AdminController:
             user_input = input()
 
             # check if out of bounds
-            if int(user_input) < 1 or int(user_input) >= len(key2_list):
+            if int(user_input) < 0\
+                    or int(user_input) >= len(key2_list):
                 print("Number out of bounds\n")
             else:
                 running = False;
