@@ -1,7 +1,9 @@
 from tkinter import *
 
-from uix import MainScreen as MS
-
+try:
+    from uix import MainScreen as MS
+except Exception as e: 
+    import MainScreen as MS
 
 class MainApp(Tk):
 
