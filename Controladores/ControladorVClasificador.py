@@ -2,7 +2,7 @@ import os
 import time
 
 from PyQt5.QtWidgets import QFileDialog, QTableWidgetItem
-
+from decimal import Decimal
 import pickle
 import shutil
 from nltk.stem.porter import *
@@ -17,6 +17,8 @@ class ControladorVClasificador_class:
         self.lista_archivos = []
         self.seleccionados = []
         self.lista_modelos = []
+        self.datos_analisis = []
+        self.datos_subjetividad = []
         self.ruta_salida = ''
 
 
@@ -29,8 +31,9 @@ class ControladorVClasificador_class:
 
     def abrir_archivo(self):
         try:
+            self.ventanaClasificador.label_5.setText('Datos seleccionados')
+            self.ventanaClasificador.datos_seleccionados.setRowCount(0)
             j = 0
-
             #Limpia la lista de archivos al elegir una ruta nueva
             for i in self.lista_archivos:
                 print(f"Eliminando {i}")
@@ -99,8 +102,8 @@ class ControladorVClasificador_class:
                 self.ventanaClasificador.datos_seleccionados.insertRow(rowPosition)
                 self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
                 self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(archivo))
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamaño_archivo} bytes"))
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
+                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamaño_archivo} bytes"))
+                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
 
                 self.ventanaClasificador.lista_archivos_2.removeRow(posicion_lista)
                 self.lista_archivos.pop(posicion_lista)
@@ -130,8 +133,8 @@ class ControladorVClasificador_class:
                 self.ventanaClasificador.datos_seleccionados.insertRow(rowPosition)
                 self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
                 self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(archivo))
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamaño_archivo} bytes"))
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
+                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamaño_archivo} bytes"))
+                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
                 self.ventanaClasificador.lista_archivos_2.removeRow(0)
 
             self.lista_archivos.clear()
@@ -158,18 +161,27 @@ class ControladorVClasificador_class:
             self.ventanaClasificador.boton_clasificador.setText("Ejecutar clasificador")
             print("Comienza la clasificación...")
             cont = 0
+            con = 0
             stemmer = PorterStemmer()
             apoyo = []
             datos_archivos = []
             for i in self.seleccionados:
-                print(i)
+                #print(i)
                 archivo = f'{self.ruta}/{i}'
                 with open(archivo, 'r', encoding='utf-8') as myfile:
                     data = myfile.read().replace('\n', '')
                     test = TextBlob(data)
-                    print(test.sentiment)
+                    if round(test.sentiment.polarity,2) > 0.3 :
+                        self.datos_analisis.append("Positivo")
+                    elif round(test.sentiment.polarity, 2) < -0.3:
+                        self.datos_analisis.append("Negativo")
+                    else:
+                        self.datos_analisis.append("Neutral")
+
+                    self.datos_subjetividad.append(str(round(test.sentiment.subjectivity,3)))
+
                     datos_archivos.append(data)
-            print(datos_archivos)
+            print(self.datos_analisis)
             ''' 
                 Aqui hacemos el procesamiento de texto usando expresiones regulares.
                 Para ello vamos limpiando los archivos poco a poco, empezando por quitar los carácteres especiales (".", ","...),
@@ -250,4 +262,21 @@ class ControladorVClasificador_class:
                                     os.path.join(os.path.join(dir1, nombres_etiquetas[4]), str(self.seleccionados[cont])))
                 cont = cont + 1
             print("Archivos guardados.")
+
+            self.ventanaClasificador.datos_seleccionados.setRowCount(0)
+            self.ventanaClasificador.label_5.setText('Resultados de la clasificación')
+            for s in range(len(self.seleccionados)):
+                rowPosition = self.ventanaClasificador.datos_seleccionados.rowCount()
+                self.ventanaClasificador.datos_seleccionados.insertRow(rowPosition)
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 1,
+                                                                     QTableWidgetItem(self.seleccionados[s]))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2,
+                                                                     QTableWidgetItem(self.datos_analisis[s]))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3,
+                                                                     QTableWidgetItem(self.datos_subjetividad[s]))
+
             self.ventanaClasificador.label_finalizado.setVisible(True)
