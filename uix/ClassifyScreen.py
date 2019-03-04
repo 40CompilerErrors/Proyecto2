@@ -4,11 +4,11 @@ from tkinter.filedialog import askdirectory
 try:
     from uix import MainScreen as MS
     from uix import ClassifyResultsScreen as CRS
-    from ETL import Models, Vectorizer, File_Manager
+    from ETL import Classifiers, Vectorizer, File_Manager
 except Exception as e: 
     import MainScreen as MS
     import ClassifyResultsScreen as CRS
-    import Models, Vectorizer, File_Manager
+    import Classifiers, Vectorizer, File_Manager
 
 
 
@@ -88,7 +88,7 @@ class ClassifyController():
             vectorizer = Vectorizer.Vectorizer(u_reviews=unlabeled_reviews)
             vectorizer.load_vectorizer(self.vocab_path)
             x_unlabeled = vectorizer.generate_unlabeled_data(u_file_names)
-            model = Models.Models()
+            model = Classifiers.Classifiers()
             model.load_model(self.model_path)
             prediction = model.predict(x_unlabeled)
             #Prints

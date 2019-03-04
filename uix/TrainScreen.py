@@ -5,12 +5,12 @@ try:
     from uix import MainScreen as MS
     from uix import TrainingResultScreen as TRS
     from ETL import Trainer
-    from ETL import Models
+    from ETL import Classifiers
 except Exception as e: 
     import MainScreen as MS
     import TrainingResultScreen as TRS
     import Trainer
-    import Models
+    import Classifiers
 
 
 class TrainController():
@@ -56,7 +56,7 @@ class TrainController():
 
     def load_model_list(self, window):
         chosen_model = window.modelVar.get()
-        algorithm_list = Models.CHOICES_DICT[chosen_model]
+        algorithm_list = Classifiers.CHOICES_DICT[chosen_model]
         menu = window.popupMenu1["menu"]
 
         menu.delete(0, END)
@@ -172,7 +172,7 @@ class TrainScreen(Frame):
         self.modelVar = StringVar()
         self.modelVar1 = StringVar()
 
-        model_list = Models.CHOICES_DICT
+        model_list = Classifiers.CHOICES_DICT
 
         self.modelVar.set(next(iter(model_list)))
         print(model_list[self.modelVar.get()])

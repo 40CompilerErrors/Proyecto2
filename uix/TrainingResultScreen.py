@@ -6,11 +6,11 @@ import seaborn as sn
 try:
     from uix import MainScreen as MS
     from uix import TrainScreen as TS
-    from ETL import Models
+    from ETL import Classifiers
 except Exception as e: 
     import MainScreen as MS
     import TrainScreen as TS
-    import Models
+    import Classifiers
 
 
 from tkinter.filedialog import askdirectory,asksaveasfilename

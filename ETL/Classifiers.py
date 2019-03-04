@@ -31,7 +31,7 @@ CHOICES_DICT = {
 }
 
 
-class Models:
+class Classifiers:
     """
     Class that will have all the Machine Learning models that the application will use.
     """

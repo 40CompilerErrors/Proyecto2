@@ -1,7 +1,7 @@
 try:
-    from ETL import Models, Vectorizer, File_Manager
+    from ETL import Classifiers, Vectorizer, File_Manager
 except Exception as e: 
-    import Models, Vectorizer, File_Manager
+    import Classifiers, Vectorizer, File_Manager
 
 
 if __name__ == '__main__':
@@ -19,7 +19,7 @@ if __name__ == '__main__':
                                                                            test_size=0.1, random_state=None)
     vectorizer.export_vectorizer(path='', model_name='test')
     vectorizer.plot_dataframe()
-    models = Models.Models(x_train, y_train, x_test, y_test)
+    models = Classifiers.Classifiers(x_train, y_train, x_test, y_test)
     models.naive_bayes_multinomial()
     cross_validation_score, conf_matrix, cross_validation_variance, classification_score = models.generate_classification_model_statistics()
     print(f'Cross Validation score: {cross_validation_score}')

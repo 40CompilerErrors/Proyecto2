@@ -1,7 +1,7 @@
 try:
-    from ETL import Models, Vectorizer, File_Manager
+    from ETL import Classifiers, Vectorizer, File_Manager
 except Exception as e: 
-    import Models, Vectorizer, File_Manager
+    import Classifiers, Vectorizer, File_Manager
 
 
 def train(path_good, path_neutral, path_bad, key1, key2):
@@ -15,7 +15,7 @@ def train(path_good, path_neutral, path_bad, key1, key2):
 
     x_train, x_test, y_train, y_test = vectorizer.generate_train_test_data(vectorizer='count_vect',
                                                                            test_size=0.1, random_state=None)
-    model = Models.Models(x_train, y_train, x_test, y_test)
+    model = Classifiers.Classifiers(x_train, y_train, x_test, y_test)
     model.train(key1,key2)
     #plot = model.plot_confusion_matrix()
     #plot.show()
