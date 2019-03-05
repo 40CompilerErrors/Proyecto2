@@ -52,11 +52,12 @@ class ControladorVEntrenamiento_class:
     def asignarVentana(self, ventanaEntrenamiento):
         self.ventanaEntrenamiento = ventanaEntrenamiento
 
-    def abrir_VEtiquetas(self):
+    #Metodo empezado pero nunca acabado
+    '''def abrir_VEtiquetas(self):
         ctrl = ControladorVEtiquetas.ControladorVEtiquetas_class()
         ventanaAnadirEtiquetas = VentanaAnadirEtiquetas.VentanaAnadirEtiquetas_class(ctrl)
         ctrl.asignarVentana(ventanaAnadirEtiquetas)
-        ventanaAnadirEtiquetas.show()
+        ventanaAnadirEtiquetas.show()'''
 
     def abrir_VGraficas(self):
         ctrl = ControladorVGraficas.ControladorVGraficas_class()
@@ -75,6 +76,7 @@ class ControladorVEntrenamiento_class:
 
     def obtener_ruta(self):
         subdirectorios = []
+        rutas = []
         ruta = QFileDialog.getExistingDirectory()
         contador = 1
         self.ruta_entrenamiento = ruta
@@ -85,11 +87,11 @@ class ControladorVEntrenamiento_class:
             for carpeta in os.listdir(ruta):
                 subdirectorios.append(carpeta)
                 self.opciones.append(carpeta)
-                lista_archivos = []
+                r = f"{ruta}/{carpeta}"
+                self.ventanaEntrenamiento.lista_Rutas.addItem(r)
                 for carpeta in subdirectorios:
                     rutaTotal = f"{ruta}/{carpeta}"
-                    lista_archivos.append(rutaTotal)
-                    self.ventanaEntrenamiento.lista_Rutas.addItem(rutaTotal)
+
 
         self.ventanaEntrenamiento.opciones1.addItems(self.opciones)
         self.ventanaEntrenamiento.opciones2.addItems(self.opciones)
@@ -105,14 +107,12 @@ class ControladorVEntrenamiento_class:
             tabla.setColumnCount(4)
             tabla.setHorizontalHeaderLabels(["ID","Nombre","Tamaño","Última modificación"])
             lay.addWidget(tabla)
-            print(f"Tab {i} creado.")
             for archivo in os.listdir(rutaTotal):
                 nombre_archivo = f"{archivo}"
                 nombre_lista = f"lista_ruta_{contador+1}"
                 if (nombre_archivo.endswith(".txt")):
                     rowPosition = tabla.rowCount()
                     tabla.insertRow(rowPosition)
-                    lista_archivos.append(archivo)
                     # Obtiene la ruta entera del archivo que se esta metiendo en la tabla
                     file_status_array = os.stat(f"{rutaTotal}/{archivo}")
                     # Obtenemos el tamaño del archivo en cuestion
@@ -124,7 +124,6 @@ class ControladorVEntrenamiento_class:
                     tabla.setItem(rowPosition, 2, QTableWidgetItem(f"{tamaño_archivo} bytes"))
                     tabla.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
                     contador = contador + 1
-
     def entrenador_archivos(self):
 
         if not self.ruta_entrenamiento:

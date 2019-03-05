@@ -166,11 +166,11 @@ class ControladorVClasificador_class:
             apoyo = []
             datos_archivos = []
             for i in self.seleccionados:
-                #print(i)
+
                 archivo = f'{self.ruta}/{i}'
                 with open(archivo, 'r', encoding='utf-8') as myfile:
                     data = myfile.read().replace('\n', '')
-                    test = TextBlob(data)
+                    '''test = TextBlob(data)
                     if round(test.sentiment.polarity,2) > 0.3 :
                         self.datos_analisis.append("Positivo")
                     elif round(test.sentiment.polarity, 2) < -0.3:
@@ -178,10 +178,9 @@ class ControladorVClasificador_class:
                     else:
                         self.datos_analisis.append("Neutral")
 
-                    self.datos_subjetividad.append(str(round(test.sentiment.subjectivity,3)))
+                    self.datos_subjetividad.append(str(round(test.sentiment.subjectivity,3)))'''
 
                     datos_archivos.append(data)
-            print(self.datos_analisis)
             ''' 
                 Aqui hacemos el procesamiento de texto usando expresiones regulares.
                 Para ello vamos limpiando los archivos poco a poco, empezando por quitar los carácteres especiales (".", ","...),
@@ -232,7 +231,6 @@ class ControladorVClasificador_class:
 
             prediccion = model.predict(X)
             print("Prediccion hecha!")
-            print(prediccion)
 
             for y in prediccion:
                 if y not in apoyo:
@@ -244,26 +242,35 @@ class ControladorVClasificador_class:
             rootdir = os.path.dirname(os.path.abspath(__file__))
             dir = os.path.join(os.path.dirname(rootdir), self.ruta)
             dir1 = os.path.join(os.path.dirname(rootdir), self.ruta_salida)
+            self.ventanaClasificador.datos_seleccionados.setRowCount(0)
+            self.ventanaClasificador.label_5.setText('Resultados de la clasificación')
+            print(os.path.join(dir, str(self.seleccionados[cont])))
             for i in prediccion:
+                with open(os.path.join(dir, str(self.seleccionados[cont])), 'r') as archivo:
+                    data = archivo.read().replace('\n', '')
+                    test = TextBlob(data)
+                    self.datos_analisis.append(round(test.sentiment.polarity, 4))
+
+                rowPosition = self.ventanaClasificador.datos_seleccionados.rowCount()
+                self.ventanaClasificador.datos_seleccionados.insertRow(rowPosition)
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 1,
+                                                                    QTableWidgetItem(self.seleccionados[cont]))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2,
+                                                                    QTableWidgetItem(nombres_etiquetas[i]))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3,
+                                                                    QTableWidgetItem(str(round(test.sentiment.polarity, 3))))
+
+                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 4,
+                                                                    QTableWidgetItem(str(round(test.sentiment.subjectivity, 3))))
+
                 shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
                                 os.path.join(os.path.join(dir1, nombres_etiquetas[i]), str(self.seleccionados[cont])))
                 cont = cont + 1
             print("Archivos guardados.")
-
-            self.ventanaClasificador.datos_seleccionados.setRowCount(0)
-            self.ventanaClasificador.label_5.setText('Resultados de la clasificación')
-            for s in range(len(self.seleccionados)):
-                rowPosition = self.ventanaClasificador.datos_seleccionados.rowCount()
-                self.ventanaClasificador.datos_seleccionados.insertRow(rowPosition)
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 1,
-                                                                     QTableWidgetItem(self.seleccionados[s]))
-
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2,
-                                                                     QTableWidgetItem(self.datos_analisis[s]))
-
-                self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3,
-                                                                     QTableWidgetItem(self.datos_subjetividad[s]))
 
             self.ventanaClasificador.label_finalizado.setVisible(True)

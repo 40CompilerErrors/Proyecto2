@@ -118,7 +118,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>554</width>
+           <width>556</width>
            <height>68</height>
           </rect>
          </property>
@@ -246,19 +246,6 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QPushButton" name="anadir_archivo_2">
-          <property name="font">
-           <font>
-            <family>Questrial</family>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Añadir...</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QPushButton" name="boton_anadir_todos">
           <property name="font">
@@ -502,7 +489,7 @@
      <x>0</x>
      <y>0</y>
      <width>1212</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -22,7 +22,7 @@ class VentanaEntrenamiento_class(QMainWindow):
 
 
     def iniciar_variables(self):
-        self.stopwords_lenguaje = ['arabic', 'danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian',
+        self.stopwords_lenguaje = ['english', 'danish', 'dutch', 'arabic', 'finnish', 'french', 'german', 'hungarian',
                                    'italian', 'kazakh', 'norwegian', 'portuguese', 'romanian', 'russian', 'spanish',
                                    'swedish', 'turkish']
         self.algoritmos = ['Random Forest', 'Naive Bayes']
@@ -31,7 +31,6 @@ class VentanaEntrenamiento_class(QMainWindow):
 
         for i in self.stopwords_lenguaje:
             self.comboBox_stopwords.addItem(i)
-
         self.label_exito.setVisible(False)
         self.label_precision.setVisible(False)
         self.boton_guardarModelo.setVisible(False)
@@ -39,9 +38,6 @@ class VentanaEntrenamiento_class(QMainWindow):
         self.label_advertencias.setVisible(False)
 
     def acciones_botones(self):
-        self.boton_Anadir_1.clicked.connect(self.controlador.abrir_VEtiquetas)
-        self.boton_Anadir_2.clicked.connect(self.controlador.abrir_VEtiquetas)
-        self.boton_Anadir_3.clicked.connect(self.controlador.abrir_VEtiquetas)
         self.boton_refrescar.clicked.connect(self.controlador.refrescar)
         self.boton_rutaPadre.clicked.connect(self.controlador.obtener_ruta)
         self.boton_clasificador.clicked.connect(self.controlador.entrenador_archivos)

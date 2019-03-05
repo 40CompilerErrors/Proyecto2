@@ -29,7 +29,7 @@ class VentanaClasificador_class(QMainWindow):
     def acciones_ctrl(self):
         self.boton_ruta_2.clicked.connect(self.controlador.abrir_archivo)
         self.boton_anadir_todos.clicked.connect(self.controlador.anadir_todos)
-        self.anadir_archivo_2.clicked.connect(self.controlador.anadir_datos)
+        #self.anadir_archivo_2.clicked.connect(self.controlador.anadir_datos)
         self.boton_clasificador.clicked.connect(self.controlador.ejecutar_clasificador)
         self.boton_guardar.clicked.connect(self.controlador.obtener_salida)
         self.boton_clasificador.setShortcut("ENTER")
