@@ -118,7 +118,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>556</width>
+           <width>554</width>
            <height>68</height>
           </rect>
          </property>
@@ -348,6 +348,11 @@
         </column>
         <column>
          <property name="text">
+          <string>Clasificación</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>Análisis del sentimiento</string>
          </property>
         </column>
@@ -497,7 +502,7 @@
      <x>0</x>
      <y>0</y>
      <width>1212</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
