@@ -7,8 +7,8 @@ class MainMenu:
     def __init__(self):
 
         self.controller = MC.MainController(self)
-        running = True
 
+        running = True
         while running:
 
             print("Who do you want to log in as?")

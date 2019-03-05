@@ -21,6 +21,7 @@ class UserController:
         prediction = model.predict(x_unlabeled)
         print(prediction)
 
+        self.__export_to_csv(vectorizer)
         self.__ask_quit()
 
 
@@ -66,7 +67,7 @@ class UserController:
 
         return model, vectorizer, x_unlabeled
 
-    def export_to_csv(self,vectorizer):
+    def __export_to_csv(self,vectorizer):
 
         running = True;
         while running:

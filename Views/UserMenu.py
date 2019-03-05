@@ -6,8 +6,8 @@ class UserMenu:
     def __init__(self):
 
         self.controller = UC.UserController(self)
-        running = True
 
+        running = True
         while running:
 
             print("What do you want to do?")

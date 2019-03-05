@@ -7,8 +7,8 @@ class AdminMenu:
     def __init__(self):
 
         self.controller = AC.AdminController(self)
-        running = True
 
+        running = True
         while running:
 
             print("What do you want to do?")
