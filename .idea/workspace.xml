@@ -95,25 +95,25 @@
     <session id="-1071161582">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
-          <entry key="project.open.time.0" value="1" />
+          <entry key="project.closed" value="12" />
+          <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.24" value="2" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.5" value="3" />
+          <entry key="project.open.time.5" value="4" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="23" />
+          <entry key="py" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="23" />
+          <entry key="Python" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -133,8 +133,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controladores/ControladorVClasificador.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="253" column="73" selection-start-line="253" selection-start-column="73" selection-end-line="253" selection-end-column="73" />
+            <state relative-caret-position="126">
+              <caret line="250" column="41" selection-start-line="250" selection-start-column="41" selection-end-line="250" selection-end-column="41" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -145,29 +145,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Ventanas/VentanaClasificador.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
+            <state relative-caret-position="459">
               <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ventanas/VentanaEntrenamiento.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Controladores/ControladorVEntrenamiento.py">
+        <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="91" column="46" lean-forward="true" selection-start-line="91" selection-start-column="46" selection-end-line="91" selection-end-column="46" />
+            <state relative-caret-position="323">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -294,17 +282,7 @@
             <path>
               <item name="Proyecto2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Proyecto2" type="462c0819:PsiDirectoryNode" />
-              <item name="Controladores" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Proyecto2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Proyecto2" type="462c0819:PsiDirectoryNode" />
-              <item name="Modelos" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Proyecto2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Proyecto2" type="462c0819:PsiDirectoryNode" />
-              <item name="Ventanas" type="462c0819:PsiDirectoryNode" />
+              <item name="Imagenes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -494,7 +472,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.304698" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4985119" weight="0.2409836" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4985119" visible="true" weight="0.2409836" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39344263" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -566,13 +544,6 @@
     <entry file="file://$PROJECT_DIR$/Modelo.py" />
     <entry file="file://$PROJECT_DIR$/Ventanas/VentanaInicio.py" />
     <entry file="file://$PROJECT_DIR$/Ventanas/VentanaAnadirEtiquetas.py" />
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../ProyectoComputacion-1/Controladores/ControladorVClasificador.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1880" />
@@ -580,26 +551,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Ventanas/VentanaGraficas.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controladores/ControladorVClasificador.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="253" column="73" selection-start-line="253" selection-start-column="73" selection-end-line="253" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Ventanas/VentanaClasificador.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Ventanas/VentanaEntrenamiento.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -612,6 +563,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="91" column="46" lean-forward="true" selection-start-line="91" selection-start-column="46" selection-end-line="91" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controladores/ControladorVClasificador.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="250" column="41" selection-start-line="250" selection-start-column="41" selection-end-line="250" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ventanas/VentanaClasificador.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
