@@ -245,21 +245,8 @@ class ControladorVClasificador_class:
             dir = os.path.join(os.path.dirname(rootdir), self.ruta)
             dir1 = os.path.join(os.path.dirname(rootdir), self.ruta_salida)
             for i in prediccion:
-                if i == 0:
-                    shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
-                                    os.path.join(os.path.join(dir1, nombres_etiquetas[0]), str(self.seleccionados[cont])))
-                elif i == 1:
-                    shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
-                                    os.path.join(os.path.join(dir1, nombres_etiquetas[1]), str(self.seleccionados[cont])))
-                elif i == 2:
-                    shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
-                                    os.path.join(os.path.join(dir1, nombres_etiquetas[2]), str(self.seleccionados[cont])))
-                elif i == 3:
-                    shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
-                                    os.path.join(os.path.join(dir1, nombres_etiquetas[3]), str(self.seleccionados[cont])))
-                else:
-                    shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
-                                    os.path.join(os.path.join(dir1, nombres_etiquetas[4]), str(self.seleccionados[cont])))
+                shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
+                                os.path.join(os.path.join(dir1, nombres_etiquetas[i]), str(self.seleccionados[cont])))
                 cont = cont + 1
             print("Archivos guardados.")
 
