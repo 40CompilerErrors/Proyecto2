@@ -1,10 +1,7 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
 
-# C extensions
-*.so
+*.pyc
+Ventanas/__pycache__/VentanaClasificador.cpython-36.pyc
+*.pyc
 
 # Pycharm
 *.idea
