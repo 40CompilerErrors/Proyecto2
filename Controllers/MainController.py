@@ -17,6 +17,7 @@ class MainController:
         elif self.__validate(username, password) == "user":
             self.view.running = False
             m.current = UM.UserMenu()
+            return True
         else:
             pass
 

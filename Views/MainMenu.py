@@ -1,29 +1,21 @@
 import sys
+
+from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMainWindow
 from Controllers import MainController as MC
 
 
-class MainMenu:
+class MainMenu(QMainWindow):
 
+    # metodo para iniciar la clase VentanaInicio
     def __init__(self):
 
         self.controller = MC.MainController(self)
 
-        running = True
-        while running:
+        loadUi('./User_Interfaces/VentanaInicio.ui', self)
 
-            print("Who do you want to log in as?")
-            print("1 - User")
-            print("2 - Administrator")
-            print("X - Exit")
+        self.setWindowTitle('Pantalla Inicio')
+        self.boton_clasificador.clicked.connect(self.controller.user_access("user",""))
+        self.boton_entrenamiento.clicked.connect(self.controller.user_access("admin",""))
+        self.setFixedSize(700,300)
 
-            user_input = input();
-
-
-            if user_input == "1":
-                self.controller.user_access("user","")
-            elif user_input == "2":
-                self.controller.user_access("admin","")
-            elif user_input == "X" or user_input == "x":
-                sys.exit(0)
-            else:
-                print("\nThat command does not exist.\n")
