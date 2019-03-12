@@ -9,10 +9,11 @@ class MainMenu(QMainWindow):
 
     # metodo para iniciar la clase VentanaInicio
     def __init__(self):
+        super(MainMenu, self).__init__()
 
         self.controller = MC.MainController(self)
 
-        loadUi('./User_Interfaces/VentanaInicio.ui', self)
+        loadUi('./Resources/UI/VentanaInicio.ui', self)
 
         self.setWindowTitle('Pantalla Inicio')
         self.boton_clasificador.clicked.connect(self.controller.user_access("user",""))
