@@ -1,26 +1,20 @@
 from Controllers import AdminController as AC
-from Model import Classifiers
+from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMainWindow
 
 
-class AdminMenu:
+class AdminMenu(QMainWindow):
 
     def __init__(self):
+        super(AdminMenu, self).__init__()
 
         self.controller = AC.AdminController(self)
 
-        running = True
-        while running:
+        loadUi('./Resources/UI/VentanaAdmin.ui', self)
 
-            print("What do you want to do?")
-            print("1 - Train (Classifier)")
-            print("X - Go Back")
+        self.boton_trainfiles.clicked.connect(self.__abrir)
 
-            user_input = input();
+        self.setWindowTitle('Pantalla Admin')
 
-            if user_input == "1":
-                self.controller.train_classifier()
-            elif user_input == "X" or user_input == "x":
-                self.controller.go_back()
-            else:
-                print("\nThat command does not exist.\n")
-
+    def __abrir(self):
+        self.controller.openTrainer()

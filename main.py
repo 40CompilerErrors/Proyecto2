@@ -6,10 +6,10 @@ class Main:
 
     def __init__(self):
         app = QApplication(sys.argv)
-        self.__change_current(MM.MainMenu())
+        self.change_current(MM.MainMenu())
         sys.exit(app.exec_())
 
-    def __change_current(self,window):
+    def change_current(self,window):
         self.current= window
         self.current.show()
 
