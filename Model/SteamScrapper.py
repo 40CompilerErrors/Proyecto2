@@ -20,6 +20,12 @@ class SteamScrapper:
 
         return allReviews
 
+    def scrapURL(self, url, language="english",batch_size=100):
+
+        rawReviews = self.__getReviews(url, language, batch_size)
+        gameReviews = self.__filterReviews(rawReviews)
+
+        return gameReviews
 
     def __getGameID(self,game):
         page = requests.get('https://store.steampowered.com/search/?term=' + game)
