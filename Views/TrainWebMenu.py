@@ -53,4 +53,4 @@ class TrainWebMenu(QMainWindow):
         self.boton_clasificador.clicked.connect(self.controller.webscrapper_train)
 
     def call_scrapper(self):
-        self.controller.metacritic(self.controller.linkList[0])
+        self.controller.metacritic(self.controller.linkList)
