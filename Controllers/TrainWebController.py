@@ -171,22 +171,21 @@ class TrainWebController:
 
                     nextpage = soup3.find("a", {"rel": "next"})
         print(self.contentList[0])
+    def entrenador_archivos(self):
 
-    ''' def entrenador_archivos(self):
+
+            print("Ejecutando el entrenador...")
+            nltk.download('stopwords')
+            stemmer = PorterStemmer()
 
 
-         print("Ejecutando el entrenador...")
-         nltk.download('stopwords')
-         stemmer = PorterStemmer()
+            valoraciones = load_files(ruta)
+            print(len(valoraciones.data))
+            X, y = valoraciones.data, valoraciones.target
 
-         valoraciones = load_files(ruta)
-         print(len(valoraciones.data))
-         X, y = valoraciones.data, valoraciones.target
-
-         self.nombre_etiquetas = valoraciones.target_names
-         documentos = []
-         '''
-    ''' 
+            self.nombre_etiquetas = valoraciones.target_names
+            documentos = []
+            ''' 
                 Aqui hacemos el procesamiento de texto usando expresiones regulares.
                 Para ello vamos limpiando los archivos poco a poco, empezando por quitar los carácteres especiales (".", ","...),
                 después los carácteres que están solos ("a", "y",...),...
@@ -194,43 +193,40 @@ class TrainWebController:
                 La función re.sub() cambia lo que detecte con la expresion regular por otro texto.
                 En este caso lo cambia por nada, es decir, lo elimina
             '''
+            for sen in range(0, len(X)):
+                # Elimina: carácteres especiales
+                documento = re.sub(r'\W', ' ', str(X[sen]))
 
+                # Elimina: carácteres solos
+                # remove all single characters
+                documento = re.sub(r'\s+[a-zA-Z]\s+', ' ', documento)
 
-''' for sen in range(0, len(X)):
-# Elimina: carácteres especiales
-documento = re.sub(r'\W', ' ', str(X[sen]))
+                # Elimina: números
+                documento = re.sub(r'\d',' ', documento)
 
-# Elimina: carácteres solos
-# remove all single characters
-documento = re.sub(r'\s+[a-zA-Z]\s+', ' ', documento)
+                # Elimina: carácteres solos al principio de una línea.
+                documento = re.sub(r'\^[a-zA-Z]\s+', ' ', documento)
 
-# Elimina: números
-documento = re.sub(r'\d',' ', documento)
+                # Sustituye: los tabuladores o multiples espacios por un solo espacio
+                documento = re.sub(r'\s+', ' ', documento, flags=re.I)
 
-# Elimina: carácteres solos al principio de una línea.
-documento = re.sub(r'\^[a-zA-Z]\s+', ' ', documento)
+                # Removing prefixed 'b'
+                documento = re.sub(r'^b\s+', '', documento)
 
-# Sustituye: los tabuladores o multiples espacios por un solo espacio
-documento = re.sub(r'\s+', ' ', documento, flags=re.I)
+                # Convierte todas las mayusuculas a minúsculas
+                documento = documento.lower()
 
-# Removing prefixed 'b'
-documento = re.sub(r'^b\s+', '', documento)
+                # Hacemos el Stem para sacar las raices de cada una de las palabras
+                documento = documento.split()
 
-# Convierte todas las mayusuculas a minúsculas
-documento = documento.lower()
+                documento = [stemmer.stem(word) for word in documento]
+                documento = ' '.join(documento)
 
-# Hacemos el Stem para sacar las raices de cada una de las palabras
-documento = documento.split()
+                documentos.append(documento)
 
-documento = [stemmer.stem(word) for word in documento]
-documento = ' '.join(documento)
+            self.stopword = str(self.ventanaEntrenamiento.comboBox_stopwords.currentText())
 
-documentos.append(documento)
-
-self.stopword = str(self.ventanaEntrenamiento.comboBox_stopwords.currentText())
-
-'''
-'''
+            ''' 
                 Con TFidVectorizer indicamos la importancia que tiene cada una de las palabras en el documento.
 
                 Para que el programa entienda el texto, hay que cambiar cada una de las palabras a su coincidente numero 
@@ -240,69 +236,69 @@ self.stopword = str(self.ventanaEntrenamiento.comboBox_stopwords.currentText())
                 clasificador, cogiendo las que mas frecuencia tengan.
             '''
 
-'''    self.vectorizador = TfidfVectorizer(max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words(self.stopword))
+            self.vectorizador = TfidfVectorizer(max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words(self.stopword))
 
-# Almacenamos las palabras en su respectivo formato numerico en X
-X = self.vectorizador.fit_transform(documentos).toarray()
+            # Almacenamos las palabras en su respectivo formato numerico en X
+            X = self.vectorizador.fit_transform(documentos).toarray()
 
-X_entrenamiento, X_test, y_entrenamiento, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+            X_entrenamiento, X_test, y_entrenamiento, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-self.elegir_algoritmo()
+            self.elegir_algoritmo()
 
-self.algoritmo.fit(X_entrenamiento, y_entrenamiento)
-y_pred = self.algoritmo.predict(X_test)
-matriz_confusion = confusion_matrix(y_test, y_pred)
+            self.algoritmo.fit(X_entrenamiento, y_entrenamiento)
+            y_pred = self.algoritmo.predict(X_test)
+            matriz_confusion = confusion_matrix(y_test, y_pred)
 
-figura = plt.figure()
-ax = figura.add_subplot(111)
+            figura = plt.figure()
+            ax = figura.add_subplot(111)
 
-cmap = plt.get_cmap('Blues')
-cax = ax.matshow(matriz_confusion, interpolation='nearest', cmap=cmap)
-figura.colorbar(cax)
+            cmap = plt.get_cmap('Blues')
+            cax = ax.matshow(matriz_confusion, interpolation='nearest', cmap=cmap)
+            figura.colorbar(cax)
 
-etiquetas = np.arange(len(self.nombre_etiquetas))
-plt.xticks(etiquetas, self.nombre_etiquetas, rotation=45)
-plt.yticks(etiquetas, self.nombre_etiquetas)
+            etiquetas = np.arange(len(self.nombre_etiquetas))
+            plt.xticks(etiquetas, self.nombre_etiquetas, rotation=45)
+            plt.yticks(etiquetas, self.nombre_etiquetas)
 
-fmt = '.2f'
-thresh = matriz_confusion.max() / 2.
-for i, j in itertools.product(range(matriz_confusion.shape[0]), range(matriz_confusion.shape[1])):
-plt.text(j, i, format(matriz_confusion[i, j], fmt),
-     horizontalalignment="center",
-     color="white" if matriz_confusion[i, j] > thresh else "black")
+            fmt = '.2f'
+            thresh = matriz_confusion.max() / 2.
+            for i, j in itertools.product(range(matriz_confusion.shape[0]), range(matriz_confusion.shape[1])):
+                plt.text(j, i, format(matriz_confusion[i, j], fmt),
+                         horizontalalignment="center",
+                         color="white" if matriz_confusion[i, j] > thresh else "black")
 
-plt.xlabel('Predicted')
-plt.ylabel('True')
-figura.savefig('./Resources/UIElements/Matriz.png')
-print("Imagen guardada")
+            plt.xlabel('Predicted')
+            plt.ylabel('True')
+            figura.savefig('./Resources/UIElements/Matriz.png')
+            print("Imagen guardada")
 
-label = QLabel(self.ventanaEntrenamiento)
-pixmap = QPixmap('./Resources/UIElements/Matriz.png')
-label.setPixmap(pixmap)
-label.setAlignment(Qt.AlignCenter)
-label.show()
-self.ventanaEntrenamiento.lay.addWidget(label)
+            label = QLabel(self.ventanaEntrenamiento)
+            pixmap = QPixmap('./Resources/UIElements/Matriz.png')
+            label.setPixmap(pixmap)
+            label.setAlignment(Qt.AlignCenter)
+            label.show()
+            self.ventanaEntrenamiento.lay.addWidget(label)
 
-true_positive = matriz_confusion[0][0]
-false_positive = matriz_confusion[0][1]
-false_negative = matriz_confusion[1][0]
-true_negative = matriz_confusion[1][1]
+            true_positive = matriz_confusion[0][0]
+            false_positive = matriz_confusion[0][1]
+            false_negative = matriz_confusion[1][0]
+            true_negative = matriz_confusion[1][1]
 
-print(matriz_confusion)
-print(classification_report(y_test, y_pred))
-self.precision = accuracy_score(y_test, y_pred)
+            print(matriz_confusion)
+            print(classification_report(y_test, y_pred))
+            self.precision = accuracy_score(y_test, y_pred)
 
-self.setVariables_visibles()
+            self.setVariables_visibles()
 
-print('True positive = ', true_positive)
-print('False positive = ', false_positive)
-print('False negative = ', false_negative)
-print('True negative = ', true_negative)
-def choose_algorithm(self):
-self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
+            print('True positive = ', true_positive)
+            print('False positive = ', false_positive)
+            print('False negative = ', false_negative)
+            print('True negative = ', true_negative)
+    def choose_algorithm(self):
+        self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
 
-if self.algorithm_name == 'Random Forest':
-self.algorithm = RandomForestClassifier(n_estimators=1000, random_state=0)
+        if self.algorithm_name == 'Random Forest':
+            self.algorithm = RandomForestClassifier(n_estimators=1000, random_state=0)
 
-elif self.algorithm_name == 'Naive Bayes':
-self.algorithm = GaussianNB()'''
+        elif self.algorithm_name == 'Naive Bayes':
+            self.algorithm = GaussianNB()

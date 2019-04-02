@@ -29,7 +29,7 @@ class TrainWebMenu(QMainWindow):
     def buttonActions(self):
         self.pushButton_addUrl.clicked.connect(self.controller.addURL)
         self.boton_scraper.clicked.connect(self.call_scrapper)
-        self.comboBox_categorias.currentTextChanged.connect()
+        #self.comboBox_categorias.currentTextChanged.connect(self.controller)
 
     def call_scrapper(self):
         self.controller.metacritic(self.controller.linkList[0])
