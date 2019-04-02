@@ -10,6 +10,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 
 import nltk
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
 
 from sklearn.datasets import load_files
@@ -193,38 +195,24 @@ class TrainWebController:
                 La función re.sub() cambia lo que detecte con la expresion regular por otro texto.
                 En este caso lo cambia por nada, es decir, lo elimina
             '''
-            for sen in range(0, len(X)):
-                # Elimina: carácteres especiales
-                documento = re.sub(r'\W', ' ', str(X[sen]))
-
-                # Elimina: carácteres solos
-                # remove all single characters
-                documento = re.sub(r'\s+[a-zA-Z]\s+', ' ', documento)
-
-                # Elimina: números
-                documento = re.sub(r'\d',' ', documento)
-
-                # Elimina: carácteres solos al principio de una línea.
-                documento = re.sub(r'\^[a-zA-Z]\s+', ' ', documento)
-
-                # Sustituye: los tabuladores o multiples espacios por un solo espacio
-                documento = re.sub(r'\s+', ' ', documento, flags=re.I)
-
-                # Removing prefixed 'b'
-                documento = re.sub(r'^b\s+', '', documento)
-
-                # Convierte todas las mayusuculas a minúsculas
-                documento = documento.lower()
-
-                # Hacemos el Stem para sacar las raices de cada una de las palabras
-                documento = documento.split()
-
-                documento = [stemmer.stem(word) for word in documento]
-                documento = ' '.join(documento)
-
-                documentos.append(documento)
-
             self.stopword = str(self.ventanaEntrenamiento.comboBox_stopwords.currentText())
+            sno = nltk.stem.SnowballStemmer(self.ventanaEntrenamiento.comboBox_stopwords.currentText())
+            
+            
+            for item in X:
+                item2 = item.decode('utf-8')
+                item2 = item2.lower()
+                item2 = word_tokenize(item2)
+                item2 = [w for w in item2 if not w in self.stopword]
+                frase_stemming = []
+                for w in item2:
+                    if w not in self.stopword:
+                        frase_stemming.append(sno.stem(w))
+                item2 = frase_stemming
+                
+                documentos.append(item2)
+                
+            documentos = [str (item) for item in documentos]
 
             ''' 
                 Con TFidVectorizer indicamos la importancia que tiene cada una de las palabras en el documento.
