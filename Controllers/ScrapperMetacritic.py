@@ -10,7 +10,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-url = "https://www.metacritic.com/movie/the-lord-of-the-rings-the-return-of-the-king"
+url = "https://www.metacritic.com/movie/the-biggest-little-farm"
 movie = False
 
 if re.search("https://www.metacritic.com/game/.*/.*", url):
@@ -90,9 +90,12 @@ else:
     
     for i in range(len(reviewList1)):
         star = reviewList1[i].find("div", {"class": "metascore_w"})
-        starList.append(star.text)
-        content = reviewList1[i].find("div", {"class": "review_body"})
-        contentList.append(content.text)
+        
+        if star.text:
+            star = float(star.text)/10
+            starList.append(star)
+            content = reviewList1[i].find("div", {"class": "review_body"})
+            contentList.append(content.text)
     
     userReviews = soup.find("a", string="User Reviews")
     userReviews = userReviews['href']
@@ -133,6 +136,5 @@ else:
                 contentList.append(content.text)
                 
             nextpage = soup3.find("a", {"rel": "next"})
-            
 
-print(contentList[-1])
+print(starList)
