@@ -11,7 +11,6 @@ class MainController:
 
         if username == "admin":
             self.view.running = False
-            print('llego')
             adminWindow = AM.AdminMenu()
             adminWindow.show()
             window.close()

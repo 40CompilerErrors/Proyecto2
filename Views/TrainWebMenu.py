@@ -13,9 +13,10 @@ class TrainWebMenu(QMainWindow):
 
         loadUi('./Resources/UI/VentanaEntrenamientoWeb.ui', self)
 
-        self.setWindowTitle('Pantalla Admin')
+        self.setWindowTitle('Pantalla de entrenador web')
 
         self.initiateVariables()
+        self.buttonActions()
 
     def initiateVariables(self):
         self.webs_list = ['Amazon', 'Steam', 'Metacritic']
@@ -25,4 +26,10 @@ class TrainWebMenu(QMainWindow):
         for i in self.category_list:
             self.comboBox_categorias.addItem(i)
 
+    def buttonActions(self):
+        self.pushButton_addUrl.clicked.connect(self.controller.addURL)
+        self.boton_scraper.clicked.connect(self.call_scrapper)
+        self.comboBox_categorias.currentTextChanged.connect()
 
+    def call_scrapper(self):
+        self.controller.metacritic(self.controller.linkList[0])

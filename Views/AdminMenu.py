@@ -7,9 +7,7 @@ class AdminMenu(QMainWindow):
 
     def __init__(self):
         super(AdminMenu, self).__init__()
-
         self.controller = AC.AdminController(self)
-
         loadUi('./Resources/UI/VentanaAdmin.ui', self)
 
         self.boton_trainfiles.clicked.connect(self.__abrir)
