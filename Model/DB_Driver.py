@@ -1,15 +1,27 @@
 import mysql.connector
+import boto3
+import hashlib
 
-
+BUCKET_NAME = 'gge-opiniones'
+keyFile = open('../Resources/keys', 'r') #Keyfile is in gitignore. Must be added manually
+PUBLIC_KEY = keyFile.readline().rstrip()
+PRIVATE_KEY = keyFile.readline().rstrip()
 
 class DB_Driver:
 
     def __init__(self):
-        # Setup s3 driver
-        self.connection = mysql.connector.connect(host="",
-                                                  database="",
-                                                  user="",
-                                                  password="")
+        self.session = boto3.Session(
+            aws_access_key_id= PUBLIC_KEY,
+            aws_secret_access_key= PRIVATE_KEY
+        )
+        self.s3 = self.session.resource('s3')
+        self.bucket = self.s3.Bucket(BUCKET_NAME)
+
+        self.connection = mysql.connector.connect(host="localhost",
+                                                  database="proyecto2",
+                                                  user="root",
+                                                  password="",
+                                                  use_pure=True)
 
         if self.connection.is_connected():
             db_Info = self.connection.get_server_info()
@@ -21,39 +33,61 @@ class DB_Driver:
         else:
             raise AssertionError('Connection to the DB could not be established')
 
+        self.cursor = self.connection.cursor(prepared = True)
+
     def getModels(self):
-        # fetch all from database
-        # Retrieve the data from the URL
-        # Return them as an array of tuples
-        pass
+        models = []
+        for object in self.bucket.objects.all():
+            models.append((object.key,object.get()))
+        return models
 
-    def uploadModel(self):
-        #upload to S3
-        #Get the URL and
-        #Upload it to DB with a given name
-        pass
+    def uploadModel(self,filename, data):
+        key = self.__uploadModelToS3(filename,data)
+        filename = self.__sanitizeInput(filename)
+        query = """INSERT INTO models filename, object_key VALUES %s, %s"""
+        self.cursor.execute(query,(filename,key))
 
-    def uploadModel(self):
-        # upload to S3
-        # Get the URL and
-        # Upload it to DB with a given name
-        pass
+
 
     def getUser(self,username):
-        #get the username and the password hash
-        pass
+        query = """SELECT password_hash, isAdmin FROM users WHERE username = %s"""
+        username = self.__sanitizeInput(self,username)
+        self.cursor.execute(query,username)
+        result = self.cursor.fetchone()
+        if result is not None:
+            return result[0], result[1]
+        else:
+            print("No users with a matching username found")
+            return 0, 0
+
+    def registerUser(self, username, password):
+        query = """INSERT INTO users username, password_hash, isAdmin VALUES %s, %s, 0"""
+        username = self.__sanitizeInput(username)
+        hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
+        self.cursor.execute(query,(username,hashed_password))
+
+
+    def __uploadModelToS3(self, filename, data):
+        self.s3.upload_file('../Resources/Models/' + str(filename),BUCKET_NAME,filename)
+
+    # def __retrieveModelsFromS3(self, url):
+    #     #retrieve data from URL
+    #     #Return data
+    #     pass
+
+    def __sanitizeInput(self,input):
+        sanitized=""
+        for character in input:
+            if character == "'" or character ==")" or character == ";":
+                break
+            else:
+                sanitized += character
+        return sanitized
 
 
     def closeConnection(self):
-        #close the connection
-        pass
+        self.connection.close()
 
-    def __uploadToS3(self, data):
-        #upload to S3
-        #Return the resulting URL
-        pass
-
-    def __retrieveFromS3(self, url):
-        #retrieve data from URL
-        #Return data
-        pass
+if __name__ == "__main__":
+    #tests go here if needed
+    pass
