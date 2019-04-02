@@ -10,7 +10,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-url = "https://www.metacritic.com/movie/the-lord-of-the-rings-the-return-of-the-king"
+url = "https://www.metacritic.com/game/xbox-one/devil-may-cry-5"
 movie = False
 
 if re.search("https://www.metacritic.com/game/.*/.*", url):
@@ -60,7 +60,12 @@ if movie == True:
         starList.append(float(star.text))
         content = reviewList[i].find("div", {"class": "review_body"})
         content = content.find("span")
-        contentList.append(content.text)
+        collapse = content.find("span", {"class": "blurb_expanded"})
+        
+        if collapse:
+            contentList.append(collapse.text)
+        else:
+            contentList.append(content.text)
         
     if pages:
         
@@ -82,7 +87,12 @@ if movie == True:
                 starList.append(float(star.text))
                 content = reviewList2[i].find("div", {"class": "review_body"})
                 content = content.find("span")
-                contentList.append(content.text)
+                collapse = content.find("span", {"class": "blurb_expanded"})
+                
+                if collapse:
+                    contentList.append(collapse.text)
+                else:
+                    contentList.append(content.text)
                 
             nextpage = soup2.find("a", {"rel": "next"})
 else:
@@ -107,7 +117,12 @@ else:
             star = float(star.text)/10
             starList.append(star)
             content = reviewList1[i].find("div", {"class": "review_body"})
-            contentList.append(content.text)
+            collapse = content.find("span", {"class": "blurb_expanded"})
+            
+            if collapse:
+                contentList.append(collapse.text)
+            else:
+                contentList.append(content.text)
     
     userReviews = soup.find("a", string="User Reviews")
     userReviews = userReviews['href']
@@ -129,7 +144,15 @@ else:
         star = reviewList2[j].find("div", {"class": "metascore_w"})
         starList.append(float(star.text))
         content = reviewList2[j].find("div", {"class": "review_body"})
-        contentList.append(content.text)
+        
+        collapse = content.find("span", {"class": "blurb_expanded"})
+        
+        if collapse:
+            contentList.append(collapse.text)
+        else:
+            contentList.append(content.text)
+        
+        
             
     if pages:
         
@@ -153,7 +176,12 @@ else:
                 star = reviewList3[h].find("div", {"class": "metascore_w"})
                 starList.append(float(star.text))
                 content = reviewList3[h].find("div", {"class": "review_body"})
-                contentList.append(content.text)
+                collapse = content.find("span", {"class": "blurb_expanded"})
+        
+                if collapse:
+                    contentList.append(collapse.text)
+                else:
+                    contentList.append(content.text)
                 
             nextpage = soup3.find("a", {"rel": "next"})
 
