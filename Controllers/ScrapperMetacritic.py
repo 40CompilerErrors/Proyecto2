@@ -10,7 +10,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-url = "https://www.metacritic.com/game/switch/the-legend-of-zelda-breath-of-the-wild"
+url = "https://www.metacritic.com/movie/the-lord-of-the-rings-the-return-of-the-king"
 movie = False
 
 if re.search("https://www.metacritic.com/game/.*/.*", url):
@@ -25,8 +25,11 @@ elif re.search("https://www.metacritic.com/movie/.*", url):
 else:
     print("Invalid syntax")
 
-page = requests.get(url, headers=      {'User-Agent': 'Mozilla/5.0'})                   
-soup = BeautifulSoup(page.content, 'html.parser')
+page = requests.get(url, headers=      {'User-Agent': 'Mozilla/5.0'})
+page = page.content.decode('utf-8')
+page = page.replace("<br>","\n")   
+page = page.replace("<br/>","\n")                       
+soup = BeautifulSoup(page, 'html.parser')
 html = list(soup.children)[2]
 html = (list(html))
 i = 0
@@ -42,8 +45,11 @@ if movie == True:
     userReviews = str(userReviews)
     
     url = "https://www.metacritic.com"+userReviews
-    page = requests.get(url, headers=      {'User-Agent': 'Mozilla/5.0'})                   
-    soup = BeautifulSoup(page.content, 'html.parser')
+    page = requests.get(url, headers=      {'User-Agent': 'Mozilla/5.0'})
+    page = page.content.decode('utf-8')
+    page = page.replace("<br>","\n")   
+    page = page.replace("<br/>","\n")                   
+    soup = BeautifulSoup(page, 'html.parser')
     html = list(soup.children)[2]
     reviewList = soup.findAll("div", {"class": "review"})
     
@@ -63,8 +69,11 @@ if movie == True:
         while nextpage:
             nextpage = nextpage['href']
             url2 = "https://www.metacritic.com"+nextpage
-            page2 = requests.get(url2, headers=      {'User-Agent': 'Mozilla/5.0'})                   
-            soup2 = BeautifulSoup(page2.content, 'html.parser')
+            page2 = requests.get(url2, headers=      {'User-Agent': 'Mozilla/5.0'})  
+            page2 = page2.content.decode('utf-8')
+            page2 = page2.replace("<br>","\n")   
+            page2 = page2.replace("<br/>","\n")                 
+            soup2 = BeautifulSoup(page2, 'html.parser')
             html2 = list(soup2.children)[2]
             reviewList2 = soup2.findAll("div", {"class": "review"})
             
@@ -82,8 +91,11 @@ else:
     criticReviews = str(criticReviews)
     
     url1 = "https://www.metacritic.com"+criticReviews
-    page1 = requests.get(url1, headers=      {'User-Agent': 'Mozilla/5.0'})                   
-    soup1 = BeautifulSoup(page1.content, 'html.parser')
+    page1 = requests.get(url1, headers=      {'User-Agent': 'Mozilla/5.0'}) 
+    page1 = page1.content.decode('utf-8')
+    page1 = page1.replace("<br>","\n")   
+    page1 = page1.replace("<br/>","\n")                  
+    soup1 = BeautifulSoup(page1, 'html.parser')
     html1 = list(soup1.children)[2]
     
     reviewList1 = soup1.findAll("li", {"class": "critic_review"})
@@ -102,8 +114,11 @@ else:
     userReviews = str(userReviews)
     
     url2 = "https://www.metacritic.com"+userReviews
-    page2 = requests.get(url2, headers=      {'User-Agent': 'Mozilla/5.0'})                   
-    soup2 = BeautifulSoup(page2.content, 'html.parser')
+    page2 = requests.get(url2, headers=      {'User-Agent': 'Mozilla/5.0'})
+    page2 = page2.content.decode('utf-8')
+    page2 = page2.replace("<br>","\n")   
+    page2 = page2.replace("<br/>","\n")             
+    soup2 = BeautifulSoup(page2, 'html.parser')
     html2 = list(soup2.children)[2]
     
     pages = soup2.find("ul", {"class": "pages"})
@@ -124,8 +139,13 @@ else:
             nextpage = nextpage['href']
             url3 = "https://www.metacritic.com"+nextpage
             page3 = requests.get(url3, headers=      {'User-Agent': 'Mozilla/5.0'})                   
-            soup3 = BeautifulSoup(page3.content, 'html.parser')
+            page3 = page3.content.decode('utf-8')
+            page3 = page3.replace("<br>","\n")   
+            page3 = page3.replace("<br/>","\n")   
+            soup3 = BeautifulSoup(page3, 'html.parser')
             html3 = list(soup3.children)[2]
+            
+            
             
             reviewList3 = soup3.findAll("li", {"class": "user_review"})
                
@@ -137,4 +157,5 @@ else:
                 
             nextpage = soup3.find("a", {"rel": "next"})
 
-print(starList)
+print(starList[-1])
+print(contentList[-1])
