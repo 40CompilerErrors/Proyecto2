@@ -10,7 +10,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-url = "https://www.metacritic.com/movie/the-biggest-little-farm"
+url = "https://www.metacritic.com/game/switch/the-legend-of-zelda-breath-of-the-wild"
 movie = False
 
 if re.search("https://www.metacritic.com/game/.*/.*", url):
@@ -51,7 +51,7 @@ if movie == True:
     
     for i in range(len(reviewList)):
         star = reviewList[i].find("div", {"class": "metascore_w"})
-        starList.append(star.text)
+        starList.append(float(star.text))
         content = reviewList[i].find("div", {"class": "review_body"})
         content = content.find("span")
         contentList.append(content.text)
@@ -70,7 +70,7 @@ if movie == True:
             
             for i in range(len(reviewList2)):
                 star = reviewList2[i].find("div", {"class": "metascore_w"})
-                starList.append(star.text)
+                starList.append(float(star.text))
                 content = reviewList2[i].find("div", {"class": "review_body"})
                 content = content.find("span")
                 contentList.append(content.text)
@@ -112,7 +112,7 @@ else:
        
     for j in range(len(reviewList2)):
         star = reviewList2[j].find("div", {"class": "metascore_w"})
-        starList.append(star.text)
+        starList.append(float(star.text))
         content = reviewList2[j].find("div", {"class": "review_body"})
         contentList.append(content.text)
             
@@ -131,7 +131,7 @@ else:
                
             for h in range(len(reviewList3)):
                 star = reviewList3[h].find("div", {"class": "metascore_w"})
-                starList.append(star.text)
+                starList.append(float(star.text))
                 content = reviewList3[h].find("div", {"class": "review_body"})
                 contentList.append(content.text)
                 
