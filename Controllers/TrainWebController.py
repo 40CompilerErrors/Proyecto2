@@ -105,7 +105,12 @@ class TrainWebController:
                 self.starList.append(float(star.text))
                 content = reviewList[i].find("div", {"class": "review_body"})
                 content = content.find("span")
-                self.contentList.append(content.text)
+                collapse = content.find("span", {"class": "blurb_expanded"})
+                
+                if collapse:
+                    self.contentList.append(collapse.text)
+                else:
+                    self.contentList.append(content.text)                
 
             if pages:
 
@@ -127,7 +132,12 @@ class TrainWebController:
                         self.starList.append(float(star.text))
                         content = reviewList2[i].find("div", {"class": "review_body"})
                         content = content.find("span")
-                        self.contentList.append(content.text)
+                        collapse = content.find("span", {"class": "blurb_expanded"})
+                        
+                        if collapse:
+                            self.contentList.append(collapse.text)
+                        else:
+                            self.contentList.append(content.text)
 
                     nextpage = soup2.find("a", {"rel": "next"})
         else:
@@ -151,7 +161,12 @@ class TrainWebController:
                     star = float(star.text)/10
                     self.starList.append(star)
                     content = reviewList1[i].find("div", {"class": "review_body"})
-                    self.contentList.append(content.text)
+                    collapse = content.find("span", {"class": "blurb_expanded"})
+                    
+                    if collapse:
+                        self.contentList.append(collapse.text)
+                    else:
+                        self.contentList.append(content.text)
 
             userReviews = soup.find("a", string="User Reviews")
             userReviews = userReviews['href']
@@ -173,7 +188,12 @@ class TrainWebController:
                 star = reviewList2[j].find("div", {"class": "metascore_w"})
                 self.starList.append(float(star.text))
                 content = reviewList2[j].find("div", {"class": "review_body"})
-                self.contentList.append(content.text)
+                collapse = content.find("span", {"class": "blurb_expanded"})
+                
+                if collapse:
+                    self.contentList.append(collapse.text)
+                else:
+                    self.contentList.append(content.text)
 
             if pages:
 
@@ -195,7 +215,12 @@ class TrainWebController:
                         star = reviewList3[h].find("div", {"class": "metascore_w"})
                         self.starList.append(float(star.text))
                         content = reviewList3[h].find("div", {"class": "review_body"})
-                        self.contentList.append(content.text)
+                        collapse = content.find("span", {"class": "blurb_expanded"})
+                        
+                        if collapse:
+                            self.contentList.append(collapse.text)
+                        else:
+                            self.contentList.append(content.text)
 
                     nextpage = soup3.find("a", {"rel": "next"})
             category_number = self.view.comboBox_categorias.currentText()
