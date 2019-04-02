@@ -521,22 +521,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_exito">
-        <property name="font">
-         <font>
-          <family>Questrial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>¡¡Entrenamiento realizado con éxito!!</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="layout_GuardarModelo">
         <item>
          <widget class="QPushButton" name="boton_guardarModelo">

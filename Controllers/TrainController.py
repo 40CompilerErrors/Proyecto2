@@ -134,6 +134,9 @@ class TrainController:
 
             valoraciones = load_files(ruta)
             X, y = valoraciones.data, valoraciones.target
+            for i in range(50):
+                print(valoraciones.target[i])
+
 
             self.nombre_etiquetas = valoraciones.target_names
 
