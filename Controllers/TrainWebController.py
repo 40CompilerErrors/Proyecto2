@@ -230,48 +230,48 @@ class TrainWebController:
             self.categoryList = [self.view.lineEdit_cat1.text(),self.view.lineEdit_cat2.text()]
             for i in range(len(self.starList)):
                 if self.starList[i] > 5:
-                    self.labels.append('0')
-                else:
                     self.labels.append('1')
+                else:
+                    self.labels.append('0')
         elif category_number == '3':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
                                  self.view.lineEdit_cat3.text()]
             for i in range(len(self.starList)):
                 if self.starList[i] >= 0 and self.starList[i] <= 3.3 :
-                    self.labels.append('0')
+                    self.labels.append('2')
                 elif self.starList[i] > 3.3 and self.starList[i] <= 6.6 :
                     self.labels.append('1')
                 else:
-                    self.labels.append('2')
+                    self.labels.append('0')
         elif category_number == '4':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
                                  self.view.lineEdit_cat3.text(), self.view.lineEdit_cat4.text()]
             for i in range(len(self.starList)):
                 if self.starList[i] >= 0 and self.starList[i] <= 2.5 :
-                    self.labels.append('0')
-                elif self.starList[i] > 2.5 and self.starList[i] <= 5 :
-                    self.labels.append('1')
-                elif self.starList[i] > 5 and self.starList[i] <= 7.5 :
-                    self.labels.append('2')
-                else:
                     self.labels.append('3')
+                elif self.starList[i] > 2.5 and self.starList[i] <= 5 :
+                    self.labels.append('2')
+                elif self.starList[i] > 5 and self.starList[i] <= 7.5 :
+                    self.labels.append('1')
+                else:
+                    self.labels.append('0')
         elif category_number == '5':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
                                  self.view.lineEdit_cat3.text(), self.view.lineEdit_cat4.text(),
                                  self.view.lineEdit_cat5.text()]
             for i in range(len(self.starList)):
                 if self.starList[i] >= 0 and self.starList[i] <= 2 :
-                    self.labels.append('0')
+                    self.labels.append('4')
                 elif self.starList[i] > 2 and self.starList[i] <= 4 :
-                    self.labels.append('1')
+                    self.labels.append('3')
                 elif self.starList[i] > 4 and self.starList[i] <= 6 :
                     self.labels.append('2')
                 elif self.starList[i] > 6 and self.starList[i] <= 8 :
-                    self.labels.append('3')
+                    self.labels.append('1')
                 else:
-                    self.labels.append('4')
+                    self.labels.append('0')
 
-        print(self.categoryList)
+
 
 
 
@@ -319,9 +319,6 @@ class TrainWebController:
             documento = ' '.join(documento)
 
             documentos.append(documento)
-        print(documentos)
-
-
         self.vectorizador = TfidfVectorizer(max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words(self.stopword))
 
         # Almacenamos las palabras en su respectivo formato numerico en X
