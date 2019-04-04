@@ -3,7 +3,7 @@ import boto3
 import hashlib
 
 BUCKET_NAME = 'gge-opiniones'
-keyFile = open('../Resources/keys', 'r') #Keyfile is in gitignore. Must be added manually
+keyFile = open('./Resources/keys.txt', 'r') #Keyfile is in gitignore. Must be added manually
 PUBLIC_KEY = keyFile.readline().rstrip()
 PRIVATE_KEY = keyFile.readline().rstrip()
 
@@ -42,10 +42,8 @@ class DB_Driver:
         return models
 
     def uploadModel(self,filename, data):
-        key = self.__uploadModelToS3(filename,data)
-        filename = self.__sanitizeInput(filename)
-        query = """INSERT INTO models filename, object_key VALUES %s, %s"""
-        self.cursor.execute(query,(filename,key))
+        self.__uploadModelToS3(filename,data)
+
 
 
 
@@ -61,14 +59,14 @@ class DB_Driver:
             return 0, 0
 
     def registerUser(self, username, password):
-        query = """INSERT INTO users username, password_hash, isAdmin VALUES %s, %s, 0"""
+        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (%s, %s, 0)"""
         username = self.__sanitizeInput(username)
         hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
         self.cursor.execute(query,(username,hashed_password))
 
 
     def __uploadModelToS3(self, filename, data):
-        self.s3.upload_file('../Resources/Models/' + str(filename),BUCKET_NAME,filename)
+        self.s3.upload_file('./Resources/Models/' + str(filename),BUCKET_NAME,filename)
 
     # def __retrieveModelsFromS3(self, url):
     #     #retrieve data from URL

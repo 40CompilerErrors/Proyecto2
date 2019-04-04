@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS proyecto2;
 CREATE TABLE IF NOT EXISTS users(
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(40) NOT NULL,
-    password_hash VARCHAR(40) NOT NULL,
+    password_hash VARCHAR(150) NOT NULL,
     isAdmin TINYINT DEFAULT 0
 
 );

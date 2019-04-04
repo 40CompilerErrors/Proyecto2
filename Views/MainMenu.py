@@ -24,7 +24,7 @@ class MainMenu(QMainWindow):
     def __login(self):
         user = self.user_text.text()
         password = self.pass_text.text()
-        self.controller.user_access(user, password, self)
+        self.controller.user_access(user, password)
 
 
 

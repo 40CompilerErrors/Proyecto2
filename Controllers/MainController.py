@@ -9,9 +9,10 @@ class MainController:
     def __init__(self, view):
         self.view = view
 
-    def user_access(self, username, password, window):
-
+    def user_access(self, username, password):
+        print('llego3')
         valid, role = self.__validate(username,password)
+        print('llego4')
         if valid != True:
             return
 
@@ -20,18 +21,19 @@ class MainController:
             m.change_current(UM.UserMenu())
 
         elif valid and role == 1:
+
             self.view.running = False
             adminWindow = AM.AdminMenu()
             adminWindow.show()
-            window.close()
+            self.view.close()
 
 
     def __validate(self, username,password):
-
+        print('llego1')
         db = DB.DB_Driver()
-        db_hash, db_role = db.getUser(username,password)
+        db_hash, db_role = db.getUser(username)
         db.closeConnection()
-
+        print('llego2')
         if db_hash == 0 and db_role == 0:
             print("Validation failed: No user found")
             return False, 0
@@ -43,6 +45,7 @@ class MainController:
             return False, 0
         else:
             return True, db_role
+
 
 
 
