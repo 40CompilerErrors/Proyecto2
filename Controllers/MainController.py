@@ -10,7 +10,7 @@ class MainController:
         self.view = view
 
     def user_access(self, username, password):
-        print('llego3')
+        print('llego1')
         valid, role = self.__validate(username,password)
         print('llego4')
         if valid != True:
@@ -29,11 +29,11 @@ class MainController:
 
 
     def __validate(self, username,password):
-        print('llego1')
+        print('llego2')
         db = DB.DB_Driver()
         db_hash, db_role = db.getUser(username)
         db.closeConnection()
-        print('llego2')
+        print('llego3')
         if db_hash == 0 and db_role == 0:
             print("Validation failed: No user found")
             return False, 0
