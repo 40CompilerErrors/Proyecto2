@@ -3,7 +3,7 @@ import boto3
 import hashlib
 
 BUCKET_NAME = 'gge-opiniones'
-keyFile = open('./Resources/keys.txt', 'r') #Keyfile is in gitignore. Must be added manually
+keyFile = open('./Resources/keys', 'r') #Keyfile is in gitignore. Must be added manually
 PUBLIC_KEY = keyFile.readline().rstrip()
 PRIVATE_KEY = keyFile.readline().rstrip()
 
@@ -48,9 +48,9 @@ class DB_Driver:
 
 
     def getUser(self,username):
-        query = """SELECT password_hash, isAdmin FROM users WHERE username = %s"""
-        username = self.__sanitizeInput(self,username)
-        self.cursor.execute(query,username)
+        query = """SELECT password_hash, isAdmin FROM users WHERE username = ?"""
+        clean_user = self.__sanitizeInput(username)
+        self.cursor.execute(query,(clean_user,))
         result = self.cursor.fetchone()
         if result is not None:
             return result[0], result[1]
@@ -59,7 +59,7 @@ class DB_Driver:
             return 0, 0
 
     def registerUser(self, username, password):
-        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (%s, %s, 0)"""
+        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (?, ?, 0)"""
         username = self.__sanitizeInput(username)
         hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
         self.cursor.execute(query,(username,hashed_password))
