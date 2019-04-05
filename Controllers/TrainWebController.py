@@ -103,7 +103,8 @@ class TrainWebController:
                 rgx = 'total-review-count'
                 total_reviews = page_content.find('span',attrs={'data-hook': rgx})
                 print(total_reviews.getText())
-                total_reviews_int = int(total_reviews.getText())
+                total_reviews_final = re.sub(',','',total_reviews.getText())
+                total_reviews_int = int(total_reviews_final)
                 print(valor)
                 
                 print()
@@ -311,7 +312,7 @@ class TrainWebController:
         if category_number == '2':
             self.categoryList = [self.view.lineEdit_cat1.text(),self.view.lineEdit_cat2.text()]
             for i in range(len(self.starList)):
-                if self.starList[i] > 5:
+                if self.starList[i] < 5:
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
