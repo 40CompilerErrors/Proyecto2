@@ -143,7 +143,11 @@ class TrainWebController:
                 valor +=1
                 
                # print(len(listaReviews))
-
+               
+        print(self.starList[5])
+        print(self.contentList[5])
+        print(self.starList[-1])
+        print(self.contentList[-1])
                 
         
         

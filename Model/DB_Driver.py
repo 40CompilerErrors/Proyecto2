@@ -3,7 +3,7 @@ import boto3
 import hashlib
 
 BUCKET_NAME = 'gge-opiniones'
-keyFile = open('./Resources/keys.txt', 'r') #Keyfile is in gitignore. Must be added manually
+keyFile = open('./Resources/keys', 'r') #Keyfile is in gitignore. Must be added manually
 PUBLIC_KEY = keyFile.readline().rstrip()
 PRIVATE_KEY = keyFile.readline().rstrip()
 
