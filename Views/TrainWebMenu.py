@@ -30,7 +30,7 @@ class TrainWebMenu(QMainWindow):
         self.stopwords_list = ['english', 'danish', 'dutch', 'arabic', 'finnish', 'french', 'german', 'hungarian',
                                    'italian', 'kazakh', 'norwegian', 'portuguese', 'romanian', 'russian', 'spanish',
                                    'swedish', 'turkish']
-        self.webs_list = ['Amazon', 'Steam', 'Metacritic']
+        self.webs_list = ['Amazon', 'Steam', 'Metacritic', 'Yelp']
         self.category_list = ['3','2','4','5']
         self.algorithm_list = ['Random Forest', 'Naive Bayes']
 
