@@ -27,17 +27,20 @@ from PyQt5.QtWidgets import QTableWidgetItem
 import requests
 import re
 from bs4 import BeautifulSoup
+from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
+
 
 
 class TrainWebController:
 
+
     def __init__(self, view):
         self.view = view
         self.linkList = []
-        self.categoryList = []
-        self.addedList = []
         self.starList = []
         self.contentList = []
+        self.categoryList = []
+        self.addedList = []
         self.labels = []
         '''
         Estos array estan por si acaso 
@@ -55,242 +58,105 @@ class TrainWebController:
         self.h = 0
 
     def addURL(self):
-        self.link = self.view.lineEdit_URL.text()
-        print(self.link)
-        '''if re.search("https://www.metacritic.com/game/.*/.*", self.link):
-            print("It's a game")
-        elif re.search("https://www.metacritic.com/music/.*/.*", self.link):
-            print("It's music")
-        elif re.search("https://www.metacritic.com/tv/.*", self.link):
-            print("It's a tv show")
-        elif re.search("https://www.metacritic.com/movie/.*", self.link):
-            print("It's a movie")
-        else:
-            print("Invalid syntax")'''
-        self.linkList.append(self.link)
+        link = self.view.lineEdit_URL.text()
+        self.linkList.append(link)
         rowPosition = self.view.tableWidget.rowCount()
         self.view.tableWidget.insertRow(rowPosition)
         self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-        self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(self.link)))
+        self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(link)))
+        self.view.lineEdit_URL.setText("")
 
-    def metacritic(self, list_url):
-        for url in list_url:
-            movie = False
-            if re.search("https://www.metacritic.com/movie/.*", url):
-                movie = True
-                print("It's a movie")
-            page = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
-            page = page.content.decode('utf-8')
-            page = page.replace("<br>", "\n")
-            page = page.replace("<br/>", "\n")
-            soup = BeautifulSoup(page, 'html.parser')
-            if movie == True:
-    
-                userReviews = soup.find("a", string="User Score")
-                userReviews = userReviews['href']
-                userReviews = str(userReviews)
-    
-                url = "https://www.metacritic.com" + userReviews
-                page = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
-                page = page.content.decode('utf-8')
-                page = page.replace("<br>", "\n")
-                page = page.replace("<br/>", "\n")
-                soup = BeautifulSoup(page, 'html.parser')
-                html = list(soup.children)[2]
-                reviewList = soup.findAll("div", {"class": "review"})
-    
-                pages = soup.find("div", {"class": "page_nav"})
-    
-                for i in range(len(reviewList)):
-                    star = reviewList[i].find("div", {"class": "metascore_w"})
-                    self.starList.append(float(star.text))
-                    content = reviewList[i].find("div", {"class": "review_body"})
-                    content = content.find("span")
-                    collapse = content.find("span", {"class": "blurb_expanded"})
-                    
-                    if collapse:
-                        self.contentList.append(collapse.text)
-                    else:
-                        self.contentList.append(content.text)                
-    
-                if pages:
-    
-                    nextpage = soup.find("a", {"rel": "next"})
-    
-                    while nextpage:
-                        nextpage = nextpage['href']
-                        url2 = "https://www.metacritic.com" + nextpage
-                        page2 = requests.get(url2, headers={'User-Agent': 'Mozilla/5.0'})
-                        page2 = page2.content.decode('utf-8')
-                        page2 = page2.replace("<br>", "\n")
-                        page2 = page2.replace("<br/>", "\n")
-                        soup2 = BeautifulSoup(page2, 'html.parser')
-                        html2 = list(soup2.children)[2]
-                        reviewList2 = soup2.findAll("div", {"class": "review"})
-    
-                        for i in range(len(reviewList2)):
-                            star = reviewList2[i].find("div", {"class": "metascore_w"})
-                            self.starList.append(float(star.text))
-                            content = reviewList2[i].find("div", {"class": "review_body"})
-                            content = content.find("span")
-                            collapse = content.find("span", {"class": "blurb_expanded"})
-                            
-                            if collapse:
-                                self.contentList.append(collapse.text)
-                            else:
-                                self.contentList.append(content.text)
-    
-                        nextpage = soup2.find("a", {"rel": "next"})
-            else:
-                criticReviews = soup.find("a", string="Critic Reviews")
-                criticReviews = criticReviews['href']
-                criticReviews = str(criticReviews)
-    
-                url1 = "https://www.metacritic.com" + criticReviews
-                page1 = requests.get(url1, headers={'User-Agent': 'Mozilla/5.0'})
-                page1 = page1.content.decode('utf-8')
-                page1 = page1.replace("<br>", "\n")
-                page1 = page1.replace("<br/>", "\n")
-                soup1 = BeautifulSoup(page1, 'html.parser')
-                html1 = list(soup1.children)[2]
-    
-                reviewList1 = soup1.findAll("li", {"class": "critic_review"})
-    
-                for i in range(len(reviewList1)):
-                    star = reviewList1[i].find("div", {"class": "metascore_w"})
-                    if star.text:
-                        star = float(star.text)/10
-                        self.starList.append(star)
-                        content = reviewList1[i].find("div", {"class": "review_body"})
-                        collapse = content.find("span", {"class": "blurb_expanded"})
-                        
-                        if collapse:
-                            self.contentList.append(collapse.text)
-                        else:
-                            self.contentList.append(content.text)
-    
-                userReviews = soup.find("a", string="User Reviews")
-                userReviews = userReviews['href']
-                userReviews = str(userReviews)
-    
-                url2 = "https://www.metacritic.com" + userReviews
-                page2 = requests.get(url2, headers={'User-Agent': 'Mozilla/5.0'})
-                page2 = page2.content.decode('utf-8')
-                page2 = page2.replace("<br>", "\n")
-                page2 = page2.replace("<br/>", "\n")
-                soup2 = BeautifulSoup(page2, 'html.parser')
-                html2 = list(soup2.children)[2]
-    
-                pages = soup2.find("ul", {"class": "pages"})
-    
-                reviewList2 = soup2.findAll("li", {"class": "user_review"})
-    
-                for j in range(len(reviewList2)):
-                    star = reviewList2[j].find("div", {"class": "metascore_w"})
-                    self.starList.append(float(star.text))
-                    content = reviewList2[j].find("div", {"class": "review_body"})
-                    collapse = content.find("span", {"class": "blurb_expanded"})
-                    
-                    if collapse:
-                        self.contentList.append(collapse.text)
-                    else:
-                        self.contentList.append(content.text)
-    
-                if pages:
-    
-                    nextpage = soup2.find("a", {"rel": "next"})
-    
-                    while nextpage:
-                        nextpage = nextpage['href']
-                        url3 = "https://www.metacritic.com" + nextpage
-                        page3 = requests.get(url3, headers={'User-Agent': 'Mozilla/5.0'})
-                        page3 = page3.content.decode('utf-8')
-                        page3 = page3.replace("<br>", "\n")
-                        page3 = page3.replace("<br/>", "\n")
-                        soup3 = BeautifulSoup(page3, 'html.parser')
-                        html3 = list(soup3.children)[2]
-    
-                        reviewList3 = soup3.findAll("li", {"class": "user_review"})
-    
-                        for h in range(len(reviewList3)):
-                            star = reviewList3[h].find("div", {"class": "metascore_w"})
-                            self.starList.append(float(star.text))
-                            content = reviewList3[h].find("div", {"class": "review_body"})
-                            collapse = content.find("span", {"class": "blurb_expanded"})
-                            
-                            if collapse:
-                                self.contentList.append(collapse.text)
-                            else:
-                                self.contentList.append(content.text)
-    
-                        nextpage = soup3.find("a", {"rel": "next"})
-                category_number = self.view.comboBox_categorias.currentText()
-                print(self.starList[-1])
-                print(self.contentList[-1])
+
+    def scrapLinks(self):
+        metacriticScrapper = MS.MetacriticScrapper()
+        steamScrapper = SS.SteamScrapper()
+        yelpScrapper = YS.YelScrapper()
+        amazonScrapper = AS.AmazonScrapper()
+
+        for url in self.linkList:
+            print("Scrapping link: " + url)
+            url_stars, url_reviews = [],[]
+            if 'metacritic.com' in url:
+                url_stars, url_reviews = metacriticScrapper.scrapURL(url)
+            elif 'store.steampowered.com' in url:
+                url_stars, url_reviews = steamScrapper.scrapURL(url)
+            elif 'amazon.com' in url:
+                url_stars, url_reviews = amazonScrapper.scrapURL(url)
+            elif 'yelp.com/biz' in url:
+                url_stars, url_reviews = yelpScrapper.scrapURL(url)
+
+            self.starList += url_stars
+            self.contentList += url_reviews
+
+    def __starsToCategories(self):
+        category_number = self.view.comboBox_categorias.currentText()
+
         if category_number == '2':
-            self.categoryList = [self.view.lineEdit_cat1.text(),self.view.lineEdit_cat2.text()]
-            for i in range(len(self.starList)):
-                if self.starList[i] > 5:
+            self.categoryList = [self.view.lineEdit_cat1.text() ,self.view.lineEdit_cat2.text()]
+            for item in self.starList:
+                value = int(item)
+                if value < 4:   #Originally >3 but it seemed so weird to invert the order here, so I assumed it was a bug
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
+
         elif category_number == '3':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
                                  self.view.lineEdit_cat3.text()]
-            for i in range(len(self.starList)):
-                if self.starList[i] >= 0 and self.starList[i] <= 3.3 :
+            for item in self.starList:
+                value = int(item)
+                if value < 2:
                     self.labels.append('2')
-                elif self.starList[i] > 3.3 and self.starList[i] <= 6.6 :
+                elif value < 4:
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
+
         elif category_number == '4':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
                                  self.view.lineEdit_cat3.text(), self.view.lineEdit_cat4.text()]
-            for i in range(len(self.starList)):
-                if self.starList[i] >= 0 and self.starList[i] <= 2.5 :
+            for item in self.starList:
+                value = int(item)
+                if value < 4 :
                     self.labels.append('3')
-                elif self.starList[i] > 2.5 and self.starList[i] <= 5 :
+                elif value < 6:
                     self.labels.append('2')
-                elif self.starList[i] > 5 and self.starList[i] <= 7.5 :
+                elif value < 8:
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
+
         elif category_number == '5':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
                                  self.view.lineEdit_cat3.text(), self.view.lineEdit_cat4.text(),
                                  self.view.lineEdit_cat5.text()]
-            for i in range(len(self.starList)):
-                if self.starList[i] >= 0 and self.starList[i] <= 2 :
+
+            for item in self.starList:
+                value = int(item)
+                if value <3 : #A heart!
                     self.labels.append('4')
-                elif self.starList[i] > 2 and self.starList[i] <= 4 :
+                elif value < 5 :
                     self.labels.append('3')
-                elif self.starList[i] > 4 and self.starList[i] <= 6 :
+                elif value < 7:
                     self.labels.append('2')
-                elif self.starList[i] > 6 and self.starList[i] <= 8 :
+                elif value < 9 :
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
 
-
-
-
-
     def webscrapper_train(self):
 
+        self.__starsToCategories()
 
         print("Ejecutando el entrenador...")
         nltk.download('stopwords')
         stemmer = PorterStemmer()
-        print('llego1')
 
         X, y = self.contentList, self.labels
         print(len(X))
         print(len(y))
-        print('llego2')
         #self.nombre_etiquetas = valoraciones.target_names
         documentos = []
-        print('llego3')
         self.stopword = str(self.view.comboBox_stopwords.currentText())
         for sen in range(0, len(X)):
             # Elimina: carácteres especiales
@@ -376,12 +242,12 @@ class TrainWebController:
         self.precision = accuracy_score(y_test, y_pred)
 
 
-
         print('True positive = ', true_positive)
         print('False positive = ', false_positive)
         print('False negative = ', false_negative)
         print('True negative = ', true_negative)
         print(self.precision)
+
     def choose_algorithm(self):
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
 

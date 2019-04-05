@@ -2,9 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import urllib.request, json
+from Model.Scrappers import AbstractScrapper as AS
 
-
-class SteamScrapper:
+class SteamScrapper(AS.AbstractScrapper):
 
 
     def scrapReviews(self, games=[], language="english", batch_size=100):
@@ -21,11 +21,25 @@ class SteamScrapper:
         return allReviews
 
     def scrapURL(self, url, language="english",batch_size=100):
-
-        rawReviews = self.__getReviews(url, language, batch_size)
+        #get the url https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/
+        gameID = re.search(r'app/.*?/' , url).group()[4:-1]
+        rawReviews = self.__getReviews(gameID, language, batch_size)
         gameReviews = self.__filterReviews(rawReviews)
 
-        return gameReviews
+
+        return self.__splitLists(gameReviews)
+
+    def __splitLists(self,gameReviews):
+        starList, reviewList = [],[]
+        for item in gameReviews:
+            if item['positive'] == True:
+                starList.append("8")
+            else:
+                starList.append("3")
+            reviewList.append(item['review'])
+
+        return starList, reviewList
+
 
     def __getGameID(self,game):
         page = requests.get('https://store.steampowered.com/search/?term=' + game)
@@ -61,31 +75,37 @@ class SteamScrapper:
 
 
 if __name__ == "__main__":
-    print("Eexecuted SteamScrapper as script: Testing purposes only")
+    URL ="https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/"
     scrapper = SteamScrapper()
-    tests = []
+    print(scrapper.scrapURL(URL))
 
-    print("Testing without a given name")
-    noNameTest = 100 == len(scrapper.scrapReviews())
-    print(noNameTest)
-    tests.append(noNameTest)
 
-    print("Testing with a given name")
-    singleNameTest = 100 == len(scrapper.scrapReviews(games =["Sekiro"]))
-    print(singleNameTest)   #If you give it a string only seems to do it a LOT???
-    tests.append(singleNameTest)
 
-    print("Testing with a list of names")
-    nameListTest = 300 == len(scrapper.scrapReviews(games=["Sekiro","Team Fortress","Dota 2"]))
-    print(nameListTest)
-
-    print("Testing with different batch sizes")
-    batchSizeTest = 60 == len(scrapper.scrapReviews(games=["Sekiro", "Team Fortress", "Dota 2"],batch_size=20))
-    print(batchSizeTest)
-
-    if not False in tests:
-        print("All tests successful.")
-    else:
-        print("Some tests failed. Make sure to fix it.")
+    # print("Eexecuted SteamScrapper as script: Testing purposes only")
+    # scrapper = SteamScrapper()
+    # tests = []
+    #
+    # print("Testing without a given name")
+    # noNameTest = 100 == len(scrapper.scrapReviews())
+    # print(noNameTest)
+    # tests.append(noNameTest)
+    #
+    # print("Testing with a given name")
+    # singleNameTest = 100 == len(scrapper.scrapReviews(games =["Sekiro"]))
+    # print(singleNameTest)   #If you give it a string only seems to do it a LOT???
+    # tests.append(singleNameTest)
+    #
+    # print("Testing with a list of names")
+    # nameListTest = 300 == len(scrapper.scrapReviews(games=["Sekiro","Team Fortress","Dota 2"]))
+    # print(nameListTest)
+    #
+    # print("Testing with different batch sizes")
+    # batchSizeTest = 60 == len(scrapper.scrapReviews(games=["Sekiro", "Team Fortress", "Dota 2"],batch_size=20))
+    # print(batchSizeTest)
+    #
+    # if not False in tests:
+    #     print("All tests successful.")
+    # else:
+    #     print("Some tests failed. Make sure to fix it.")
 
 
