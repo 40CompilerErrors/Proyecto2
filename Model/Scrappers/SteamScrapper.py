@@ -33,9 +33,9 @@ class SteamScrapper(AS.AbstractScrapper):
         starList, reviewList = [],[]
         for item in gameReviews:
             if item['positive'] == True:
-                starList.append("8")
+                starList.append("4")
             else:
-                starList.append("3")
+                starList.append("2")
             reviewList.append(item['review'])
 
         return starList, reviewList
