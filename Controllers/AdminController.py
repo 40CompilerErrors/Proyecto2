@@ -6,6 +6,7 @@ class AdminController:
     def __init__(self, view):
         self.view = view
 
+
     def openTrainer(self):
         ctrl = TC.TrainController()
         ventanaEntrenamiento = TM.TrainMenu(ctrl)
