@@ -1,5 +1,5 @@
-from Views import TrainMenu as TM
-from Controllers import TrainController as TC
+from Views import TrainMenu as TM, TrainWebMenu as TWM
+from Controllers import TrainController as TC, TrainWebController as TWC
 
 class AdminController:
 
@@ -12,5 +12,6 @@ class AdminController:
         ctrl.asignarVentana(ventanaEntrenamiento)
         ventanaEntrenamiento.show()
 
-    #def openWebScrapper(self):
-
+    def openWebScrapper(self):
+        ventanaEntrenamientoWeb = TWM.TrainWebMenu()
+        ventanaEntrenamientoWeb.show()

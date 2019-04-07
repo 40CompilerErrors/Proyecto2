@@ -7,14 +7,16 @@ class AdminMenu(QMainWindow):
 
     def __init__(self):
         super(AdminMenu, self).__init__()
-
         self.controller = AC.AdminController(self)
-
         loadUi('./Resources/UI/VentanaAdmin.ui', self)
 
         self.boton_trainfiles.clicked.connect(self.__abrir)
+        self.boton_trainweb.clicked.connect(self.__abrirweb)
 
         self.setWindowTitle('Pantalla Admin')
 
     def __abrir(self):
         self.controller.openTrainer()
+
+    def __abrirweb(self):
+        self.controller.openWebScrapper()

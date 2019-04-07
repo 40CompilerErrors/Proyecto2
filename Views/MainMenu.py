@@ -16,7 +16,6 @@ class MainMenu(QMainWindow):
 
         loadUi('./Resources/UI/VentanaLogin.ui', self)
 
-
         pixmap = QPixmap('./Resources/UIElements/logo.jpeg')
         self.logo.setPixmap(pixmap)
         self.setWindowTitle('Pantalla Login')
@@ -25,7 +24,7 @@ class MainMenu(QMainWindow):
     def __login(self):
         user = self.user_text.text()
         password = self.pass_text.text()
-        self.controller.user_access(user)
+        self.controller.user_access(user, password)
 
 
 

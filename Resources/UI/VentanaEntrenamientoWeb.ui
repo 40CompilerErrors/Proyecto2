@@ -32,6 +32,9 @@
     </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>15</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_15">
         <property name="text">
@@ -95,7 +98,27 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableWidget"/>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="maximumSize">
+           <size>
+            <width>420</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <column>
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>URL</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+         </widget>
         </item>
        </layout>
       </item>
@@ -363,6 +386,9 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMaximumSize</enum>
+        </property>
         <item>
          <widget class="QLabel" name="label_7">
           <property name="sizePolicy">
@@ -383,24 +409,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="textField_nombreModelo">
+         <widget class="QLineEdit" name="modelName_text">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>15</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Questrial</family>
-            <pointsize>9</pointsize>
-           </font>
           </property>
          </widget>
         </item>
@@ -507,22 +521,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_exito">
-        <property name="font">
-         <font>
-          <family>Questrial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>¡¡Entrenamiento realizado con éxito!!</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="layout_GuardarModelo">
         <item>
          <widget class="QPushButton" name="boton_guardarModelo">
@@ -598,7 +596,7 @@
      <x>0</x>
      <y>0</y>
      <width>1290</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

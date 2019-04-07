@@ -56,3 +56,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+#API keys
+Resources/keys
+Resources/keys.txt
+Resources/keys*
