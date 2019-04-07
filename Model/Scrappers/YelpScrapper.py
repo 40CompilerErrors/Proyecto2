@@ -5,10 +5,12 @@ import urllib.request, json
 
 # class="review-content"
 #?start=X where X = page_number*20
+from Model.Scrappers import AbstractScrapper as AS
 
-class YelScrapper:
 
-    def scrap(self, URL):
+class YelScrapper(AS.AbstractScrapper):
+
+    def scrapURL(self, URL):
 
         reviews = None
         current_page = 1
