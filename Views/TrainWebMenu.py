@@ -17,10 +17,8 @@ class TrainWebMenu(QMainWindow):
 
         self.setWindowTitle('Pantalla de entrenador web')
 
-        self.label_13.setVisible(False)
-        self.label_14.setVisible(False)
-        self.lineEdit_cat4.setVisible(False)
-        self.lineEdit_cat5.setVisible(False)
+
+
 
         self.initiateVariables()
         self.buttonActions()
@@ -45,12 +43,20 @@ class TrainWebMenu(QMainWindow):
         self.lineEdit_cat1.setText('Buenas')
         self.lineEdit_cat2.setText('Neutras')
         self.lineEdit_cat3.setText('Malas')
+        self.label_13.setVisible(False)
+        self.label_14.setVisible(False)
+        self.lineEdit_cat4.setVisible(False)
+        self.lineEdit_cat5.setVisible(False)
+        self.label_precision.setVisible(False)
+        self.label_guardarModelo.setVisible(False)
+        self.label_formatError.setVisible(False)
 
     def buttonActions(self):
-        self.pushButton_addUrl.clicked.connect(self.controller.addURL)
+        self.pushButton_addUrl.clicked.connect(self.controller.validate)
         self.boton_scraper.clicked.connect(self.call_scrapper)
         self.comboBox_categorias.currentTextChanged.connect(self.controller.change_category_combo)
         self.boton_clasificador.clicked.connect(self.controller.webscrapper_train)
+        self.boton_guardarModelo.clicked.connect(self.controller.guardar_modelo)
 
     def call_scrapper(self):
         self.controller.scrapLinks()

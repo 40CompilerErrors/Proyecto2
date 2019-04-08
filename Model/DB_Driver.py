@@ -39,11 +39,11 @@ class DB_Driver:
     def getModels(self):
         models = []
         for object in self.bucket.objects.all():
-            models.append((object.key,object.get()))
+            models.append((object.key,object.get()['Body']))
         return models
 
-    def uploadModel(self,filename, data):
-        self.__uploadModelToS3(filename,data)
+    def uploadModel(self,filename):
+        self.__uploadModelToS3(filename)
         
         
     def getUserList(self):
@@ -77,8 +77,8 @@ class DB_Driver:
     
 
 
-    def __uploadModelToS3(self, filename, data):
-        self.s3.upload_file('./Resources/Models/' + str(filename),BUCKET_NAME,filename)
+    def __uploadModelToS3(self, filename):
+        self.bucket.upload_file(('./Resources/Models/' + str(filename)), Key=filename)
 
     # def __retrieveModelsFromS3(self, url):
     #     #retrieve data from URL
@@ -100,4 +100,10 @@ class DB_Driver:
 
 if __name__ == "__main__":
     #tests go here if needed
+    db = DB_Driver()
+    model = db.getModels()
+    for i in model:
+        print(i[0])
+
+
     pass
