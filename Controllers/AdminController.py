@@ -23,14 +23,15 @@ class AdminController:
         ventanaGestionUsuarios = AU.AdminUsers()
         ventanaGestionUsuarios.show()
         
-    #def getUser(self):
-        objeto =  DD.DB_Driver()
-        objeto.getUser()
+    def getUser(self):
+        driver =  DD.DB_Driver()
+        driver.getUser()
+        driver.closeConnection()
         
         
     def insertUser(self,user,password):
-        objeto =  DD.DB_Driver()
-        #objeto.__init__()
-        objeto.registerUser(user,password)
+        driver =  DD.DB_Driver()
+        driver.registerUser(user,password)
+        driver.closeConnection()
         
         
