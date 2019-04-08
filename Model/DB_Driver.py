@@ -18,7 +18,7 @@ class DB_Driver:
         self.bucket = self.s3.Bucket(BUCKET_NAME)
 
         self.connection = mysql.connector.connect(host="localhost",
-                                                  port = "8889",
+                                                  port = "3306",
                                                   database="proyecto2",
                                                   user="root",
                                                   password="root",
