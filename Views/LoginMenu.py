@@ -6,11 +6,11 @@ from PyQt5.QtWidgets import QMainWindow
 from Controllers import LoginController as MC
 
 
-class MainMenu(QMainWindow):
+class LoginMenu(QMainWindow):
 
     # metodo para iniciar la clase VentanaInicio
     def __init__(self):
-        super(MainMenu, self).__init__()
+        super(LoginMenu, self).__init__()
 
         self.controller = MC.LoginController(self)
 
