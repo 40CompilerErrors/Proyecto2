@@ -21,7 +21,7 @@ class DB_Driver:
                                                   port = "3306",
                                                   database="proyecto2",
                                                   user="root",
-                                                  password="root",
+                                                  password="",
                                                   use_pure=True)
 
         if self.connection.is_connected():

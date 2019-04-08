@@ -1,10 +1,10 @@
-from Views import UserMenu as UM, AdminMenu as AM,MainMenu as MM
+from Views import UserMenu as UM, AdminMenu as AM, MainMenu as MM
 from main import Main as m
 from Model import DB_Driver as DB
 import hashlib, uuid
 
 
-class MainController:
+class LoginController:
 
     def __init__(self, view):
         self.view = view

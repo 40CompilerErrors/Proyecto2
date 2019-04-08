@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtGui import QPixmap
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow
-from Controllers import MainController as MC
+from Controllers import LoginController as MC
 
 
 class MainMenu(QMainWindow):
@@ -12,7 +12,7 @@ class MainMenu(QMainWindow):
     def __init__(self):
         super(MainMenu, self).__init__()
 
-        self.controller = MC.MainController(self)
+        self.controller = MC.LoginController(self)
 
         loadUi('./Resources/UI/VentanaLogin.ui', self)
 
