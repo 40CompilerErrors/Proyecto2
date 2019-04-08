@@ -44,7 +44,22 @@ class DB_Driver:
 
     def uploadModel(self,filename, data):
         self.__uploadModelToS3(filename,data)
+        
+        
+    def getUserList(self):
+         query = """SELECT username FROM users"""
+         self.cursor.execute(query)
+         #result = self.cursor.fetchall()
+         result = list(self.cursor)
+         #print(result)
+         return result
 
+    def registerUser(self, username, password):
+        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (?, ?, 0)"""
+        username = self.__sanitizeInput(username)
+        hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
+        self.cursor.execute(query,(username,hashed_password))
+        self.connection.commit()
 
 
 
@@ -59,11 +74,7 @@ class DB_Driver:
             print("No users with a matching username found")
             return 0, 0
 
-    def registerUser(self, username, password):
-        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (?, ?, 0)"""
-        username = self.__sanitizeInput(username)
-        hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
-        self.cursor.execute(query,(username,hashed_password))
+    
 
 
     def __uploadModelToS3(self, filename, data):
