@@ -46,8 +46,6 @@ class DB_Driver:
         self.__uploadModelToS3(filename,data)
 
 
-
-
     def getUser(self,username):
         query = """SELECT password_hash, isAdmin FROM users WHERE username = ?"""
         clean_user = self.__sanitizeInput(username)
