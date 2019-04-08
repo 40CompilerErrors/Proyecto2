@@ -12,6 +12,8 @@ class AdminMenu(QMainWindow):
 
         self.boton_trainfiles.clicked.connect(self.__abrir)
         self.boton_trainweb.clicked.connect(self.__abrirweb)
+        self.boton_usersAdmin.clicked.connect(self.__abrirgestor)
+       
 
         self.setWindowTitle('Pantalla Admin')
 
@@ -20,3 +22,8 @@ class AdminMenu(QMainWindow):
 
     def __abrirweb(self):
         self.controller.openWebScrapper()
+        
+    def __abrirgestor(self):
+        self.controller.openGestor()
+        
+    

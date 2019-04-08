@@ -3,7 +3,7 @@ import boto3
 import hashlib
 
 BUCKET_NAME = 'gge-opiniones'
-keyFile = open('./Resources/keys', 'r') #Keyfile is in gitignore. Must be added manually
+keyFile = open('./Resources/keys.txt', 'r') #Keyfile is in gitignore. Must be added manually
 PUBLIC_KEY = keyFile.readline().rstrip()
 PRIVATE_KEY = keyFile.readline().rstrip()
 
@@ -18,9 +18,10 @@ class DB_Driver:
         self.bucket = self.s3.Bucket(BUCKET_NAME)
 
         self.connection = mysql.connector.connect(host="localhost",
+                                                  port = "8889",
                                                   database="proyecto2",
                                                   user="root",
-                                                  password="",
+                                                  password="root",
                                                   use_pure=True)
 
         if self.connection.is_connected():
