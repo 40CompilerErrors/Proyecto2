@@ -57,3 +57,10 @@ class AmazonScrapper(AS.AbstractScrapper):
             current_page += 1
 
         return starList, contentList
+
+
+
+if __name__ == "__main__":
+    URL = 'https://www.amazon.com/Clarks-Tilden-Style-black-leather/dp/B078GZB11J/ref=lp_18637582011_1_1?srs=18637582011&ie=UTF8&qid=1554809371&sr=8-1#customerReviews'
+    scrappy = AmazonScrapper()
+    print(scrappy.scrapURL(URL))

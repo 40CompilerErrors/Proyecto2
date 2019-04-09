@@ -48,8 +48,8 @@ class YelScrapper(AS.AbstractScrapper):
         return scores, bodies
 
 if __name__ == "__main__":
-    URL = "https://www.yelp.es/biz/takos-al-pastor-madrid"
+    URL = "https://www.yelp.com/biz/el-sur-madrid"
     scrappy = YelScrapper()
-    print(scrappy.scrap(URL))
+    print(scrappy.scrapURL(URL))
 
 
