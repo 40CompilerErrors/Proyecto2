@@ -177,7 +177,7 @@ class ClassifyWebController:
 
 
                 print('llegoantes')
-                elementLists.append([str(labelsName[i]), str(round(test.sentiment.polarity, 3)),
+                elementLists.append([str(labelsName[i][:]), str(round(test.sentiment.polarity, 3)),
                                      str(round(test.sentiment.subjectivity, 3)),self.contentList[cont]])
                 print('llegodespues')
                 cont = cont + 1
