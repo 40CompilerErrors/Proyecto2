@@ -375,8 +375,6 @@ class TrainWebController:
             self.view.label_14.setVisible(True)
             self.view.lineEdit_cat5.setVisible(True)
 
-
-
         ''' IMPORTANTE, ESTO HAY QUE METERLO EN EL ENTRENADOR EN CUANTO PODAMOS
         
         sno = nltk.stem.SnowballStemmer(self.view.comboBox_stopwords.currentText())

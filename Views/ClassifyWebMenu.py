@@ -17,6 +17,7 @@ class ClassifyWebMenu(QMainWindow):
 
     def initiateVariables(self):
         self.label_finalizado.setVisible(False)
+        self.label_3.setVisible(False)
         self.webs_list = ['Amazon', 'Steam', 'Metacritic', 'Yelp']
         for i in self.webs_list:
             self.pages_combo.addItem(i)
