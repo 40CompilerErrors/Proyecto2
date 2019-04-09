@@ -92,7 +92,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>TextLabel</string>
+        <string>Añada URLs antes de realizar el Web Scraping porfavor.</string>
        </property>
       </widget>
      </item>

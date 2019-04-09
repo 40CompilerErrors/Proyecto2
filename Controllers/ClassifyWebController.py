@@ -62,33 +62,39 @@ class ClassifyWebController:
         steamScrapper = SS.SteamScrapper()
         yelpScrapper = YS.YelScrapper()
         amazonScrapper = AS.AmazonScrapper()
-
-        for url in self.linkList:
-            print("Scrapping link: " + url)
-            url_stars, url_reviews = [], []
-            if 'metacritic.com' in url:
-                print("Detected as Metacritic URL")
-                url_stars, url_reviews = metacriticScrapper.scrapURL(url)
-            elif 'store.steampowered.com' in url:
-                print("Detected as Steam URL")
-                url_stars, url_reviews = steamScrapper.scrapURL(url)
-            elif 'amazon.com' in url:
-                print("Detected as Amazon URL")
-                url_stars, url_reviews = amazonScrapper.scrapURL(url)
-            elif 'yelp.com' in url:
-                print("Detected as Yelp URL")
-                url_stars, url_reviews = yelpScrapper.scrapURL(url)
-            else:
-                print("Detected as invalid link")
-            print("Finished scrapping URL")
-            self.contentList += url_reviews
+        if not self.linkList:
+            self.view.label_3.setVisible(True)
+        else:
+            self.view.label_3.setVisible(False)
+            for url in self.linkList:
+                print("Scrapping link: " + url)
+                url_stars, url_reviews = [], []
+                if 'metacritic.com' in url:
+                    print("Detected as Metacritic URL")
+                    url_stars, url_reviews = metacriticScrapper.scrapURL(url)
+                elif 'store.steampowered.com' in url:
+                    print("Detected as Steam URL")
+                    url_stars, url_reviews = steamScrapper.scrapURL(url)
+                elif 'amazon.com' in url:
+                    print("Detected as Amazon URL")
+                    url_stars, url_reviews = amazonScrapper.scrapURL(url)
+                elif 'yelp.com' in url:
+                    print("Detected as Yelp URL")
+                    url_stars, url_reviews = yelpScrapper.scrapURL(url)
+                else:
+                    print("Detected as invalid link")
+                print("Finished scrapping URL")
+                self.contentList += url_reviews
 
     def ejecutar_clasificador(self):
 
         if not self.modelsList:
             self.view.boton_clasificador.setText("La lista de modelos esta vacía. porfavor cree algún "
                                                                 "modelo")
+        elif not self.ruta_salida:
+            self.view.label_6.setText('Porfavor elija una ruta para guardar las reviews')
         else:
+            self.view.label_6.setText('Elegir la ruta donde se guardarán los archivos clasificados:')
             self.view.boton_clasificador.setText("Ejecutar clasificador")
             print("Comienza la clasificación...")
             cont = 0
@@ -135,22 +141,22 @@ class ClassifyWebController:
             print("Prediccion hecha!")
 
             for y in prediccion:
-                print(y)
                 if y not in self.support:
                     self.support.append(y)
             '''for i in labelsName:
                 if not os.path.exists(f'{self.ruta_salida}/{i}'):
                     os.makedirs(f'{self.ruta_salida}/{i}')'''
-
+            print(self.contentList)
+            print(labelsName)
             rootdir = os.path.dirname(os.path.abspath(__file__))
             dir1 = os.path.join(os.path.dirname(rootdir), self.ruta_salida)
             self.view.datos_seleccionados.setRowCount(0)
             self.view.label_5.setText('Resultados de la clasificación')
-
+            contador = 0
             elementLists = []
             for i in prediccion:
                 elementList = []
-                data = self.contentList[cont].replace('\n', '')
+                data = self.contentList[contador].replace('\n', '')
                 test = TextBlob(data)
                 self.analysis_data.append(round(test.sentiment.polarity, 4))
 
@@ -160,7 +166,7 @@ class ClassifyWebController:
                 self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
 
                 self.view.datos_seleccionados.setItem(rowPosition, 1,
-                                                                    QTableWidgetItem(self.contentList[cont]))
+                                                                    QTableWidgetItem(self.contentList[contador]))
 
                 self.view.datos_seleccionados.setItem(rowPosition, 2,
                                                                     QTableWidgetItem(labelsName[i]))
@@ -170,16 +176,16 @@ class ClassifyWebController:
 
                 self.view.datos_seleccionados.setItem(rowPosition, 4,
                                                                     QTableWidgetItem(str(round(test.sentiment.subjectivity, 3))))
-
-
-                #shutil.copyfile(os.path.join(dir, str(self.contentList[cont])),
-                 #               os.path.join(os.path.join(dir1, labelsName[i]), str(self.contentList[cont])))
+                print('llegoantes')
                 elementLists.append([labelsName[i], str(round(test.sentiment.polarity, 3)),
-                                     str(round(test.sentiment.subjectivity, 3)),self.contentList[cont]])
-                cont = cont + 1
-
+                                     str(round(test.sentiment.subjectivity, 3)),self.contentList[contador]])
+                print('llegodespues')
+                contador = contador + 1
+            print('llego3')
             headers = ["Label", "Polarity", "Subjectivity", "Body"]
+            print('llego4')
             dataframe = pd.DataFrame(elementLists,columns=headers)
+            print('llego5')
             print(dataframe)
 
             if not self.ruta_salida == '':
@@ -188,8 +194,5 @@ class ClassifyWebController:
 
             print("Archivos guardados.")
             c = 0
-            '''with open('./resultados.csv', 'wb', newline='')as csvfile:
-                wr = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-                wr.writerows(self.contentList)'''
 
             self.view.label_finalizado.setVisible(True)
