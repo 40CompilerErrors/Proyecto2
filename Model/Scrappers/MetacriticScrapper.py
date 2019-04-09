@@ -176,7 +176,7 @@ class MetacriticScrapper(AS.AbstractScrapper):
         return normalizedStarList
 
 if __name__ == "__main__":
-    URL = "https://www.metacritic.com/game/pc/anthem"
+    URL = "https://www.metacritic.com/game/pc/bad-rats-the-rats-revenge"
     scrappy = MetacriticScrapper()
     print(scrappy.scrapURL(URL))
 
