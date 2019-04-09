@@ -1,6 +1,3 @@
-from Views import TrainWebMenu as TWM
-import os
-import time
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -10,8 +7,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 
 import nltk
-from nltk.corpus import stopwords 
-from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
 
 from sklearn.datasets import load_files
@@ -24,12 +19,9 @@ import numpy as np
 import itertools
 from sklearn.feature_extraction.text import TfidfVectorizer
 from PyQt5.QtWidgets import QTableWidgetItem
-import requests
 import re
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
 from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
-
+from Model import DB_Driver as DB
 
 
 class TrainWebController:
@@ -58,6 +50,22 @@ class TrainWebController:
         self.j = 0
         self.h = 0
 
+    def validate(self):
+        if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
+            self.addURL()
+            self.view.label_formatError.setVisible(False)
+        elif 'store.steampowered.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Steam':
+            self.addURL()
+            self.view.label_formatError.setVisible(False)
+        elif 'https://www.amazon.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Amazon':
+            self.addURL()
+            self.view.label_formatError.setVisible(False)
+        elif 'https://www.yelp.' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Yelp':
+            self.addURL()
+            self.view.label_formatError.setVisible(False)
+        else:
+            self.view.label_formatError.setVisible(True)
+
     def addURL(self):
         link = self.view.lineEdit_URL.text()
         self.linkList.append(link)
@@ -78,16 +86,42 @@ class TrainWebController:
             print("Scrapping link: " + url)
             url_stars, url_reviews = [],[]
             if 'metacritic.com' in url:
+                print("Detected as Metacritic URL")
                 url_stars, url_reviews = metacriticScrapper.scrapURL(url)
             elif 'store.steampowered.com' in url:
+                print("Detected as Steam URL")
                 url_stars, url_reviews = steamScrapper.scrapURL(url)
             elif 'amazon.com' in url:
+                print("Detected as Amazon URL")
                 url_stars, url_reviews = amazonScrapper.scrapURL(url)
-            elif 'yelp.com/biz' in url:
+            elif 'yelp.com' in url:
+                print("Detected as Yelp URL")
                 url_stars, url_reviews = yelpScrapper.scrapURL(url)
+            else:
+                print("Detected as invalid link")
+            print("Finished scrapping URL")
 
             self.starList += url_stars
             self.contentList += url_reviews
+
+    def guardar_modelo(self):
+        nombre_modelo = self.view.modelName_text.text()
+
+
+        # Aqui guardamos el Modelo en formato pickle
+        with open(f'./Resources/Models/{nombre_modelo}', 'wb') as modelo_completo:
+             pickle.dump(self.algorithm, modelo_completo)
+             pickle.dump(self.vectorizador, modelo_completo)
+             pickle.dump(self.labels, modelo_completo)
+
+        db = DB.DB_Driver()
+
+        db.uploadModel(nombre_modelo)
+
+        db.closeConnection()
+
+        self.view.label_guardarModelo.setVisible(True)
+
 
     def __starsToCategories(self):
         category_number = self.view.comboBox_categorias.currentText()
@@ -96,7 +130,7 @@ class TrainWebController:
             self.categoryList = [self.view.lineEdit_cat1.text() ,self.view.lineEdit_cat2.text()]
             for item in self.starList:
                 value = int(item)
-                if value < 4:   #Originally >3 but it seemed so weird to invert the order here, so I assumed it was a bug
+                if value < 3:   #Originally >3 but it seemed so weird to invert the order here, so I assumed it was a bug
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
@@ -118,11 +152,11 @@ class TrainWebController:
                                  self.view.lineEdit_cat3.text(), self.view.lineEdit_cat4.text()]
             for item in self.starList:
                 value = int(item)
-                if value < 4 :
+                if value < 1 :
                     self.labels.append('3')
-                elif value < 6:
+                elif value < 3:
                     self.labels.append('2')
-                elif value < 8:
+                elif value < 5:
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
@@ -134,13 +168,13 @@ class TrainWebController:
 
             for item in self.starList:
                 value = int(item)
-                if value <3 : #A heart!
+                if value < 2 : #A heart!
                     self.labels.append('4')
-                elif value < 5 :
+                elif value < 3 :
                     self.labels.append('3')
-                elif value < 7:
+                elif value < 4:
                     self.labels.append('2')
-                elif value < 9 :
+                elif value < 5 :
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
@@ -154,9 +188,8 @@ class TrainWebController:
         stemmer = PorterStemmer()
 
         X, y = self.contentList, self.labels
-        print(len(X))
-        print(len(y))
-        #self.nombre_etiquetas = valoraciones.target_names
+
+
         documentos = []
         self.stopword = str(self.view.comboBox_stopwords.currentText())
         for sen in range(0, len(X)):
@@ -228,7 +261,6 @@ class TrainWebController:
         label = QLabel(self.view)
         pixmap = QPixmap('./Resources/UIElements/Matriz.png')
         label.setPixmap(pixmap)
-        #ME HE QUEDADO AQUI
         label.setAlignment(Qt.AlignCenter)
         label.show()
         self.view.lay.addWidget(label)
@@ -248,6 +280,8 @@ class TrainWebController:
         print('False negative = ', false_negative)
         print('True negative = ', true_negative)
         print(self.precision)
+        #self.view.label_precision.setVisibleU(True)
+
 
     def choose_algorithm(self):
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
@@ -257,6 +291,9 @@ class TrainWebController:
 
         elif self.algorithm_name == 'Naive Bayes':
             self.algorithm = GaussianNB()
+
+    #def save_model(self):
+
 
     def change_category_combo(self):
 

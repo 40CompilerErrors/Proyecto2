@@ -9,7 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 
 import nltk
-from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
 
@@ -22,7 +21,8 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 import numpy as np
 import itertools
 from sklearn.feature_extraction.text import TfidfVectorizer
-from Views import TrainMenu as TM
+
+from Model import DB_Driver as DB
 
 class TrainController:
 
@@ -243,6 +243,7 @@ class TrainController:
 
     def guardar_modelo(self):
         nombre_modelo = self.ventanaEntrenamiento.textField_nombreModelo.toPlainText()
+
         if not nombre_modelo:
             self.ventanaEntrenamiento.label_advertencias.setText("[ADVERTENCIA] No se ha introducido nombre al modelo.\n No se puede efectuar el entrenamiento.")
             self.ventanaEntrenamiento.label_advertencias.setVisible(True)
@@ -252,6 +253,12 @@ class TrainController:
                 pickle.dump(self.algoritmo, modelo_completo)
                 pickle.dump(self.vectorizador, modelo_completo)
                 pickle.dump(self.nombre_etiquetas, modelo_completo)
+
+            db = DB.DB_Driver()
+
+            db.uploadModel(nombre_modelo)
+
+            db.closeConnection()
 
             self.ventanaEntrenamiento.label_guardarModelo.setVisible(True)
 

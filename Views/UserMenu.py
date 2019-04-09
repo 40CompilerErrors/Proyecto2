@@ -1,27 +1,24 @@
 from Controllers import UserController as UC
+from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMainWindow
 
-
-class UserMenu:
+class UserMenu(QMainWindow):
 
     def __init__(self):
-
+        super(UserMenu, self).__init__()
         self.controller = UC.UserController(self)
+        loadUi('./Resources/UI/VentanaUsuario.ui', self)
 
-        running = True
-        while running:
+        self.boton_classifyfiles.clicked.connect(self.__callClass)
+        self.boton_classifyweb.clicked.connect(self.__callWebClass)
 
-            print("What do you want to do?")
-            print("1 - Classify")
-            print("2 - Sentiment Analysis")
-            print("X - Go Back")
+        self.setWindowTitle('Pantalla Usuario')
 
-            user_input = input();
 
-            if user_input == "1":
-                self.controller.perform_classification()
-            elif user_input == "2":
-                self.controller.perform_sentiment_analysis()
-            elif user_input == "X" or user_input == "x":
-                self.controller.go_back()
-            else:
-                print("\nThat command does not exist.\n")
+    def __callClass(self):
+        print("llego1")
+        self.controller.openClass()
+
+    def __callWebClass(self):
+        self.controller.openWebClass()
+
