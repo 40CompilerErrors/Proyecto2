@@ -50,6 +50,8 @@ class TrainWebMenu(QMainWindow):
         self.label_precision.setVisible(False)
         self.label_guardarModelo.setVisible(False)
         self.label_formatError.setVisible(False)
+        self.labelError1.setVisible(False)
+
 
     def buttonActions(self):
         self.pushButton_addUrl.clicked.connect(self.controller.validate)

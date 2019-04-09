@@ -81,46 +81,69 @@ class TrainWebController:
         steamScrapper = SS.SteamScrapper()
         yelpScrapper = YS.YelScrapper()
         amazonScrapper = AS.AmazonScrapper()
+        if not self.linkList:
+            self.view.labelError1.setVisible(True)
+        else:
+            self.view.labelError1.setVisible(False)
+            for url in self.linkList:
+                print("Scrapping link: " + url)
+                url_stars, url_reviews = [],[]
+                if 'metacritic.com' in url:
+                    print("Detected as Metacritic URL")
+                    url_stars, url_reviews = metacriticScrapper.scrapURL(url)
+                elif 'store.steampowered.com' in url:
+                    print("Detected as Steam URL")
+                    url_stars, url_reviews = steamScrapper.scrapURL(url)
+                elif 'amazon.com' in url:
+                    print("Detected as Amazon URL")
+                    url_stars, url_reviews = amazonScrapper.scrapURL(url)
+                elif 'yelp.com' in url:
+                    print("Detected as Yelp URL")
+                    url_stars, url_reviews = yelpScrapper.scrapURL(url)
+                else:
+                    print("Detected as invalid link")
+                print("Finished scrapping URL")
 
-        for url in self.linkList:
-            print("Scrapping link: " + url)
-            url_stars, url_reviews = [],[]
-            if 'metacritic.com' in url:
-                print("Detected as Metacritic URL")
-                url_stars, url_reviews = metacriticScrapper.scrapURL(url)
-            elif 'store.steampowered.com' in url:
-                print("Detected as Steam URL")
-                url_stars, url_reviews = steamScrapper.scrapURL(url)
-            elif 'amazon.com' in url:
-                print("Detected as Amazon URL")
-                url_stars, url_reviews = amazonScrapper.scrapURL(url)
-            elif 'yelp.com' in url:
-                print("Detected as Yelp URL")
-                url_stars, url_reviews = yelpScrapper.scrapURL(url)
-            else:
-                print("Detected as invalid link")
-            print("Finished scrapping URL")
+                self.starList += url_stars
+                self.contentList += url_reviews
+            cont = 0
+            for i in range(0,len(self.contentList)):
+                rowPosition = self.view.reviewTable.rowCount()
+                self.view.reviewTable.insertRow(rowPosition)
+                self.view.reviewTable.resizeColumnsToContents()
+                self.view.reviewTable.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+                self.view.reviewTable.setItem(rowPosition, 1,
+                                                      QTableWidgetItem(str(self.starList[cont])))
+                self.view.reviewTable.setItem(rowPosition, 2,
+                                                      QTableWidgetItem(self.contentList[cont]))
+                cont = cont +1
 
-            self.starList += url_stars
-            self.contentList += url_reviews
 
     def guardar_modelo(self):
         nombre_modelo = self.view.modelName_text.text()
 
+        if not nombre_modelo:
+            self.view.label_guardarModelo.setVisible(True)
+            self.view.label_guardarModelo.setText('No eligio un nombre para el modelo, elija uno porfavor.')
+        elif not self.algorithm:
+            self.view.label_guardarModelo.setVisible(True)
+            self.view.label_guardarModelo.setText('Porfavor realice el entrenamiento para guardar un modelo.')
+        else:
+            self.view.label_guardarModelo.setVisible(False)
+            # Aqui guardamos el Modelo en formato pickle
+            with open(f'./Resources/Models/{nombre_modelo}', 'wb') as modelo_completo:
 
-        # Aqui guardamos el Modelo en formato pickle
-        with open(f'./Resources/Models/{nombre_modelo}', 'wb') as modelo_completo:
-             pickle.dump(self.algorithm, modelo_completo)
-             pickle.dump(self.vectorizador, modelo_completo)
-             pickle.dump(self.labels, modelo_completo)
+                 pickle.dump(self.algorithm, modelo_completo)
+                 pickle.dump(self.vectorizador, modelo_completo)
+                 pickle.dump(self.labels, modelo_completo)
 
-        db = DB.DB_Driver()
+            db = DB.DB_Driver()
 
-        db.uploadModel(nombre_modelo)
+            db.uploadModel(nombre_modelo)
 
-        db.closeConnection()
-
-        self.view.label_guardarModelo.setVisible(True)
+            db.closeConnection()
+            self.view.label_guardarModelo.setText('¡Guardado!')
+            self.view.label_guardarModelo.setVisible(True)
 
 
     def __starsToCategories(self):
@@ -180,107 +203,109 @@ class TrainWebController:
                     self.labels.append('0')
 
     def webscrapper_train(self):
+        if not self.contentList:
+            self.view.boton_clasificador.setText('Porfavor realice Web Scraping antes de entrenar un modelo.')
+        else:
+            self.view.boton_clasificador.setText('Ejecutar entrenamiento')
+            self.__starsToCategories()
 
-        self.__starsToCategories()
+            print("Ejecutando el entrenador...")
+            nltk.download('stopwords')
+            stemmer = PorterStemmer()
 
-        print("Ejecutando el entrenador...")
-        nltk.download('stopwords')
-        stemmer = PorterStemmer()
-
-        X, y = self.contentList, self.labels
-
-
-        documentos = []
-        self.stopword = str(self.view.comboBox_stopwords.currentText())
-        for sen in range(0, len(X)):
-            # Elimina: carácteres especiales
-            documento = re.sub(r'\W', ' ', str(X[sen]))
-
-            # Elimina: carácteres solos
-            # remove all single characters
-            documento = re.sub(r'\s+[a-zA-Z]\s+', ' ', documento)
-
-            # Elimina: números
-            documento = re.sub(r'\d', ' ', documento)
-
-            # Elimina: carácteres solos al principio de una línea.
-            documento = re.sub(r'\^[a-zA-Z]\s+', ' ', documento)
-
-            # Sustituye: los tabuladores o multiples espacios por un solo espacio
-            documento = re.sub(r'\s+', ' ', documento, flags=re.I)
-
-            # Removing prefixed 'b'
-            documento = re.sub(r'^b\s+', '', documento)
-
-            # Convierte todas las mayusuculas a minúsculas
-            documento = documento.lower()
-
-            # Hacemos el Stem para sacar las raices de cada una de las palabras
-            documento = documento.split()
-
-            documento = [stemmer.stem(word) for word in documento]
-            documento = ' '.join(documento)
-
-            documentos.append(documento)
-        self.vectorizador = TfidfVectorizer(max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words(self.stopword))
-
-        # Almacenamos las palabras en su respectivo formato numerico en X
-        X = self.vectorizador.fit_transform(documentos).toarray()
-
-        X_entrenamiento, X_test, y_entrenamiento, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-        self.choose_algorithm()
-
-        self.algorithm.fit(X_entrenamiento, y_entrenamiento)
-        y_pred = self.algorithm.predict(X_test)
-        matriz_confusion = confusion_matrix(y_test, y_pred)
-
-        figura = plt.figure()
-        ax = figura.add_subplot(111)
-
-        cmap = plt.get_cmap('Blues')
-        cax = ax.matshow(matriz_confusion, interpolation='nearest', cmap=cmap)
-        figura.colorbar(cax)
-
-        etiquetas = np.arange(len(self.categoryList))
-        plt.xticks(etiquetas, self.categoryList, rotation=45)
-        plt.yticks(etiquetas, self.categoryList)
-
-        fmt = '.2f'
-        thresh = matriz_confusion.max() / 2.
-        for i, j in itertools.product(range(matriz_confusion.shape[0]), range(matriz_confusion.shape[1])):
-            plt.text(j, i, format(matriz_confusion[i, j], fmt),
-                     horizontalalignment="center",
-                     color="white" if matriz_confusion[i, j] > thresh else "black")
-
-        plt.xlabel('Predicted')
-        plt.ylabel('True')
-        figura.savefig('./Resources/UIElements/Matriz.png')
-        print("Imagen guardada")
-
-        label = QLabel(self.view)
-        pixmap = QPixmap('./Resources/UIElements/Matriz.png')
-        label.setPixmap(pixmap)
-        label.setAlignment(Qt.AlignCenter)
-        label.show()
-        self.view.lay.addWidget(label)
-
-        true_positive = matriz_confusion[0][0]
-        false_positive = matriz_confusion[0][1]
-        false_negative = matriz_confusion[1][0]
-        true_negative = matriz_confusion[1][1]
-
-        print(matriz_confusion)
-        print(classification_report(y_test, y_pred))
-        self.precision = accuracy_score(y_test, y_pred)
+            X, y = self.contentList, self.labels
 
 
-        print('True positive = ', true_positive)
-        print('False positive = ', false_positive)
-        print('False negative = ', false_negative)
-        print('True negative = ', true_negative)
-        print(self.precision)
-        #self.view.label_precision.setVisibleU(True)
+            documentos = []
+            self.stopword = str(self.view.comboBox_stopwords.currentText())
+            for sen in range(0, len(X)):
+                # Elimina: carácteres especiales
+                documento = re.sub(r'\W', ' ', str(X[sen]))
+
+                # Elimina: carácteres solos
+                # remove all single characters
+                documento = re.sub(r'\s+[a-zA-Z]\s+', ' ', documento)
+
+                # Elimina: números
+                documento = re.sub(r'\d', ' ', documento)
+
+                # Elimina: carácteres solos al principio de una línea.
+                documento = re.sub(r'\^[a-zA-Z]\s+', ' ', documento)
+
+                # Sustituye: los tabuladores o multiples espacios por un solo espacio
+                documento = re.sub(r'\s+', ' ', documento, flags=re.I)
+
+                # Removing prefixed 'b'
+                documento = re.sub(r'^b\s+', '', documento)
+
+                # Convierte todas las mayusuculas a minúsculas
+                documento = documento.lower()
+
+                # Hacemos el Stem para sacar las raices de cada una de las palabras
+                documento = documento.split()
+
+                documento = [stemmer.stem(word) for word in documento]
+                documento = ' '.join(documento)
+
+                documentos.append(documento)
+            self.vectorizador = TfidfVectorizer(max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words(self.stopword))
+
+            # Almacenamos las palabras en su respectivo formato numerico en X
+            X = self.vectorizador.fit_transform(documentos).toarray()
+
+            X_entrenamiento, X_test, y_entrenamiento, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+            self.choose_algorithm()
+
+            self.algorithm.fit(X_entrenamiento, y_entrenamiento)
+            y_pred = self.algorithm.predict(X_test)
+            matriz_confusion = confusion_matrix(y_test, y_pred)
+
+            figura = plt.figure()
+            ax = figura.add_subplot(111)
+
+            cmap = plt.get_cmap('Blues')
+            cax = ax.matshow(matriz_confusion, interpolation='nearest', cmap=cmap)
+            figura.colorbar(cax)
+
+            etiquetas = np.arange(len(self.categoryList))
+            plt.xticks(etiquetas, self.categoryList, rotation=45)
+            plt.yticks(etiquetas, self.categoryList)
+
+            fmt = '.2f'
+            thresh = matriz_confusion.max() / 2.
+            for i, j in itertools.product(range(matriz_confusion.shape[0]), range(matriz_confusion.shape[1])):
+                plt.text(j, i, format(matriz_confusion[i, j], fmt),
+                         horizontalalignment="center",
+                         color="white" if matriz_confusion[i, j] > thresh else "black")
+
+            plt.xlabel('Predicted')
+            plt.ylabel('True')
+            figura.savefig('./Resources/UIElements/Matriz.png')
+            print("Imagen guardada")
+
+            label = QLabel(self.view)
+            pixmap = QPixmap('./Resources/UIElements/Matriz.png')
+            label.setPixmap(pixmap)
+            label.setAlignment(Qt.AlignCenter)
+            label.show()
+            self.view.lay.addWidget(label)
+
+            true_positive = matriz_confusion[0][0]
+            false_positive = matriz_confusion[0][1]
+            false_negative = matriz_confusion[1][0]
+            true_negative = matriz_confusion[1][1]
+
+            print(matriz_confusion)
+            print(classification_report(y_test, y_pred))
+            self.precision = accuracy_score(y_test, y_pred)
+
+
+            print('True positive = ', true_positive)
+            print('False positive = ', false_positive)
+            print('False negative = ', false_negative)
+            print('True negative = ', true_negative)
+            print(self.precision)
 
 
     def choose_algorithm(self):
