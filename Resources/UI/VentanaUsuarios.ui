@@ -27,7 +27,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Lista de usuarios </string>
+        <string>Lista de usuarios existentes :</string>
        </property>
       </widget>
      </item>
@@ -62,22 +62,9 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Nombre</string>
+        <string>Rellena los siguientes campos.</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEdit"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Apellidos</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
      <item>
       <widget class="QLabel" name="label_4">
@@ -92,7 +79,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Contraseña</string>
+        <string>Contraseña :</string>
        </property>
       </widget>
      </item>
@@ -128,7 +115,7 @@
      <item>
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>Selecciona el usuario que quieres eliminar</string>
+        <string>Selecciona el usuario que quieres eliminar.</string>
        </property>
       </widget>
      </item>
