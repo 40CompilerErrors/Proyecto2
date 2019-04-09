@@ -28,6 +28,16 @@ class AdminController:
         driver =  DD.DB_Driver()
         result = driver.getUserList()
         print(result)
+        
+        for i in result:
+            
+            rowPosition = self.view.tableWidget.rowCount()
+            self.view.tableWidget.insertRow(rowPosition)
+    
+            self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i[0]))
+    
+            
+    
         driver.closeConnection()
         return result
    
@@ -37,6 +47,17 @@ class AdminController:
     def insertUser(self,user,password):
         driver =  DD.DB_Driver()
         driver.registerUser(user,password)
+        result = driver.getUserList()
+        self.view.tableWidget.setRowCount(0)
+        
+        for i in result:
+            
+            rowPosition = self.view.tableWidget.rowCount()
+            self.view.tableWidget.insertRow(rowPosition)
+    
+            self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i[0]))
+        
+        
         driver.closeConnection()
         
         

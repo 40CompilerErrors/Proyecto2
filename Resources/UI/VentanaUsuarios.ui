@@ -32,7 +32,13 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableView" name="tableView"/>
+      <widget class="QTableWidget" name="tableWidget">
+       <column>
+        <property name="text">
+         <string>USERNAME</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>
