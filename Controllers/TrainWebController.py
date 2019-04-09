@@ -51,16 +51,16 @@ class TrainWebController:
         self.h = 0
 
     def validate(self):
-        if 'metacritic' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
+        if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
             self.addURL()
             self.view.label_formatError.setVisible(False)
-        elif 'steam' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Steam':
+        elif 'store.steampowered.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Steam':
             self.addURL()
             self.view.label_formatError.setVisible(False)
-        elif 'amazon' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Amazon':
+        elif 'https://www.amazon.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Amazon':
             self.addURL()
             self.view.label_formatError.setVisible(False)
-        elif 'yelp' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Yelp':
+        elif 'https://www.yelp.' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Yelp':
             self.addURL()
             self.view.label_formatError.setVisible(False)
         else:
@@ -91,7 +91,7 @@ class TrainWebController:
                 url_stars, url_reviews = steamScrapper.scrapURL(url)
             elif 'amazon.com' in url:
                 url_stars, url_reviews = amazonScrapper.scrapURL(url)
-            elif 'yelp.com/biz' in url:
+            elif 'yelp.es' in url:
                 url_stars, url_reviews = yelpScrapper.scrapURL(url)
 
             self.starList += url_stars
@@ -123,7 +123,7 @@ class TrainWebController:
             self.categoryList = [self.view.lineEdit_cat1.text() ,self.view.lineEdit_cat2.text()]
             for item in self.starList:
                 value = int(item)
-                if value < 4:   #Originally >3 but it seemed so weird to invert the order here, so I assumed it was a bug
+                if value < 3:   #Originally >3 but it seemed so weird to invert the order here, so I assumed it was a bug
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
@@ -145,11 +145,11 @@ class TrainWebController:
                                  self.view.lineEdit_cat3.text(), self.view.lineEdit_cat4.text()]
             for item in self.starList:
                 value = int(item)
-                if value < 4 :
+                if value < 1 :
                     self.labels.append('3')
-                elif value < 6:
+                elif value < 3:
                     self.labels.append('2')
-                elif value < 8:
+                elif value < 5:
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
@@ -161,13 +161,13 @@ class TrainWebController:
 
             for item in self.starList:
                 value = int(item)
-                if value <3 : #A heart!
+                if value < 2 : #A heart!
                     self.labels.append('4')
-                elif value < 5 :
+                elif value < 3 :
                     self.labels.append('3')
-                elif value < 7:
+                elif value < 4:
                     self.labels.append('2')
-                elif value < 9 :
+                elif value < 5 :
                     self.labels.append('1')
                 else:
                     self.labels.append('0')
@@ -182,7 +182,7 @@ class TrainWebController:
 
         X, y = self.contentList, self.labels
 
-        #self.nombre_etiquetas = valoraciones.target_names
+
         documentos = []
         self.stopword = str(self.view.comboBox_stopwords.currentText())
         for sen in range(0, len(X)):
@@ -273,7 +273,7 @@ class TrainWebController:
         print('False negative = ', false_negative)
         print('True negative = ', true_negative)
         print(self.precision)
-        self.view.label_precision.setVisibleU(True)
+        #self.view.label_precision.setVisibleU(True)
 
 
     def choose_algorithm(self):

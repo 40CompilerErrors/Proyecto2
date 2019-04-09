@@ -24,16 +24,16 @@ class ClassifyWebController:
         self.ruta_salida = ''
 
     def validate(self):
-        if 'metacritic' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Metacritic':
+        if 'https://www.metacritic.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Metacritic':
             self.addURL()
             self.view.label_2.setText('Inserte las URLs: ')
-        elif 'steam' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Steam':
+        elif 'store.steampowered.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Steam':
             self.addURL()
             self.view.label_2.setText('Inserte las URLs: ')
-        elif 'amazon' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Amazon':
+        elif 'https://www.amazon.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Amazon':
             self.addURL()
             self.view.label_2.setText('Inserte las URLs: ')
-        elif 'yelp' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Yelp':
+        elif 'https://www.yelp.' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Yelp':
             self.addURL()
             self.view.label_2.setText('Inserte las URLs: ')
         else:
@@ -128,6 +128,7 @@ class ClassifyWebController:
             print("Prediccion hecha!")
 
             for y in prediccion:
+                print(y)
                 if y not in self.support:
                     self.support.append(y)
             '''for i in labelsName:
