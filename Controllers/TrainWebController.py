@@ -86,13 +86,20 @@ class TrainWebController:
             print("Scrapping link: " + url)
             url_stars, url_reviews = [],[]
             if 'metacritic.com' in url:
+                print("Detected as Metacritic URL")
                 url_stars, url_reviews = metacriticScrapper.scrapURL(url)
             elif 'store.steampowered.com' in url:
+                print("Detected as Steam URL")
                 url_stars, url_reviews = steamScrapper.scrapURL(url)
             elif 'amazon.com' in url:
+                print("Detected as Amazon URL")
                 url_stars, url_reviews = amazonScrapper.scrapURL(url)
-            elif 'yelp.es' in url:
+            elif 'yelp.com' in url:
+                print("Detected as Yelp URL")
                 url_stars, url_reviews = yelpScrapper.scrapURL(url)
+            else:
+                print("Detected as invalid link")
+            print("Finished scrapping URL")
 
             self.starList += url_stars
             self.contentList += url_reviews

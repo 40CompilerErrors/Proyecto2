@@ -4,6 +4,7 @@ import re
 import urllib.request, json
 from Model.Scrappers import AbstractScrapper as AS
 from urllib.request import urlopen
+import urllib.request
 # class="review-content"
 #?start=X where X = page_number*20
 
@@ -19,9 +20,11 @@ class AmazonScrapper(AS.AbstractScrapper):
         step = re.search('.*?/ref', URL).group()[:-4]
         step2 = re.sub('dp', 'product-reviews', step)
         page_reviews = step2 + '/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(1)
+        request = urllib.request.Request(page_reviews, headers={"Accept": "text/html"})
 
-        codigo_html = urlopen(page_reviews)
-        page_content = BeautifulSoup(codigo_html.read(), 'html.parser')
+
+        codigo_html = urllib.request.urlopen(request).read()
+        page_content = BeautifulSoup(codigo_html, 'html.parser')
         rgx = 'total-review-count'
         total_reviews = page_content.find('span', attrs={'data-hook': rgx})
         print(total_reviews.getText())
@@ -37,13 +40,13 @@ class AmazonScrapper(AS.AbstractScrapper):
             step = re.search('.*?/ref', URL).group()[:-4]
             step2 = re.sub('dp', 'product-reviews', step)
             page_reviews = step2 + '/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(current_page)
+            request = urllib.request.Request(page_reviews, headers={"Accept": "text/html"})
 
-            codigo_html = urlopen(page_reviews)
-            page_content = BeautifulSoup(codigo_html.read(), 'html.parser')
+            codigo_html = urllib.request.urlopen(request).read()
+            page_content = BeautifulSoup(codigo_html, 'html.parser')
 
             print(current_page)
-            print()
-            print()
+
             reviews = page_content.findAll('div', class_='a-row a-spacing-small review-data')
             regex = 'review-star-rating'
             puntuacion = page_content.findAll('i', attrs={'data-hook': regex})
