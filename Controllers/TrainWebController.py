@@ -154,9 +154,9 @@ class TrainWebController:
             for item in self.starList:
                 value = int(item)
                 if value < 3:   #Originally >3 but it seemed so weird to invert the order here, so I assumed it was a bug
-                    self.labels.append('1')
+                    self.labels.append(self.view.lineEdit_cat2.text())
                 else:
-                    self.labels.append('0')
+                    self.labels.append(self.view.lineEdit_cat1.text())
 
         elif category_number == '3':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
@@ -164,11 +164,11 @@ class TrainWebController:
             for item in self.starList:
                 value = int(item)
                 if value < 2:
-                    self.labels.append('2')
+                    self.labels.append(self.view.lineEdit_cat3.text())
                 elif value < 4:
-                    self.labels.append('1')
+                    self.labels.append(self.view.lineEdit_cat2.text())
                 else:
-                    self.labels.append('0')
+                    self.labels.append(self.view.lineEdit_cat1.text())
 
         elif category_number == '4':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
@@ -176,13 +176,13 @@ class TrainWebController:
             for item in self.starList:
                 value = int(item)
                 if value < 1 :
-                    self.labels.append('3')
+                    self.labels.append(self.view.lineEdit_cat4.text())
                 elif value < 3:
-                    self.labels.append('2')
+                    self.labels.append(self.view.lineEdit_cat3.text())
                 elif value < 5:
-                    self.labels.append('1')
+                    self.labels.append(self.view.lineEdit_cat2.text())
                 else:
-                    self.labels.append('0')
+                    self.labels.append(self.view.lineEdit_cat1.text())
 
         elif category_number == '5':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text(),
@@ -192,15 +192,15 @@ class TrainWebController:
             for item in self.starList:
                 value = int(item)
                 if value < 2 : #A heart!
-                    self.labels.append('4')
+                    self.labels.append(self.view.lineEdit_cat5.text())
                 elif value < 3 :
-                    self.labels.append('3')
+                    self.labels.append(self.view.lineEdit_cat4.text())
                 elif value < 4:
-                    self.labels.append('2')
+                    self.labels.append(self.view.lineEdit_cat3.text())
                 elif value < 5 :
-                    self.labels.append('1')
+                    self.labels.append(self.view.lineEdit_cat2.text())
                 else:
-                    self.labels.append('0')
+                    self.labels.append(self.view.lineEdit_cat1.text())
 
     def webscrapper_train(self):
         if not self.contentList:

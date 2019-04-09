@@ -168,7 +168,7 @@ class ClassifyWebController:
                                                                     QTableWidgetItem(self.contentList[cont]))
 
                 self.view.datos_seleccionados.setItem(rowPosition, 2,
-                                                                    QTableWidgetItem((labelsName[i])[:]))
+                                                                    QTableWidgetItem(i))
                 self.view.datos_seleccionados.setItem(rowPosition, 3,
                                                                     QTableWidgetItem(str(round(test.sentiment.polarity, 3))))
 
@@ -176,10 +176,10 @@ class ClassifyWebController:
                                                                     QTableWidgetItem(str(round(test.sentiment.subjectivity, 3))))
 
 
-                print('llegoantes')
-                elementLists.append([str(labelsName[i][:]), str(round(test.sentiment.polarity, 3)),
+                
+                elementLists.append([i, str(round(test.sentiment.polarity, 3)),
                                      str(round(test.sentiment.subjectivity, 3)),self.contentList[cont]])
-                print('llegodespues')
+                
                 cont = cont + 1
             print('llego3')
             headers = ["Label", "Polarity", "Subjectivity", "Body"]
