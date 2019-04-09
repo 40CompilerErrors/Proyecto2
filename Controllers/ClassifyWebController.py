@@ -169,8 +169,7 @@ class ClassifyWebController:
                                                                     QTableWidgetItem(self.contentList[contador]))
 
                 self.view.datos_seleccionados.setItem(rowPosition, 2,
-                                                                    QTableWidgetItem(labelsName[i]))
-
+                                                                    QTableWidgetItem((labelsName[i])[:]))
                 self.view.datos_seleccionados.setItem(rowPosition, 3,
                                                                     QTableWidgetItem(str(round(test.sentiment.polarity, 3))))
 
