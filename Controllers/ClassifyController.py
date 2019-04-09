@@ -46,7 +46,7 @@ class ClassifyController:
 
             self.ruta = QFileDialog.getExistingDirectory()
             if not self.ruta:
-                print("El usuario no ha elegido ninguna ruta.")
+                self.view.label_ruta_2.setText('El usuario no selecciono ninguna ruta')
             else:
                 print(f"Ruta: {self.ruta}")
                 self.view.label_ruta_2.setText(self.ruta)
@@ -114,33 +114,36 @@ class ClassifyController:
 
     def anadir_todos(self):
         self.view.boton_clasificador.setText("Ejecutar Clasificador")
-        print("Has pulsado el boton de Añadir Todos los archivos.")
-        try:
-            tamano_lista = len(self.lista_archivos)
-            for i in range(0,tamano_lista):
-                archivo = self.lista_archivos[i]
-                rowPosition = self.view.datos_seleccionados.rowCount()
-                self.seleccionados.append(archivo)
+        if not self.ruta:
+            self.view.label_ruta_2.setText('Debe seleccionar una ruta de archivos previamente.')
+        else:
+            self.view.label_ruta_2.setText('RUTA SELECCIONADA')
+            try:
+                tamano_lista = len(self.lista_archivos)
+                for i in range(0,tamano_lista):
+                    archivo = self.lista_archivos[i]
+                    rowPosition = self.view.datos_seleccionados.rowCount()
+                    self.seleccionados.append(archivo)
 
-                # Obtiene la ruta entera del archivo que se esta metiendo en la tabla
-                file_status_array = os.stat(f"{self.ruta}/{archivo}")
+                    # Obtiene la ruta entera del archivo que se esta metiendo en la tabla
+                    file_status_array = os.stat(f"{self.ruta}/{archivo}")
 
-                # Obtenemos el tamano del archivo en cuestion
-                tamano_archivo = file_status_array.st_size
-                fecha_mod = file_status_array.st_mtime
-                fecha_final = time.ctime(fecha_mod)
+                    # Obtenemos el tamano del archivo en cuestion
+                    tamano_archivo = file_status_array.st_size
+                    fecha_mod = file_status_array.st_mtime
+                    fecha_final = time.ctime(fecha_mod)
 
-                self.view.datos_seleccionados.insertRow(rowPosition)
-                self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-                self.view.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(archivo))
-                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamano_archivo} bytes"))
-                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
-                self.view.lista_archivos_2.removeRow(0)
+                    self.view.datos_seleccionados.insertRow(rowPosition)
+                    self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+                    self.view.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(archivo))
+                    #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamano_archivo} bytes"))
+                    #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
+                    self.view.lista_archivos_2.removeRow(0)
 
-            self.lista_archivos.clear()
+                self.lista_archivos.clear()
 
-        except ValueError:
-            print('Fallo al añadir los datos a la tabla de "Datos seleccionados"')
+            except ValueError:
+                print('Fallo al añadir los datos a la tabla de "Datos seleccionados"')
 
     def obtener_modelos(self):
         for modelo in os.listdir('./Resources/Models'):
