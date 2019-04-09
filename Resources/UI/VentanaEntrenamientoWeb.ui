@@ -105,6 +105,9 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
+          </property>
           <column>
            <property name="text">
             <string>ID</string>
@@ -151,20 +154,13 @@
       <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Elegir el nombre de las categorías.</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Recuerde que debe organizarlas de mejor a peor.</string>
+         <string>Elegir el nombre de las categorías. Recuerde que debe organizarlas de mejor a peor.</string>
         </property>
        </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
+        <item alignment="Qt::AlignLeft">
          <widget class="QLabel" name="label_6">
           <property name="text">
            <string>Categoría 1</string>
@@ -240,6 +236,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="labelError1">
+        <property name="text">
+         <string>No se han detectado URLs de paginas web, introduzca URLs para realizar el scraping</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <property name="topMargin">
          <number>0</number>
@@ -280,22 +283,25 @@
          </widget>
         </item>
         <item>
-         <widget class="QTabWidget" name="tabWidget_3">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QTableWidget" name="reviewTable">
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustIgnored</enum>
           </property>
-          <property name="font">
-           <font>
-            <family>Questrial</family>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="currentIndex">
-           <number>-1</number>
-          </property>
+          <column>
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Puntuacion</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Descripcion</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>
@@ -435,7 +441,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Ejecutar clasificador</string>
+         <string>Ejecutar entrenamiento</string>
         </property>
         <property name="icon">
          <iconset>
