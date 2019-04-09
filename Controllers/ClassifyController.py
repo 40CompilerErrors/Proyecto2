@@ -7,6 +7,7 @@ import pickle
 import shutil
 from nltk.stem.porter import *
 from textblob import TextBlob
+from Model import DB_Driver as DB
 
 
 class ClassifyController:

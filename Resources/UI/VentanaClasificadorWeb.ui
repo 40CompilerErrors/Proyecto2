@@ -89,6 +89,13 @@
        </column>
       </widget>
      </item>
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="scrap_Button">
+       <property name="text">
+        <string>Realizar Scrapping</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -224,45 +231,55 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="label_6">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="topMargin">
+        <number>5</number>
        </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
+       <property name="bottomMargin">
+        <number>5</number>
        </property>
-       <property name="text">
-        <string>Elegir la ruta donde se guardarán los archivos clasificados:</string>
-       </property>
-      </widget>
-     </item>
-     <item alignment="Qt::AlignHCenter">
-      <widget class="QPushButton" name="boton_guardar">
-       <property name="font">
-        <font>
-         <family>Questrial</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Guardar en...</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../Imagenes/Aplicar2.png</normaloff>../Imagenes/Aplicar2.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>25</width>
-         <height>25</height>
-        </size>
-       </property>
-      </widget>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Elegir la ruta donde se guardarán los archivos clasificados:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="save_button">
+         <property name="font">
+          <font>
+           <family>Questrial</family>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Guardar en...</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../Imagenes/Aplicar2.png</normaloff>../Imagenes/Aplicar2.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item alignment="Qt::AlignHCenter">
       <widget class="QPushButton" name="boton_clasificador">
@@ -309,6 +326,19 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>20</y>
+      <width>20</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

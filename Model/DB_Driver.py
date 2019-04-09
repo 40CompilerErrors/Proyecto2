@@ -39,12 +39,32 @@ class DB_Driver:
     def getModels(self):
         models = []
         for object in self.bucket.objects.all():
-            models.append((object.key,object.get()))
+            models.append((object.key,object.get()['Body']))
         return models
 
-    def uploadModel(self,filename, data):
-        self.__uploadModelToS3(filename,data)
+    def uploadModel(self,filename):
+        self.__uploadModelToS3(filename)
+     
+        
+    def deleteUser(self,username):
+        query = """DELETE FROM users WHERE username = %s"""
+        self.cursor.execute(query,(username,))
+        self.connection.commit()
+        
+    def getUserList(self):
+         query = """SELECT username FROM users"""
+         self.cursor.execute(query)
+         #result = self.cursor.fetchall()
+         result = list(self.cursor)
+         #print(result)
+         return result
 
+    def registerUser(self, username, password):
+        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (?, ?, 0)"""
+        username = self.__sanitizeInput(username)
+        hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
+        self.cursor.execute(query,(username,hashed_password))
+        self.connection.commit()
 
     def getUser(self,username):
         query = """SELECT password_hash, isAdmin FROM users WHERE username = ?"""
@@ -57,15 +77,11 @@ class DB_Driver:
             print("No users with a matching username found")
             return 0, 0
 
-    def registerUser(self, username, password):
-        query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (?, ?, 0)"""
-        username = self.__sanitizeInput(username)
-        hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
-        self.cursor.execute(query,(username,hashed_password))
+    
 
 
-    def __uploadModelToS3(self, filename, data):
-        self.s3.upload_file('./Resources/Models/' + str(filename),BUCKET_NAME,filename)
+    def __uploadModelToS3(self, filename):
+        self.bucket.upload_file(('./Resources/Models/' + str(filename)), Key=filename)
 
     # def __retrieveModelsFromS3(self, url):
     #     #retrieve data from URL
@@ -87,4 +103,10 @@ class DB_Driver:
 
 if __name__ == "__main__":
     #tests go here if needed
+    db = DB_Driver()
+    model = db.getModels()
+    for i in model:
+        print(i[0])
+
+
     pass
