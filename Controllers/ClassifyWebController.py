@@ -3,6 +3,7 @@ import csv
 from PyQt5.QtWidgets import QFileDialog
 import pickle
 from nltk.corpus import stopwords
+import pandas as pd
 from nltk.stem.porter import *
 from PyQt5.QtWidgets import QTableWidgetItem
 import re
@@ -64,16 +65,22 @@ class ClassifyWebController:
 
         for url in self.linkList:
             print("Scrapping link: " + url)
-            url_stars, url_reviews = [],[]
+            url_stars, url_reviews = [], []
             if 'metacritic.com' in url:
+                print("Detected as Metacritic URL")
                 url_stars, url_reviews = metacriticScrapper.scrapURL(url)
             elif 'store.steampowered.com' in url:
+                print("Detected as Steam URL")
                 url_stars, url_reviews = steamScrapper.scrapURL(url)
             elif 'amazon.com' in url:
+                print("Detected as Amazon URL")
                 url_stars, url_reviews = amazonScrapper.scrapURL(url)
-            elif 'yelp.com/biz' in url:
+            elif 'yelp.com' in url:
+                print("Detected as Yelp URL")
                 url_stars, url_reviews = yelpScrapper.scrapURL(url)
-
+            else:
+                print("Detected as invalid link")
+            print("Finished scrapping URL")
             self.contentList += url_reviews
 
     def ejecutar_clasificador(self):
@@ -139,7 +146,10 @@ class ClassifyWebController:
             dir1 = os.path.join(os.path.dirname(rootdir), self.ruta_salida)
             self.view.datos_seleccionados.setRowCount(0)
             self.view.label_5.setText('Resultados de la clasificación')
+
+            elementLists = []
             for i in prediccion:
+                elementList = []
                 data = self.contentList[cont].replace('\n', '')
                 test = TextBlob(data)
                 self.analysis_data.append(round(test.sentiment.polarity, 4))
@@ -164,7 +174,17 @@ class ClassifyWebController:
 
                 #shutil.copyfile(os.path.join(dir, str(self.contentList[cont])),
                  #               os.path.join(os.path.join(dir1, labelsName[i]), str(self.contentList[cont])))
+                elementLists.append([labelsName[i], str(round(test.sentiment.polarity, 3)),
+                                     str(round(test.sentiment.subjectivity, 3)),self.contentList[cont]])
                 cont = cont + 1
+
+            headers = ["Label", "Polarity", "Subjectivity", "Body"]
+            dataframe = pd.DataFrame(elementLists,columns=headers)
+            print(dataframe)
+
+            if not self.ruta_salida == '':
+                dataframe.to_csv(os.path.join(dir1,"results.csv"), encoding='utf-8', index=False)
+
 
             print("Archivos guardados.")
             c = 0
