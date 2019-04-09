@@ -146,17 +146,16 @@ class ClassifyWebController:
             '''for i in labelsName:
                 if not os.path.exists(f'{self.ruta_salida}/{i}'):
                     os.makedirs(f'{self.ruta_salida}/{i}')'''
-            print(self.contentList)
-            print(labelsName)
+
             rootdir = os.path.dirname(os.path.abspath(__file__))
             dir1 = os.path.join(os.path.dirname(rootdir), self.ruta_salida)
             self.view.datos_seleccionados.setRowCount(0)
             self.view.label_5.setText('Resultados de la clasificación')
-            contador = 0
+
             elementLists = []
             for i in prediccion:
                 elementList = []
-                data = self.contentList[contador].replace('\n', '')
+                data = self.contentList[cont].replace('\n', '')
                 test = TextBlob(data)
                 self.analysis_data.append(round(test.sentiment.polarity, 4))
 
@@ -166,7 +165,7 @@ class ClassifyWebController:
                 self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
 
                 self.view.datos_seleccionados.setItem(rowPosition, 1,
-                                                                    QTableWidgetItem(self.contentList[contador]))
+                                                                    QTableWidgetItem(self.contentList[cont]))
 
                 self.view.datos_seleccionados.setItem(rowPosition, 2,
                                                                     QTableWidgetItem((labelsName[i])[:]))
@@ -175,11 +174,13 @@ class ClassifyWebController:
 
                 self.view.datos_seleccionados.setItem(rowPosition, 4,
                                                                     QTableWidgetItem(str(round(test.sentiment.subjectivity, 3))))
+
+
                 print('llegoantes')
-                elementLists.append([labelsName[i], str(round(test.sentiment.polarity, 3)),
-                                     str(round(test.sentiment.subjectivity, 3)),self.contentList[contador]])
+                elementLists.append([str(labelsName[i]), str(round(test.sentiment.polarity, 3)),
+                                     str(round(test.sentiment.subjectivity, 3)),self.contentList[cont]])
                 print('llegodespues')
-                contador = contador + 1
+                cont = cont + 1
             print('llego3')
             headers = ["Label", "Polarity", "Subjectivity", "Body"]
             print('llego4')

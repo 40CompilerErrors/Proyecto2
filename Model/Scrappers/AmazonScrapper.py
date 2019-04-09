@@ -20,7 +20,7 @@ class AmazonScrapper(AS.AbstractScrapper):
         step = re.search('.*?/ref', URL).group()[:-4]
         step2 = re.sub('dp', 'product-reviews', step)
         page_reviews = step2 + '/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(1)
-        request = urllib.request.Request(page_reviews, headers={"Accept": "text/html"})
+        request = urllib.request.Request(page_reviews, headers={"Accept" : "text/html"})
 
 
         codigo_html = urllib.request.urlopen(request).read()
@@ -40,7 +40,7 @@ class AmazonScrapper(AS.AbstractScrapper):
             step = re.search('.*?/ref', URL).group()[:-4]
             step2 = re.sub('dp', 'product-reviews', step)
             page_reviews = step2 + '/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(current_page)
-            request = urllib.request.Request(page_reviews, headers={"Accept": "text/html"})
+            request = urllib.request.Request(page_reviews, headers={"Accept" : "text/html"})
 
             codigo_html = urllib.request.urlopen(request).read()
             page_content = BeautifulSoup(codigo_html, 'html.parser')
