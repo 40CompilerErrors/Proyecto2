@@ -44,7 +44,12 @@ class DB_Driver:
 
     def uploadModel(self,filename):
         self.__uploadModelToS3(filename)
+     
         
+    def deleteUser(self,username):
+        query = """DELETE FROM users WHERE username = %s"""
+        self.cursor.execute(query,(username,))
+        self.connection.commit()
         
     def getUserList(self):
          query = """SELECT username FROM users"""
