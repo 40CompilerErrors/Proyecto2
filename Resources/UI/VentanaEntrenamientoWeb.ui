@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1290</width>
+    <width>1402</width>
     <height>879</height>
    </rect>
   </property>
@@ -362,6 +362,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="boton_algoritmos">
+        <property name="text">
+         <string>Editar parámetros del algoritmo</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="label_10">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -558,8 +565,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1290</width>
-     <height>21</height>
+     <width>1402</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
