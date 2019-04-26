@@ -85,6 +85,7 @@ class ClassifyWebController:
                     print("Detected as invalid link")
                 print("Finished scrapping URL")
                 self.contentList += url_reviews
+        
 
     def ejecutar_clasificador(self):
 

@@ -23,6 +23,8 @@ import re
 from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
 from Model import DB_Driver as DB
 
+from Views import AlgorithmDialog
+
 
 class TrainWebController:
 
@@ -49,6 +51,9 @@ class TrainWebController:
         self.i = 0
         self.j = 0
         self.h = 0
+        
+        self.n_estimators = 1000
+        self.random_state = 0
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
@@ -312,12 +317,16 @@ class TrainWebController:
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
 
         if self.algorithm_name == 'Random Forest':
-            self.algorithm = RandomForestClassifier(n_estimators=1000, random_state=0)
+            self.algorithm = RandomForestClassifier(n_estimators = self.n_estimators, random_state = self.random_state)
 
         elif self.algorithm_name == 'Naive Bayes':
             self.algorithm = GaussianNB()
 
     #def save_model(self):
+    def editar_algoritmo(self):
+        self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
+        dialog = AlgorithmDialog.AlgorithmDialog(self.algorithm_name)
+        dialog.show()
 
 
     def change_category_combo(self):
