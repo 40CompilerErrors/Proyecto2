@@ -57,11 +57,14 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/Controllers/UserController.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
               <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
 =======
+=======
+>>>>>>> Stashed changes
         <entry file="file://$PROJECT_DIR$/Model/Classifiers.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
@@ -69,11 +72,15 @@
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controllers/AdminController.py">
@@ -86,6 +93,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Views/ClassifyWebMenu.py">
           <provider selected="true" editor-type-id="text-editor">
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Views/ClassifyWebMenu.py">
+          <provider selected="true" editor-type-id="text-editor">
+>>>>>>> Stashed changes
             <state relative-caret-position="391">
               <caret line="25" column="69" selection-start-line="25" selection-start-column="69" selection-end-line="25" selection-end-column="69" />
             </state>
@@ -98,6 +110,9 @@
             <state>
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               </folding>
             </state>
@@ -105,6 +120,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/Controllers/TrainWebController.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -120,10 +136,15 @@
             <state relative-caret-position="129">
               <caret line="49" column="13" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="13" />
 =======
+=======
+>>>>>>> Stashed changes
         <entry file="file://$PROJECT_DIR$/Controllers/ClassifyWebController.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2771">
               <caret line="175" column="105" selection-start-line="175" selection-start-column="105" selection-end-line="175" selection-end-column="105" />
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -148,8 +169,13 @@
         <entry file="file://$PROJECT_DIR$/Model/Scrappers/MetacriticScrapper.py">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <state relative-caret-position="528">
               <caret line="41" column="58" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="58" />
+=======
+            <state relative-caret-position="391">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+>>>>>>> Stashed changes
 =======
             <state relative-caret-position="391">
               <caret line="25" selection-start-line="25" selection-end-line="25" />
@@ -258,7 +284,11 @@
         <option value="$PROJECT_DIR$/Ventanas/VentanaEntrenamiento.py" />
         <option value="$PROJECT_DIR$/Controladores/ControladorVEntrenamiento.py" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/Views/ClassifyWebMenu.py" />
+=======
+        <option value="$PROJECT_DIR$/Controllers/TrainWebController.py" />
+>>>>>>> Stashed changes
 =======
         <option value="$PROJECT_DIR$/Controllers/TrainWebController.py" />
 >>>>>>> Stashed changes
@@ -267,7 +297,12 @@
         <option value="$PROJECT_DIR$/Model/DB_Driver.py" />
         <option value="$PROJECT_DIR$/Controllers/ClassifyWebController.py" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/Controllers/TrainWebController.py" />
+=======
+        <option value="$PROJECT_DIR$/Views/CheckpointMenu.py" />
+        <option value="$PROJECT_DIR$/Views/ClassifyWebMenu.py" />
+>>>>>>> Stashed changes
 =======
         <option value="$PROJECT_DIR$/Views/CheckpointMenu.py" />
         <option value="$PROJECT_DIR$/Views/ClassifyWebMenu.py" />
@@ -459,7 +494,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <option name="SDK_HOME" value="C:\Users\Pablo\Documents\GitHub\Proyecto2\venv\Scripts\python.exe" />
+=======
+      <option name="SDK_HOME" value="S:\Repos\Proyecto2\venv\Scripts\python.exe" />
+>>>>>>> Stashed changes
 =======
       <option name="SDK_HOME" value="S:\Repos\Proyecto2\venv\Scripts\python.exe" />
 >>>>>>> Stashed changes
@@ -517,10 +556,17 @@
   </component>
   <component name="ToolWindowManager">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7180095" visible="true" weight="0.3080357" />
+=======
+    <frame x="-7" y="-7" width="1753" height="954" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7180095" visible="true" weight="0.24896756" />
+>>>>>>> Stashed changes
 =======
     <frame x="-7" y="-7" width="1753" height="954" extended-state="6" />
     <editor active="true" />
@@ -538,7 +584,11 @@
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.28199053" visible="true" weight="0.23606557" />
+=======
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.28199053" visible="true" weight="0.23588456" />
+>>>>>>> Stashed changes
 =======
       <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.28199053" visible="true" weight="0.23588456" />
 >>>>>>> Stashed changes
@@ -660,6 +710,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Controllers/ClassifyWebController.py">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
@@ -672,18 +723,28 @@
             <element signature="e#0#9#0" expanded="true" />
           </folding>
 >>>>>>> Stashed changes
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/Scrappers/AmazonScrapper.py">
+=======
+    <entry file="file://$PROJECT_DIR$/Views/ClassifyMenu.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+>>>>>>> Stashed changes
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/ClassifyWebController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2771">
+          <caret line="175" column="105" selection-start-line="175" selection-start-column="105" selection-end-line="175" selection-end-column="105" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Model/DB_Driver.py">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
@@ -738,12 +799,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+=======
+    <entry file="file://$PROJECT_DIR$/Model/Scrappers/AmazonScrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model/DB_Driver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/Model/Scrappers/MetacriticScrapper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
@@ -779,6 +856,25 @@
             <element signature="e#0#39#0" expanded="true" />
           </folding>
 =======
+        <state relative-caret-position="391">
+          <caret line="25" column="69" selection-start-line="25" selection-start-column="69" selection-end-line="25" selection-end-column="69" />
+>>>>>>> Stashed changes
+=======
+    <entry file="file://$PROJECT_DIR$/Resources/keys.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/Test/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/ClassifyWebMenu.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="25" column="69" selection-start-line="25" selection-start-column="69" selection-end-line="25" selection-end-column="69" />
 >>>>>>> Stashed changes
