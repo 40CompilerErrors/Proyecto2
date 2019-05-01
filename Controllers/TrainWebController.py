@@ -54,6 +54,11 @@ class TrainWebController:
         
         self.n_estimators = 1000
         self.random_state = 0
+        self.max_depth = None
+        self.verbose = 0
+        self.oob_score = False
+        
+        self.var_smoothing = 1e-09
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
@@ -317,10 +322,10 @@ class TrainWebController:
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
 
         if self.algorithm_name == 'Random Forest':
-            self.algorithm = RandomForestClassifier(n_estimators = self.n_estimators, random_state = self.random_state)
+            self.algorithm = RandomForestClassifier(n_estimators = self.n_estimators, random_state = self.random_state, max_depth = self.max_depth, verbose = self.verbose, oob_score = self.oob_score)
 
         elif self.algorithm_name == 'Naive Bayes':
-            self.algorithm = GaussianNB()
+            self.algorithm = GaussianNB(var_smoothing = self.var_smoothing)
 
     #def save_model(self):
     def editar_algoritmo(self):
