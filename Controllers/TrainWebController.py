@@ -325,7 +325,7 @@ class TrainWebController:
     #def save_model(self):
     def editar_algoritmo(self):
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
-        dialog = AlgorithmDialog.AlgorithmDialog(self.algorithm_name)
+        dialog = AlgorithmDialog.AlgorithmDialog(self.algorithm_name, self)
         dialog.show()
 
 

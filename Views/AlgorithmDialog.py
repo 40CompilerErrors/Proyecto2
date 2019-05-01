@@ -10,13 +10,15 @@ from Controllers import AlgorithmController as AC
 from PyQt5.uic import loadUi
 
 class AlgorithmDialog(QDialog):
-    def __init__(self, algorithm_name):
+    def __init__(self, algorithm_name, webcontroller):
         super(AlgorithmDialog, self).__init__()
         
-        self.controller = AC.AlgorithmController(self, algorithm_name)
+        self.controller = AC.AlgorithmController(self, algorithm_name, webcontroller)
         
         if(algorithm_name=='Random Forest'):
-            print('Pelo de Gon')
+            loadUi('./Resources/UI/DialogRandomForest.ui', self)
+    
+            self.setWindowTitle('Editor de algoritmo Random Forest')
         elif(algorithm_name=='Naive Bayes'):
             loadUi('./Resources/UI/DialogNaiveBayes.ui', self)
     
@@ -25,8 +27,9 @@ class AlgorithmDialog(QDialog):
         
     def buttonActions(self, algorithm_name):
         if(algorithm_name=='Random Forest'):
-            print('Ultra Instinct')
+            self.buttonBox_RF.accepted.connect(self.controller.randomforest)
+            self.buttonBox_RF.rejected.connect(self.reject)
         elif(algorithm_name=='Naive Bayes'):
-            self.buttonBox_NB.accepted.connect(self.controller.editar)
+            self.buttonBox_NB.accepted.connect(self.controller.naivebayes)
             self.buttonBox_NB.rejected.connect(self.reject)
         
