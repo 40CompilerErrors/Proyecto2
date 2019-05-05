@@ -23,6 +23,8 @@ class AlgorithmDialog(QDialog):
             loadUi('./Resources/UI/DialogNaiveBayes.ui', self)
     
             self.setWindowTitle('Editor de algoritmo Naive Bayes')
+        elif(algorithm_name=='SVM'):
+            loadUi('./Resources/UI/DialogSVM.ui', self)
         self.buttonActions(algorithm_name)
         
     def buttonActions(self, algorithm_name):
@@ -31,5 +33,8 @@ class AlgorithmDialog(QDialog):
             self.buttonBox_RF.rejected.connect(self.reject)
         elif(algorithm_name=='Naive Bayes'):
             self.buttonBox_NB.accepted.connect(self.controller.naivebayes)
+            self.buttonBox_NB.rejected.connect(self.reject)
+        elif(algorithm_name=='SVM'):
+            self.buttonBox_NB.accepted.connect(self.controller.svm)
             self.buttonBox_NB.rejected.connect(self.reject)
         

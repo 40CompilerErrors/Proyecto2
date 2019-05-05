@@ -24,3 +24,10 @@ class AlgorithmController:
     def naivebayes(self):
         self.webcontroller.var_smoothing = float(self.view.dialog_NB.text())
         self.view.close()
+        
+    def svm(self):
+        self.webcontroller.random_state = int(self.view.dialog_random_SVM.text())
+        self.webcontroller.verbose = int(self.view.dialog_verbose_SVM.text())
+        self.webcontroller.shrinking = bool(self.view.dialog_shrinking_SVM.text())
+        self.webcontroller.max_iter = int(self.view.dialog_max_iter_SVM.text())        
+        self.view.close()

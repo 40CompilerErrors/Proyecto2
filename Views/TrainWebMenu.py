@@ -30,7 +30,7 @@ class TrainWebMenu(QMainWindow):
                                    'swedish', 'turkish']
         self.webs_list = ['Amazon', 'Steam', 'Metacritic', 'Yelp']
         self.category_list = ['3','2','4','5']
-        self.algorithm_list = ['Random Forest', 'Naive Bayes']
+        self.algorithm_list = ['Random Forest', 'Naive Bayes', 'SVM']
 
         for i in self.algorithm_list:
             self.comboBox_algoritmos.addItem(i)

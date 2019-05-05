@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QWidget,QTableWidget,QGridLayout,QTableWidgetItem,QF
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
 
 import nltk
 import matplotlib.pyplot as plt
@@ -59,6 +60,9 @@ class TrainWebController:
         self.oob_score = False
         
         self.var_smoothing = 1e-09
+        
+        self.shrinking = False
+        self.max_iter = -1
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
@@ -326,6 +330,9 @@ class TrainWebController:
 
         elif self.algorithm_name == 'Naive Bayes':
             self.algorithm = GaussianNB(var_smoothing = self.var_smoothing)
+            
+        elif self.algorithm_name == 'SVM':
+            self.algorithm = SVC(max_iter = self.max_iter, verbose = self.verbose, random_state = self.random_state, shrinking = self.shrinking)
 
     #def save_model(self):
     def editar_algoritmo(self):
