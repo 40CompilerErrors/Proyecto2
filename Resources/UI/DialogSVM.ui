@@ -42,7 +42,7 @@
     <string>1000</string>
    </property>
   </widget>
-  <widget class="QDialogButtonBox" name="buttonBox_RF">
+  <widget class="QDialogButtonBox" name="buttonBox_SVM">
    <property name="geometry">
     <rect>
      <x>110</x>

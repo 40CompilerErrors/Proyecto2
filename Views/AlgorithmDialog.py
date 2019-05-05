@@ -35,6 +35,6 @@ class AlgorithmDialog(QDialog):
             self.buttonBox_NB.accepted.connect(self.controller.naivebayes)
             self.buttonBox_NB.rejected.connect(self.reject)
         elif(algorithm_name=='SVM'):
-            self.buttonBox_NB.accepted.connect(self.controller.svm)
-            self.buttonBox_NB.rejected.connect(self.reject)
+            self.buttonBox_SVM.accepted.connect(self.controller.svm)
+            self.buttonBox_SVM.rejected.connect(self.reject)
         
