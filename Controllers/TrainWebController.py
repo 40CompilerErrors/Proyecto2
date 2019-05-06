@@ -3,6 +3,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QWidget,QTableWidget,QGridLayout,QTableWidgetItem,QFileDialog, QLabel
 
+import os
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
@@ -33,26 +35,18 @@ class TrainWebController:
     def __init__(self, view):
         self.view = view
         self.linkList = []
+        self.pathList = []
         self.starList = []
         self.contentList = []
         self.categoryList = []
         self.addedList = []
         self.labels = []
-        '''
-        Estos array estan por si acaso 
-        self.vgood = []
-        self.good = []
-        self.neutral = []
-        self.bad = []
-        self.vbad = []
-        '''
         self.algorithm = ''
         self.algorithm_name = ''
         self.stopword = ''
-        self.i = 0
-        self.j = 0
-        self.h = 0
-        
+        self.route=''
+        self.subdirectories=[]
+
         self.n_estimators = 1000
         self.random_state = 0
         self.max_depth = None
@@ -63,6 +57,35 @@ class TrainWebController:
         
         self.shrinking = False
         self.max_iter = -1
+
+    def addfromfile(self):
+        description = ''
+        rating=''
+        self.route = QFileDialog.getExistingDirectory()
+        self.pathList.append(self.route)
+        rowPosition = self.view.tableWidget.rowCount()
+        self.view.tableWidget.insertRow(rowPosition)
+        self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+        self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(self.route)))
+
+        for folder in os.listdir(self.route):
+            folder = f"{self.route}/{folder}"
+            self.subdirectories.append(folder)
+
+        for folder in self.subdirectories:
+            for file in os.listdir(folder):
+                file = f"{folder}/{file}"
+                with open(file,'r') as f:
+                    booleano = True
+                    for line in f:
+                        if booleano == True:
+                            rating = line
+                            booleano = False
+                        else:
+                            description += line
+                    self.starList.append(rating)
+                    self.contentList.append(description)
+
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
@@ -95,7 +118,7 @@ class TrainWebController:
         steamScrapper = SS.SteamScrapper()
         yelpScrapper = YS.YelScrapper()
         amazonScrapper = AS.AmazonScrapper()
-        if not self.linkList:
+        if not self.linkList and not self.pathList:
             self.view.labelError1.setVisible(True)
         else:
             self.view.labelError1.setVisible(False)

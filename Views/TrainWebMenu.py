@@ -60,6 +60,7 @@ class TrainWebMenu(QMainWindow):
         self.boton_clasificador.clicked.connect(self.controller.webscrapper_train)
         self.boton_guardarModelo.clicked.connect(self.controller.guardar_modelo)
         self.boton_algoritmos.clicked.connect(self.controller.editar_algoritmo)
+        self.boton_ruta.clicked.connect(self.controller.addfromfile)
 
     def call_scrapper(self):
         self.controller.scrapLinks()
