@@ -78,6 +78,19 @@
     <string>that is added to variances for calculation stability.</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_errors">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>150</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Errores detectados</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

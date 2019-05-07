@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>140</y>
+     <y>150</y>
      <width>193</width>
      <height>28</height>
     </rect>
@@ -144,6 +144,19 @@
    </property>
    <property name="text">
     <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_errors">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>130</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Errores detectados</string>
    </property>
   </widget>
  </widget>

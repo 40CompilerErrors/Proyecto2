@@ -1,7 +1,7 @@
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QWidget,QTableWidget,QGridLayout,QTableWidgetItem,QFileDialog, QLabel
+from PyQt5.QtWidgets import QFileDialog, QLabel,QDesktopWidget
 
 import os
 
@@ -27,6 +27,7 @@ from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, Stea
 from Model import DB_Driver as DB
 
 from Views import AlgorithmDialog
+from Views import TrainWebMenu as TWM
 
 
 class TrainWebController:
@@ -154,19 +155,22 @@ class TrainWebController:
                 self.view.reviewTable.setItem(rowPosition, 2,
                                                       QTableWidgetItem(self.contentList[cont]))
                 cont = cont +1
+            self.view.frame_2.setVisible(True)
+            self.view.setFixedSize(1343,724)
+
 
 
     def guardar_modelo(self):
-        nombre_modelo = self.view.modelName_text.text()
+        nombre_modelo = self.view.modelName_text_.text()
 
         if not nombre_modelo:
-            self.view.label_guardarModelo.setVisible(True)
-            self.view.label_guardarModelo.setText('No eligio un nombre para el modelo, elija uno porfavor.')
+            self.view.label_guardarModelo_.setVisible(True)
+            self.view.label_guardarModelo_.setText('No eligio un nombre para el modelo, elija uno porfavor.')
         elif not self.algorithm:
-            self.view.label_guardarModelo.setVisible(True)
-            self.view.label_guardarModelo.setText('Porfavor realice el entrenamiento para guardar un modelo.')
+            self.view.label_guardarModelo_.setVisible(True)
+            self.view.label_guardarModelo_.setText('Porfavor realice el entrenamiento para guardar un modelo.')
         else:
-            self.view.label_guardarModelo.setVisible(False)
+            self.view.label_guardarModelo_.setVisible(False)
             # Aqui guardamos el Modelo en formato pickle
             with open(f'./Resources/Models/{nombre_modelo}', 'wb') as modelo_completo:
 
@@ -179,8 +183,8 @@ class TrainWebController:
             db.uploadModel(nombre_modelo)
 
             db.closeConnection()
-            self.view.label_guardarModelo.setText('¡Guardado!')
-            self.view.label_guardarModelo.setVisible(True)
+            self.view.label_guardarModelo_.setText('¡Guardado!')
+            self.view.label_guardarModelo_.setVisible(True)
 
 
     def __starsToCategories(self):
@@ -241,9 +245,11 @@ class TrainWebController:
 
     def webscrapper_train(self):
         if not self.contentList:
-            self.view.boton_clasificador.setText('Porfavor realice Web Scraping antes de entrenar un modelo.')
+            self.view.boton_clasificador_.setText('Porfavor realice Web Scraping antes de entrenar un modelo.')
         else:
-            self.view.boton_clasificador.setText('Ejecutar entrenamiento')
+            self.view.boton_guardarModelo_.setVisible(True)
+            self.view.label_35.setVisible(True)
+            self.view.boton_clasificador_.setText('Ejecutar entrenamiento')
             self.__starsToCategories()
 
             print("Ejecutando el entrenador...")
@@ -254,7 +260,7 @@ class TrainWebController:
 
 
             documentos = []
-            self.stopword = str(self.view.comboBox_stopwords.currentText())
+            self.stopword = str(self.view.comboBox_stopwords_.currentText())
             for sen in range(0, len(X)):
                 # Elimina: carácteres especiales
                 documento = re.sub(r'\W', ' ', str(X[sen]))
@@ -326,7 +332,7 @@ class TrainWebController:
             label.setPixmap(pixmap)
             label.setAlignment(Qt.AlignCenter)
             label.show()
-            self.view.lay.addWidget(label)
+            self.view.lay_.addWidget(label)
 
             true_positive = matriz_confusion[0][0]
             false_positive = matriz_confusion[0][1]
@@ -346,7 +352,7 @@ class TrainWebController:
 
 
     def choose_algorithm(self):
-        self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
+        self.algorithm_name = str(self.view.comboBox_algoritmos_.currentText())
 
         if self.algorithm_name == 'Random Forest':
             self.algorithm = RandomForestClassifier(n_estimators = self.n_estimators, random_state = self.random_state, max_depth = self.max_depth, verbose = self.verbose, oob_score = self.oob_score)
@@ -359,7 +365,7 @@ class TrainWebController:
 
     #def save_model(self):
     def editar_algoritmo(self):
-        self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
+        self.algorithm_name = str(self.view.comboBox_algoritmos_.currentText())
         dialog = AlgorithmDialog.AlgorithmDialog(self.algorithm_name, self)
         dialog.show()
 

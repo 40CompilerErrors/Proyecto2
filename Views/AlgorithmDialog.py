@@ -15,16 +15,17 @@ class AlgorithmDialog(QDialog):
         
         self.controller = AC.AlgorithmController(self, algorithm_name, webcontroller)
         
+        
         if(algorithm_name=='Random Forest'):
-            loadUi('./Resources/UI/DialogRandomForest.ui', self)
-    
+            loadUi('./Resources/UI/DialogRandomForest.ui', self)    
             self.setWindowTitle('Editor de algoritmo Random Forest')
         elif(algorithm_name=='Naive Bayes'):
             loadUi('./Resources/UI/DialogNaiveBayes.ui', self)
-    
             self.setWindowTitle('Editor de algoritmo Naive Bayes')
         elif(algorithm_name=='SVM'):
             loadUi('./Resources/UI/DialogSVM.ui', self)
+            self.setWindowTitle('Editor de algoritmo SVM')
+        self.label_errors.setVisible(False)
         self.buttonActions(algorithm_name)
         
     def buttonActions(self, algorithm_name):
