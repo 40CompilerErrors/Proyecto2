@@ -25,5 +25,7 @@ class ClassifyWebMenu(QMainWindow):
         self.addUrl_button.clicked.connect(self.controller.validate)
         self.save_button.clicked.connect(self.controller.obtainRoute)
         self.boton_clasificador.clicked.connect(self.controller.ejecutar_clasificador)
+        self.removeButton.clicked.connect(self.controller.removeReviews)
+        self.addFolderButton.clicked.connect(self.controller.addFromFile)
 
 

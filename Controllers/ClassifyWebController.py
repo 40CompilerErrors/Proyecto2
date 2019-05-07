@@ -1,5 +1,7 @@
 import os
 import csv
+from threading import Thread
+from time import sleep
 from PyQt5.QtWidgets import QFileDialog
 import pickle
 from nltk.corpus import stopwords
@@ -7,6 +9,11 @@ import pandas as pd
 from nltk.stem.porter import *
 from PyQt5.QtWidgets import QTableWidgetItem
 import re
+import time
+import glob
+from tkinter.filedialog import askdirectory
+
+
 
 from textblob import TextBlob
 
@@ -24,74 +31,84 @@ class ClassifyWebController:
         self.analysis_data = []
         self.ruta_salida = ''
 
+        self.metacriticScrapper = MS.MetacriticScrapper()
+        self.steamScrapper = SS.SteamScrapper()
+        self.yelpScrapper = YS.YelScrapper()
+        self.amazonScrapper = AS.AmazonScrapper()
+
     def validate(self):
+
         if 'https://www.metacritic.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Metacritic':
             self.addURL()
-            self.view.label_2.setText('Inserte las URLs: ')
         elif 'store.steampowered.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Steam':
             self.addURL()
-            self.view.label_2.setText('Inserte las URLs: ')
         elif 'https://www.amazon.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Amazon':
             self.addURL()
-            self.view.label_2.setText('Inserte las URLs: ')
         elif 'https://www.yelp.' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Yelp':
             self.addURL()
-            self.view.label_2.setText('Inserte las URLs: ')
         else:
-            self.view.label_2.setText('No introdujo correctamente la URL. Porfavor introduzca de nuevo la URL')
+            self.view.messages.setText('Invalid URL. Please make sure the URL is valid.')
 
     def addURL(self):
         link = self.view.url_line.text()
         self.linkList.append(link)
+        review_number = self.scrapLink(link)
+
+        # Add the current link to the table
         rowPosition = self.view.url_table.rowCount()
         self.view.url_table.insertRow(rowPosition)
         self.view.url_table.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(link)))
+        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_number)))
+        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(link)))
         self.view.url_line.setText("")
 
     def obtainModels(self):
         for model in os.listdir('./Resources/Models'):
             self.modelsList.append(model)
         self.view.comboBox_modelos.addItems(self.modelsList)
+        #Need to make this work with S3
 
     def obtainRoute(self):
         self.ruta_salida = QFileDialog.getExistingDirectory()
+        self.view.directoryLine.setText(self.ruta_salida)
 
-    def scrapLinks(self):
-        metacriticScrapper = MS.MetacriticScrapper()
-        steamScrapper = SS.SteamScrapper()
-        yelpScrapper = YS.YelScrapper()
-        amazonScrapper = AS.AmazonScrapper()
-        if not self.linkList:
-            self.view.label_3.setVisible(True)
+    def scrapLink(self, url):
+        #For some reason it's REALLY not loading
+        self.view.messages.setText("Scrapping URL: " + url)
+        self.view.update()
+        # if not self.linkList:
+        #     # self.view.label_3.setVisible(True)
+        #     pass
+        # else:
+            # self.view.label_3.setVisible(False)
+
+        print("Scrapping link: " + url)
+        url_stars, url_reviews = [], []
+        if 'metacritic.com' in url:
+            print("Detected as Metacritic URL")
+            url_stars, url_reviews = self.metacriticScrapper.scrapURL(url)
+        elif 'store.steampowered.com' in url:
+            print("Detected as Steam URL")
+            url_stars, url_reviews = self.steamScrapper.scrapURL(url)
+        elif 'amazon.com' in url:
+            print("Detected as Amazon URL")
+            url_stars, url_reviews = self.amazonScrapper.scrapURL(url)
+        elif 'yelp.com' in url:
+            print("Detected as Yelp URL")
+            url_stars, url_reviews = self.yelpScrapper.scrapURL(url)
         else:
-            self.view.label_3.setVisible(False)
-            for url in self.linkList:
-                print("Scrapping link: " + url)
-                url_stars, url_reviews = [], []
-                if 'metacritic.com' in url:
-                    print("Detected as Metacritic URL")
-                    url_stars, url_reviews = metacriticScrapper.scrapURL(url)
-                elif 'store.steampowered.com' in url:
-                    print("Detected as Steam URL")
-                    url_stars, url_reviews = steamScrapper.scrapURL(url)
-                elif 'amazon.com' in url:
-                    print("Detected as Amazon URL")
-                    url_stars, url_reviews = amazonScrapper.scrapURL(url)
-                elif 'yelp.com' in url:
-                    print("Detected as Yelp URL")
-                    url_stars, url_reviews = yelpScrapper.scrapURL(url)
-                else:
-                    print("Detected as invalid link")
-                print("Finished scrapping URL")
-                self.contentList += url_reviews
+            print("Detected as invalid link")
+        print("Finished scrapping URL")
+        self.contentList += url_reviews
+        self.view.messages.setText("Successfully scrapped " + url)
+        return len(url_reviews)
+
         
 
     def ejecutar_clasificador(self):
 
         if not self.modelsList:
-            self.view.boton_clasificador.setText("La lista de modelos esta vacía. porfavor cree algún "
-                                                                "modelo")
+            self.view.boton_clasificador.setText("La lista de modelos esta vacía. porfavor cree algún modelo")
         elif not self.ruta_salida:
             self.view.label_6.setText('Porfavor elija una ruta para guardar las reviews')
         else:
@@ -197,3 +214,31 @@ class ClassifyWebController:
             c = 0
 
             self.view.label_finalizado.setVisible(True)
+
+    def addFromFile(self):
+        dir = str(QFileDialog.getExistingDirectory(self.view, "Select Directory"))
+        file_pattern = os.path.join(dir, '*.csv')
+        file_list = glob.glob(file_pattern)
+        review_count = 0
+
+        for file in file_list:
+            with open(file) as csvfile:
+                readCSV = csv.reader(csvfile, delimiter=',')
+                for row in readCSV:
+                    review_count += 1
+                    self.contentList += row[1]
+
+        rowPosition = self.view.url_table.rowCount()
+        self.view.url_table.insertRow(rowPosition)
+        self.view.url_table.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_count)))
+        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(file)))
+
+
+    def removeReviews(self):
+        self.view.messages.setText("Removing reviews...")
+        self.linkList = []
+        self.contentList = []
+        while self.view.url_table.rowCount() > 0:
+            self.view.url_table.removeRow(0)
+        self.view.messages.setText("Removed all reviews")
