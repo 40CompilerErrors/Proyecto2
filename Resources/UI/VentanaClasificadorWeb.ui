@@ -198,6 +198,13 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QPushButton" name="getModelsButton">
+         <property name="text">
+          <string>Descargar Modelos</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>

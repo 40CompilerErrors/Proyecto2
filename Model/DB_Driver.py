@@ -1,3 +1,5 @@
+import os
+
 import mysql.connector
 import boto3
 import hashlib
@@ -37,10 +39,17 @@ class DB_Driver:
         self.cursor = self.connection.cursor(prepared = True)
 
     def getModels(self):
-        models = []
-        for object in self.bucket.objects.all():
-            models.append((object.key,object.get()['Body']))
-        return models
+        # for obj in self.bucket.objects.all():
+        #     print(str(obj.key))
+
+        for obj in self.bucket.objects.all():
+            key = str(obj.key)
+            print("Downloading " + key)
+            # parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+            resources_path = os.path.join(os.getcwd(), 'Resources/Models')
+            s3_path = os.path.join(resources_path,key)
+
+            self.s3.meta.client.download_file(BUCKET_NAME,key,s3_path)
 
     def uploadModel(self,filename):
         self.__uploadModelToS3(filename)
@@ -107,6 +116,3 @@ if __name__ == "__main__":
     model = db.getModels()
     for i in model:
         print(i[0])
-
-
-    pass

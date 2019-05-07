@@ -17,6 +17,7 @@ from tkinter.filedialog import askdirectory
 
 from textblob import TextBlob
 
+from Model.DB_Driver import DB_Driver
 from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
 
 class ClassifyWebController:
@@ -62,6 +63,19 @@ class ClassifyWebController:
         self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(link)))
         self.view.url_line.setText("")
 
+    def downloadModels(self):
+        # Download from S3
+        self.view.messages.setText("Downloading models from remote storage...")
+        db =  DB_Driver()
+        db.getModels()
+        db.closeConnection()
+
+        self.modelList = []
+        while self.view.comboBox_modelos.count() > 0:
+            self.view.comboBox_modelos.removeItem(0)
+        self.obtainModels()
+        self.view.messages.setText("Models downloaded successfully!")
+
     def obtainModels(self):
         for model in os.listdir('./Resources/Models'):
             self.modelsList.append(model)
@@ -71,6 +85,7 @@ class ClassifyWebController:
     def obtainRoute(self):
         self.ruta_salida = QFileDialog.getExistingDirectory()
         self.view.directoryLine.setText(self.ruta_salida)
+
 
     def scrapLink(self, url):
         #For some reason it's REALLY not loading
