@@ -175,14 +175,17 @@
   <widget class="QLabel" name="label_errors">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>10</x>
      <y>160</y>
-     <width>121</width>
-     <height>16</height>
+     <width>381</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>Errores detectados</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
