@@ -2,6 +2,7 @@ from Views import TrainMenu as TM, TrainWebMenu as TWM , AdminUsers as AU
 from Controllers import TrainController as TC, TrainWebController as TWC
 from Model import DB_Driver as DD
 from PyQt5.QtWidgets import QWidget,QTableWidget,QGridLayout,QTableWidgetItem,QFileDialog, QLabel
+from PyQt5 import QtCore
 
 class AdminController:
 
@@ -33,8 +34,9 @@ class AdminController:
             
             rowPosition = self.view.tableWidget.rowCount()
             self.view.tableWidget.insertRow(rowPosition)
-    
-            self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i[0]))
+            item = QTableWidgetItem(i[0])
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.view.tableWidget.setItem(rowPosition, 0, item)
     
             
     
@@ -54,8 +56,9 @@ class AdminController:
             
             rowPosition = self.view.tableWidget.rowCount()
             self.view.tableWidget.insertRow(rowPosition)
-    
-            self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i[0]))
+            item = QTableWidgetItem(i[0])
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.view.tableWidget.setItem(rowPosition, 0, item)
         
         
         driver.closeConnection()
@@ -70,8 +73,9 @@ class AdminController:
             
             rowPosition = self.view.tableWidget.rowCount()
             self.view.tableWidget.insertRow(rowPosition)
-    
-            self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i[0]))
+            item = QTableWidgetItem(i[0])
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.view.tableWidget.setItem(rowPosition, 0, item)
         
         
         driver.closeConnection()
