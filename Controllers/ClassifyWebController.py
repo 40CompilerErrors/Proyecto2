@@ -58,7 +58,9 @@ class ClassifyWebController:
         # Add the current link to the table
         rowPosition = self.view.url_table.rowCount()
         self.view.url_table.insertRow(rowPosition)
-        self.view.url_table.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+        item = QTableWidgetItem(f"{rowPosition}")
+        item.setFlags()
+        self.view.url_table.setItem(rowPosition, 0, item )
         self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_number)))
         self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(link)))
         self.view.url_line.setText("")

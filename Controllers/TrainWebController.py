@@ -4,6 +4,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QFileDialog, QLabel,QDesktopWidget
 
 import os
+from PyQt5 import QtCore
+
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
@@ -109,8 +111,12 @@ class TrainWebController:
         self.linkList.append(link)
         rowPosition = self.view.tableWidget.rowCount()
         self.view.tableWidget.insertRow(rowPosition)
-        self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-        self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(link)))
+        item = QTableWidgetItem(f"{rowPosition}")
+        item.setFlags(QtCore.Qt.ItemIsEnabled)
+        item2 = QTableWidgetItem(str(link))
+        item2.setFlags(QtCore.Qt.ItemIsEnabled)
+        self.view.tableWidget.setItem(rowPosition, 0, item)
+        self.view.tableWidget.setItem(rowPosition, 1, item2 )
         self.view.lineEdit_URL.setText("")
 
 
@@ -149,11 +155,17 @@ class TrainWebController:
                 rowPosition = self.view.reviewTable.rowCount()
                 self.view.reviewTable.insertRow(rowPosition)
                 self.view.reviewTable.resizeColumnsToContents()
-                self.view.reviewTable.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+                item = QTableWidgetItem(f"{rowPosition}")
+                item.setFlags(QtCore.Qt.ItemIsEnabled)
+                item2 = QTableWidgetItem(str(self.starList[cont]))
+                item2.setFlags(QtCore.Qt.ItemIsEnabled)
+                item3 = QTableWidgetItem(self.contentList[cont])
+                item3.setFlags(QtCore.Qt.ItemIsEnabled)
+                self.view.reviewTable.setItem(rowPosition, 0, item )
                 self.view.reviewTable.setItem(rowPosition, 1,
-                                                      QTableWidgetItem(str(self.starList[cont])))
+                                                      item2 )
                 self.view.reviewTable.setItem(rowPosition, 2,
-                                                      QTableWidgetItem(self.contentList[cont]))
+                                                      item3 )
                 cont = cont +1
             self.view.frame_2.setVisible(True)
             self.view.setFixedSize(1343,724)
