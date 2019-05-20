@@ -4,6 +4,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QFileDialog, QLabel,QDesktopWidget
 
 import os
+import glob
+import csv
 from PyQt5 import QtCore
 
 
@@ -14,7 +16,6 @@ from sklearn.svm import SVC
 import nltk
 import matplotlib.pyplot as plt
 
-from sklearn.datasets import load_files
 import pickle
 from nltk.corpus import stopwords
 from nltk.stem.porter import *
@@ -62,33 +63,23 @@ class TrainWebController:
         self.max_iter = -1
 
     def addfromfile(self):
-        description = ''
-        rating=''
-        self.route = QFileDialog.getExistingDirectory()
+        self.route = QFileDialog.getExistingDirectory(self.view, "Select Directory")
         self.pathList.append(self.route)
+        file_pattern = os.path.join(self.route, '*.csv')
+        file_list = glob.glob(file_pattern)
+        review_count = 0
+        for file in file_list:
+            with open(file) as csvfile:
+                readCSV = csv.reader(csvfile, delimiter=',')
+                for row in readCSV:
+                    review_count += 1
+                    self.starList.append(row[0])
+                    self.contentList.append(row[1])
+
         rowPosition = self.view.tableWidget.rowCount()
         self.view.tableWidget.insertRow(rowPosition)
         self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
         self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(self.route)))
-
-        for folder in os.listdir(self.route):
-            folder = f"{self.route}/{folder}"
-            self.subdirectories.append(folder)
-
-        for folder in self.subdirectories:
-            for file in os.listdir(folder):
-                file = f"{folder}/{file}"
-                with open(file,'r') as f:
-                    booleano = True
-                    for line in f:
-                        if booleano == True:
-                            rating = line
-                            booleano = False
-                        else:
-                            description += line
-                    self.starList.append(rating)
-                    self.contentList.append(description)
-
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
