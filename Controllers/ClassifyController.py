@@ -1,186 +1,155 @@
 import os
-import time
-
-from PyQt5.QtWidgets import QFileDialog, QTableWidgetItem
-from decimal import Decimal
+import csv
+from threading import Thread
+from time import sleep
+from PyQt5.QtWidgets import QFileDialog
 import pickle
-import shutil
+from nltk.corpus import stopwords
+import pandas as pd
 from nltk.stem.porter import *
+from PyQt5.QtWidgets import QTableWidgetItem
+import re
+import time
+import glob
+from tkinter.filedialog import askdirectory
+from Views import ClassifyInputWindow as CIW, ClassifyOutputWindow as COW
+
+
 from textblob import TextBlob
-from Model import DB_Driver as DB
 
+from Model.DB_Driver import DB_Driver
+from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
 
-class ClassifyController:
+class ClassifyWebController:
 
-    def __init__(self, view):
-        self.view = view
-        print("Controlador principal inicializado...")
-        self.ruta = ''
-        self.lista_archivos = []
-        self.seleccionados = []
-        self.lista_modelos = []
-        self.datos_analisis = []
-        self.datos_subjetividad = []
+    def __init__(self):
+
+        self.linkList = []
+        self.modelsList = []
+        self.reviewList = []
+        self.support = []
+        self.contentList = []
+        self.analysis_data = []
         self.ruta_salida = ''
 
 
+        self.metacriticScrapper = MS.MetacriticScrapper()
+        self.steamScrapper = SS.SteamScrapper()
+        self.yelpScrapper = YS.YelScrapper()
+        self.amazonScrapper = AS.AmazonScrapper()
 
-    def obtener_salida(self):
-        self.ruta_salida = QFileDialog.getExistingDirectory()
-        print(f'Ruta de salida = {self.ruta_salida}')
+        self.view = CIW.ClassifyInputWindow(self)
+        self.obtainModels()
+        self.view.show()
+        print(self.view)
 
-    def abrir_archivo(self):
-        try:
-            self.view.label_5.setText('Datos seleccionados')
-            self.view.datos_seleccionados.setRowCount(0)
-            j = 0
-            #Limpia la lista de archivos al elegir una ruta nueva
-            for i in self.lista_archivos:
-                print(f"Eliminando {i}")
-                self.lista_archivos.pop(j)
-                j = j+1
+    def validate(self):
 
-            #limpia la tabla que no se añadan a la tabla los datos de una ruta nueva.
-            while self.view.lista_archivos_2.rowCount() > 0:
-                    self.view.lista_archivos_2.removeRow(0)
-
-            self.ruta = QFileDialog.getExistingDirectory()
-            if not self.ruta:
-                self.view.label_ruta_2.setText('El usuario no selecciono ninguna ruta')
-            else:
-                print(f"Ruta: {self.ruta}")
-                self.view.label_ruta_2.setText(self.ruta)
-                print(f"Lista de los archivos de la ruta: {os.listdir(self.ruta)}")
-                contador = 0
-                for archivo in os.listdir(self.ruta):
-                    nombre_archivo = f"{archivo}"
-                    if(nombre_archivo.endswith(".txt")):
-                        rowPosition = self.view.lista_archivos_2.rowCount()
-                        self.view.lista_archivos_2.insertRow(rowPosition)
-                        self.lista_archivos.append(archivo)
-                        # Obtiene la ruta entera del archivo que se esta metiendo en la tabla
-                        file_status_array = os.stat(f"{self.ruta}/{archivo}")
-                        # Obtenemos el tamano del archivo en cuestion
-                        tamano_archivo = file_status_array.st_size
-
-                        fecha_mod = file_status_array.st_mtime
-                        fecha_final = time.ctime(fecha_mod)
-
-                        self.view.lista_archivos_2.setItem(rowPosition, 0, QTableWidgetItem(f"{contador}"))
-                        self.view.lista_archivos_2.setItem(rowPosition, 1, QTableWidgetItem(nombre_archivo))
-                        self.view.lista_archivos_2.setItem(rowPosition, 2, QTableWidgetItem(f"{tamano_archivo} bytes"))
-                        self.view.lista_archivos_2.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
-
-                        contador = contador + 1
-
-        except ValueError:
-            print('¡¡Fallo al abrir el explorador de archivos!!')
-
-    def anadir_datos(self):
-        self.view.boton_clasificador.setText("Ejecutar Clasificador")
-        print("Entrando en añadir datos...")
-        try:
-            contador = 0
-            archivos_seleccionados = self.view.lista_archivos_2.selectionModel().selectedRows()
-            for index in sorted(archivos_seleccionados):
-                rowPosition = self.view.datos_seleccionados.rowCount()
-
-                #sacamos la posicion del archivo seleccionado de la QTableWidget
-                posicion_lista = index.row() - contador
-                archivo = self.lista_archivos[posicion_lista]
-                print(f"Archivo en posicion {posicion_lista}: {archivo}")
-                self.seleccionados.append(archivo)
-
-                # Obtiene la ruta entera del archivo que se esta metiendo en la tabla
-                file_status_array = os.stat(f"{self.ruta}/{archivo}")
-
-                # Obtenemos el tamano del archivo en cuestion
-                tamano_archivo = file_status_array.st_size
-                fecha_mod = file_status_array.st_mtime
-                fecha_final = time.ctime(fecha_mod)
-
-                self.view.datos_seleccionados.insertRow(rowPosition)
-                self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-                self.view.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(archivo))
-                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamano_archivo} bytes"))
-                #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
-
-                self.view.lista_archivos_2.removeRow(posicion_lista)
-                self.lista_archivos.pop(posicion_lista)
-                print(f"Eliminado {archivo}")
-                contador = contador + 1
-        except ValueError:
-            print('Fallo al añadir los datos a la tabla de "Datos seleccionados"')
-
-    def anadir_todos(self):
-        self.view.boton_clasificador.setText("Ejecutar Clasificador")
-        if not self.ruta:
-            self.view.label_ruta_2.setText('Debe seleccionar una ruta de archivos previamente.')
+        if 'https://www.metacritic.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Metacritic':
+            self.addURL()
+        elif 'store.steampowered.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Steam':
+            self.addURL()
+        elif 'https://www.amazon.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Amazon':
+            self.addURL()
+        elif 'https://www.yelp.' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Yelp':
+            self.addURL()
         else:
-            self.view.label_ruta_2.setText('RUTA SELECCIONADA')
-            try:
-                tamano_lista = len(self.lista_archivos)
-                for i in range(0,tamano_lista):
-                    archivo = self.lista_archivos[i]
-                    rowPosition = self.view.datos_seleccionados.rowCount()
-                    self.seleccionados.append(archivo)
+            self.view.messages.setText('Invalid URL. Please make sure the URL is valid.')
 
-                    # Obtiene la ruta entera del archivo que se esta metiendo en la tabla
-                    file_status_array = os.stat(f"{self.ruta}/{archivo}")
+    def addURL(self):
+        link = self.view.url_line.text()
+        self.linkList.append(link)
+        review_number = self.scrapLink(link)
 
-                    # Obtenemos el tamano del archivo en cuestion
-                    tamano_archivo = file_status_array.st_size
-                    fecha_mod = file_status_array.st_mtime
-                    fecha_final = time.ctime(fecha_mod)
+        # Add the current link to the table
+        rowPosition = self.view.url_table.rowCount()
+        self.view.url_table.insertRow(rowPosition)
+        item = QTableWidgetItem(f"{rowPosition}")
+        # item.setFlags() //Esto ha dado problemas al cambiar las ventanas y ni idea de por que
+        self.view.url_table.setItem(rowPosition, 0, item )
+        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_number)))
+        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(link)))
+        self.view.url_line.setText("")
 
-                    self.view.datos_seleccionados.insertRow(rowPosition)
-                    self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-                    self.view.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(archivo))
-                    #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(f"{tamano_archivo} bytes"))
-                    #self.ventanaClasificador.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(f"{fecha_final}"))
-                    self.view.lista_archivos_2.removeRow(0)
+    def downloadModels(self):
+        # Download from S3
+        self.view.messages.setText("Downloading models from remote storage...")
+        db =  DB_Driver()
+        db.getModels()
+        db.closeConnection()
 
-                self.lista_archivos.clear()
+        self.modelList = []
+        while self.view.comboBox_modelos.count() > 0:
+            self.view.comboBox_modelos.removeItem(0)
+        self.obtainModels()
+        self.view.messages.setText("Models downloaded successfully!")
 
-            except ValueError:
-                print('Fallo al añadir los datos a la tabla de "Datos seleccionados"')
+    def obtainModels(self):
+        for model in os.listdir('./Resources/Models'):
+            self.modelsList.append(model)
+        self.view.comboBox_modelos.addItems(self.modelsList)
+        #Need to make this work with S3
 
-    def obtener_modelos(self):
-        for modelo in os.listdir('./Resources/Models'):
-            self.lista_modelos.append(modelo)
-        self.view.comboBox_modelos.addItems(self.lista_modelos)
+    def obtainRoute(self):
+        self.ruta_salida = QFileDialog.getExistingDirectory()
+        self.view.directoryLine.setText(self.ruta_salida)
 
+
+    def scrapLink(self, url):
+        #For some reason it's REALLY not loading
+        self.view.messages.setText("Scrapping URL: " + url)
+        self.view.update()
+        # if not self.linkList:
+        #     # self.view.label_3.setVisible(True)
+        #     pass
+        # else:
+            # self.view.label_3.setVisible(False)
+
+        print("Scrapping link: " + url)
+        url_stars, url_reviews = [], []
+        if 'metacritic.com' in url:
+            print("Detected as Metacritic URL")
+            url_stars, url_reviews = self.metacriticScrapper.scrapURL(url)
+        elif 'store.steampowered.com' in url:
+            print("Detected as Steam URL")
+            url_stars, url_reviews = self.steamScrapper.scrapURL(url)
+        elif 'amazon.com' in url:
+            print("Detected as Amazon URL")
+            url_stars, url_reviews = self.amazonScrapper.scrapURL(url)
+        elif 'yelp.com' in url:
+            print("Detected as Yelp URL")
+            url_stars, url_reviews = self.yelpScrapper.scrapURL(url)
+        else:
+            print("Detected as invalid link")
+        print("Finished scrapping URL")
+        self.contentList += url_reviews
+        self.view.messages.setText("Successfully scrapped " + url)
+        return len(url_reviews)
+
+
+    def switch_view(self,new_view,**kwargs):
+        self.view.close()
+        self.view = new_view(self,kwargs)
+        self.view.show()
+        
 
     def ejecutar_clasificador(self):
-        if not self.ruta:
-            self.view.label.setText("No ha seleccionado ninguna carpeta, porfavor "
-                                                                "seleccione alguna carpeta.")
-        elif not self.lista_modelos:
-            self.view.boton_clasificador.setText("La lista de modelos esta vacía. porfavor cree algún "
-                                                                "modelo")
-        elif not self.seleccionados:
-            self.view.boton_clasificador.setText("No ha seleccionado ningun archivo de la lista, "
-                                                                "porfavor seleccione algun archivo para clasificar")
+
+        if not self.modelsList:
+            self.view.boton_clasificador.setText("La lista de modelos esta vacía. porfavor cree algún modelo")
         else:
+            # self.view.label_6.setText('Elegir la ruta donde se guardarán los archivos clasificados:')
             self.view.boton_clasificador.setText("Ejecutar clasificador")
             print("Comienza la clasificación...")
             cont = 0
             con = 0
             stemmer = PorterStemmer()
-            apoyo = []
-            datos_archivos = []
-            for i in self.seleccionados:
-
-                archivo = f'{self.ruta}/{i}'
-                with open(archivo, 'r', encoding='utf-8') as myfile:
-                    data = myfile.read().replace('\n', '')
-                    datos_archivos.append(data)
 
             documentos = []
             print("Comienza el pre-procesado")
-            for sen in range(0, len(datos_archivos)):
+            for sen in range(0, len(self.contentList)):
                 # Elimina: carácteres especiales
-                documento = re.sub(r'\W', ' ', str(datos_archivos[sen]))
+                documento = re.sub(r'\W', ' ', str(self.contentList[sen]))
 
                 # Elimina: carácteres solos
                 documento = re.sub(r'\s+[a-zA-Z]\s+', ' ', documento)
@@ -203,13 +172,12 @@ class ClassifyController:
                 documento = ' '.join(documento)
                 documentos.append(documento)
 
-
-
-            nombre_modelo = self.view.comboBox_modelos.currentText()
-            with open(f'./Resources/Models/{nombre_modelo}', 'rb') as training_model:
+            model_name = self.view.comboBox_modelos.currentText()
+            with open(f'./Resources/Models/{model_name}', 'rb') as training_model:
                 model = pickle.load(training_model)
                 diccionarioAntiguo = pickle.load(training_model)
-                nombres_etiquetas = pickle.load(training_model)
+                labelsName = pickle.load(training_model)
+
 
             X = diccionarioAntiguo.transform(documentos)
 
@@ -217,44 +185,71 @@ class ClassifyController:
             print("Prediccion hecha!")
 
             for y in prediccion:
-                if y not in apoyo:
-                    apoyo.append(y)
-            for i in nombres_etiquetas:
+                if y not in self.support:
+                    self.support.append(y)
+            '''for i in labelsName:
                 if not os.path.exists(f'{self.ruta_salida}/{i}'):
-                    os.makedirs(f'{self.ruta_salida}/{i}')
+                    os.makedirs(f'{self.ruta_salida}/{i}')'''
 
-            rootdir = os.path.dirname(os.path.abspath(__file__))
-            dir = os.path.join(os.path.dirname(rootdir), self.ruta)
-            dir1 = os.path.join(os.path.dirname(rootdir), self.ruta_salida)
+
+            # self.view.label_5.setText('Resultados de la clasificación')
+
+            self.switch_view(COW.ClassifyOutputWindow,classify_results=prediccion)
+
             self.view.datos_seleccionados.setRowCount(0)
-            self.view.label_5.setText('Resultados de la clasificación')
-            print(os.path.join(dir, str(self.seleccionados[cont])))
+
+            elementLists = []
+
             for i in prediccion:
-                with open(os.path.join(dir, str(self.seleccionados[cont])), 'r') as archivo:
-                    data = archivo.read().replace('\n', '')
-                    test = TextBlob(data)
-                    self.datos_analisis.append(round(test.sentiment.polarity, 4))
+                elementList = []
+                data = self.contentList[cont].replace('\n', '')
+                test = TextBlob(data)
+                self.analysis_data.append(round(test.sentiment.polarity, 4))
 
                 rowPosition = self.view.datos_seleccionados.rowCount()
                 self.view.datos_seleccionados.insertRow(rowPosition)
 
                 self.view.datos_seleccionados.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+                self.view.datos_seleccionados.setItem(rowPosition, 1, QTableWidgetItem(i))
+                self.view.datos_seleccionados.setItem(rowPosition, 2, QTableWidgetItem(str(round(test.sentiment.polarity, 3))))
+                self.view.datos_seleccionados.setItem(rowPosition, 3, QTableWidgetItem(str(round(test.sentiment.subjectivity, 3))))
+                self.view.datos_seleccionados.setItem(rowPosition, 4, QTableWidgetItem(self.contentList[cont]))
 
-                self.view.datos_seleccionados.setItem(rowPosition, 1,
-                                                                    QTableWidgetItem(self.seleccionados[cont]))
+                elementLists.append([i, str(round(test.sentiment.polarity, 3)),
+                                     str(round(test.sentiment.subjectivity, 3)),self.contentList[cont]])
 
-                self.view.datos_seleccionados.setItem(rowPosition, 2,
-                                                                    QTableWidgetItem(nombres_etiquetas[i]))
-
-                self.view.datos_seleccionados.setItem(rowPosition, 3,
-                                                                    QTableWidgetItem(str(round(test.sentiment.polarity, 3))))
-
-                self.view.datos_seleccionados.setItem(rowPosition, 4,
-                                                                    QTableWidgetItem(str(round(test.sentiment.subjectivity, 3))))
-
-                shutil.copyfile(os.path.join(dir, str(self.seleccionados[cont])),
-                                os.path.join(os.path.join(dir1, nombres_etiquetas[i]), str(self.seleccionados[cont])))
                 cont = cont + 1
-            print("Archivos guardados.")
 
-            self.view.label_finalizado.setVisible(True)
+            headers = ["Label", "Polarity", "Subjectivity", "Body"]
+            dataframe = pd.DataFrame(elementLists,columns=headers)
+            print(dataframe)
+
+
+
+    def addFromFile(self):
+        dir = str(QFileDialog.getExistingDirectory(self.view, "Select Directory"))
+        file_pattern = os.path.join(dir, '*.csv')
+        file_list = glob.glob(file_pattern)
+        review_count = 0
+
+        for file in file_list:
+            with open(file) as csvfile:
+                readCSV = csv.reader(csvfile, delimiter=',')
+                for row in readCSV:
+                    review_count += 1
+                    self.contentList += row[1]
+
+        rowPosition = self.view.url_table.rowCount()
+        self.view.url_table.insertRow(rowPosition)
+        self.view.url_table.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_count)))
+        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(file)))
+
+
+    def removeReviews(self):
+        self.view.messages.setText("Removing reviews...")
+        self.linkList = []
+        self.contentList = []
+        while self.view.url_table.rowCount() > 0:
+            self.view.url_table.removeRow(0)
+        self.view.messages.setText("Removed all reviews")
