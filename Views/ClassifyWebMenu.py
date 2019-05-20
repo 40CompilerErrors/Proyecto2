@@ -6,7 +6,7 @@ class ClassifyWebMenu(QMainWindow):
     def __init__(self):
         super(ClassifyWebMenu, self).__init__()
         self.controller = CWC.ClassifyWebController(self)
-        loadUi('./Resources/UI/VentanaClasificadorWeb.ui', self)
+        loadUi('./Resources/UI/InputWindowClasificadorWeb.ui', self)
 
         self.webs_list = []
 
@@ -16,17 +16,18 @@ class ClassifyWebMenu(QMainWindow):
         self.controller.obtainModels()
 
     def initiateVariables(self):
-        self.label_finalizado.setVisible(False)
+        # self.label_finalizado.setVisible(False)
         self.webs_list = ['Amazon', 'Steam', 'Metacritic', 'Yelp']
         for i in self.webs_list:
             self.pages_combo.addItem(i)
 
     def buttonActions(self):
-        self.addUrl_button.clicked.connect(self.controller.validate)
-        self.save_button.clicked.connect(self.controller.obtainRoute)
-        self.boton_clasificador.clicked.connect(self.controller.ejecutar_clasificador)
-        self.removeButton.clicked.connect(self.controller.removeReviews)
-        self.addFolderButton.clicked.connect(self.controller.addFromFile)
-        self.getModelsButton.clicked.connect(self.controller.downloadModels)
+        pass
+        # self.addUrl_button.clicked.connect(self.controller.validate)
+        # self.save_button.clicked.connect(self.controller.obtainRoute)
+        # self.boton_clasificador.clicked.connect(self.controller.ejecutar_clasificador)
+        # self.removeButton.clicked.connect(self.controller.removeReviews)
+        # self.addFolderButton.clicked.connect(self.controller.addFromFile)
+        # self.getModelsButton.clicked.connect(self.controller.downloadModels)
 
 

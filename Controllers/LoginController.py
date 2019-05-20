@@ -1,4 +1,4 @@
-from Views import UserMenu as UM, AdminMenu as AM, LoginMenu as MM
+from Views import UserMenu as UM, AdminMenu as AM, LoginMenu as MM, ClassifyWebMenu as CW
 from main import Main as m
 from Model import DB_Driver as DB
 import hashlib, uuid
@@ -18,8 +18,10 @@ class LoginController:
 
         if valid and role == 0:
             self.view.running = False
-            userWindow = UM.UserMenu()
-            userWindow.show()
+            # userWindow = UM.UserMenu()
+            # userWindow.show()
+            classifyWindow = CW.ClassifyWebMenu()
+            classifyWindow.show()
             self.view.close()
 
         elif valid and role == 1:
