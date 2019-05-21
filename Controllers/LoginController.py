@@ -40,12 +40,14 @@ class LoginController:
 
         if db_hash == 0 and db_role == 0:
             print("Validation failed: No user found")
+            self.view.label_errors.setVisible(True)
             return False, 0
 
         hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
 
         if not hashed_password == db_hash:
             print("Validation failed: Password incorrect")
+            self.view.label_errors.setVisible(True)
             return False, 0
         else:
             return True, db_role

@@ -20,6 +20,7 @@ class LoginMenu(QMainWindow):
         self.logo.setPixmap(pixmap)
         self.setWindowTitle('Pantalla Login')
         self.login_button.clicked.connect(self.__login)
+        self.label_errors.setVisible(False)
         #self.login_button.setShortcut("Intro")    esto pone el atajo al teclado pero tengo que revisarlo
 
     def __login(self):
