@@ -3,6 +3,7 @@ import csv
 from threading import Thread
 from time import sleep
 from PyQt5.QtWidgets import QFileDialog
+from PyQt5 import QtCore
 import pickle
 from nltk.corpus import stopwords
 import pandas as pd
@@ -65,7 +66,11 @@ class ClassifyWebController:
         rowPosition = self.view.url_table.rowCount()
         self.view.url_table.insertRow(rowPosition)
         item = QTableWidgetItem(f"{rowPosition}")
-        # item.setFlags() //Esto ha dado problemas al cambiar las ventanas y ni idea de por que
+        item.setFlags(QtCore.Qt.ItemIsEnabled)
+        item2 = QTableWidgetItem(str(review_number))
+        item2.setFlags(QtCore.Qt.ItemIsEnabled)
+        item3 = QTableWidgetItem(str(link))
+        item3.setFlags(QtCore.Qt.ItemIsEnabled)
         self.view.url_table.setItem(rowPosition, 0, item )
         self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_number)))
         self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(link)))
