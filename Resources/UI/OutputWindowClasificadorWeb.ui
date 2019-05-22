@@ -107,7 +107,7 @@
          <number>5</number>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="backButton">
           <property name="text">
            <string>Volver atras</string>
           </property>

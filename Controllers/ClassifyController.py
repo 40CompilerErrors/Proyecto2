@@ -99,6 +99,8 @@ class ClassifyWebController:
         self.ruta_salida = QFileDialog.getExistingDirectory()
         self.view.directoryLine.setText(self.ruta_salida)
 
+        #Add saving files here
+
 
     def scrapLink(self, url):
         #For some reason it's REALLY not loading
