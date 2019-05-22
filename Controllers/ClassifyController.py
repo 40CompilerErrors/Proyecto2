@@ -134,9 +134,9 @@ class ClassifyWebController:
         return len(url_reviews)
 
 
-    def switch_view(self,new_view,**kwargs):
+    def switch_view(self,new_view):
         self.view.close()
-        self.view = new_view(self,kwargs)
+        self.view = new_view(self)
         self.view.show()
         
 
@@ -201,7 +201,7 @@ class ClassifyWebController:
 
             # self.view.label_5.setText('Resultados de la clasificación')
 
-            self.switch_view(COW.ClassifyOutputWindow,classify_results=prediccion)
+            self.switch_view(COW.ClassifyOutputWindow)
 
             self.view.datos_seleccionados.setRowCount(0)
 

@@ -4,7 +4,7 @@ from Controllers import ClassifyController as CWC
 from Views import ClassifyInputWindow as CIW
 
 class ClassifyOutputWindow(QMainWindow):
-    def __init__(self,controller,classify_results):
+    def __init__(self,controller):
         super(ClassifyOutputWindow, self).__init__()
         self.controller = controller
         loadUi('./Resources/UI/OutputWindowClasificadorWeb.ui', self)
