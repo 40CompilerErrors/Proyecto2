@@ -13,6 +13,7 @@ import re
 import time
 import glob
 from tkinter.filedialog import askdirectory
+import re
 from Views import ClassifyInputWindow as CIW, ClassifyOutputWindow as COW
 
 
@@ -47,20 +48,34 @@ class ClassifyWebController:
     def validate(self):
 
         if 'https://www.metacritic.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Metacritic':
-            self.addURL()
+            if re.search("https://www.metacritic.com/movie/.*", self.view.url_line.text()) or re.search("https://www.metacritic.com/game/.*/.*", self.view.url_line.text()) or re.search("https://www.metacritic.com/tv/.*/.*", self.view.url_line.text()) or re.search("https://www.metacritic.com/music/.*/.*", self.view.url_line.text()):
+                self.addURL()
+            else:
+                self.view.messages.setText('Invalid Metacritic URL.')
         elif 'store.steampowered.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Steam':
-            self.addURL()
+            if re.search("store.steampowered.com/app/.*", self.view.url_line.text()):
+                self.addURL()
+            else:
+                self.view.messages.setText('Invalid Steam URL.')
         elif 'https://www.amazon.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Amazon':
-            self.addURL()
+            if re.search("https://www.amazon.com/.*?/ref", self.view.url_line.text()):
+                self.addURL()
+            else:
+                self.view.messages.setText('Invalid Amazon URL.')
         elif 'https://www.yelp.' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Yelp':
-            self.addURL()
+            if re.search("yelp.*/biz/.*", self.view.url_line.text()):
+                self.addURL()
+            else:
+                self.view.messages.setText('Invalid Yelp URL.')
         else:
             self.view.messages.setText('Invalid URL. Please make sure the URL is valid.')
 
     def addURL(self):
         link = self.view.url_line.text()
         self.linkList.append(link)
+        self.view.messages.setText('Scrapping...')
         review_number = self.scrapLink(link)
+        
 
         # Add the current link to the table
         rowPosition = self.view.url_table.rowCount()

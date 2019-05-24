@@ -16,7 +16,7 @@ class AmazonScrapper(AS.AbstractScrapper):
         total_reviews_int = 2
         starList = []
         contentList = []
-
+        
         step = re.search('.*?/ref', URL).group()[:-4]
         step2 = re.sub('dp', 'product-reviews', step)
         page_reviews = step2 + '/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber=' + str(1)
