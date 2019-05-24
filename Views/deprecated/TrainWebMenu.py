@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow,QDesktopWidget
 from PyQt5.uic import loadUi
-from Controllers import TrainWebController as TWC
+from Controllers.deprecated import TrainWebController as TWC
+
 
 class TrainWebMenu(QMainWindow):
 

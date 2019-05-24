@@ -1,7 +1,7 @@
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QFileDialog, QLabel,QDesktopWidget
+from PyQt5.QtWidgets import QFileDialog, QLabel
 
 import os
 import glob
@@ -30,7 +30,6 @@ from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, Stea
 from Model import DB_Driver as DB
 
 from Views import AlgorithmDialog
-from Views import TrainWebMenu as TWM
 
 
 class TrainWebController:
