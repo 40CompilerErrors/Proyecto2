@@ -61,7 +61,7 @@ class DB_Driver:
         self.connection.commit()
         
     def getUserList(self):
-         query = """SELECT username FROM users"""
+         query = """SELECT username FROM users WHERE isAdmin = 0"""
          self.cursor.execute(query)
          #result = self.cursor.fetchall()
          result = list(self.cursor)
