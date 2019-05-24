@@ -265,7 +265,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_algoritmos_1">
+                 <widget class="QComboBox" name="comboBox_algoritmos">
                   <property name="font">
                    <font>
                     <family>Questrial</family>
@@ -304,7 +304,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_stopwords_1">
+                 <widget class="QComboBox" name="comboBox_stopwords">
                   <property name="font">
                    <font>
                     <family>Questrial</family>
@@ -400,7 +400,7 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_26">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_2">
+                 <widget class="QTableWidget" name="tableWidget">
                   <column>
                    <property name="text">
                     <string>ID</string>
