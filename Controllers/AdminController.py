@@ -37,8 +37,7 @@ class AdminController:
 
     def __init__(self):
         self.view = AM.AdminMenu(self)
-        # self.loadUsers()
-        self.view.initiateVariables()
+        self.loadUsers()
         self.view.show()
 
         self.linkList = []
@@ -432,7 +431,7 @@ class AdminController:
             print(self.precision)
 
     def choose_algorithm(self):
-        self.algorithm_name = str(self.view.comboBox_algoritmos_.currentText())
+        self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
 
         if self.algorithm_name == 'Random Forest':
             self.algorithm = RandomForestClassifier(n_estimators=self.n_estimators, random_state=self.random_state,
@@ -449,7 +448,7 @@ class AdminController:
         # def save_model(self):
 
     def editar_algoritmo(self):
-        self.algorithm_name = str(self.view.comboBox_algoritmos_.currentText())
+        self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
         dialog = AlgorithmDialog.AlgorithmDialog(self.algorithm_name, self)
         dialog.show()
 

@@ -22,24 +22,24 @@ class AdminMenu(QMainWindow):
         self.stopwords_list = ['english', 'danish', 'dutch', 'arabic', 'finnish', 'french', 'german', 'hungarian',
                                    'italian', 'kazakh', 'norwegian', 'portuguese', 'romanian', 'russian', 'spanish',
                                    'swedish', 'turkish']
-        self.comboBox_websites = ['Amazon', 'Steam', 'Metacritic', 'Yelp']
+        self.webs_list = ['Amazon', 'Steam', 'Metacritic', 'Yelp']
         self.category_list = ['3','2','4','5']
         self.algorithm_list = ['Random Forest', 'Naive Bayes', 'SVM']
 
-
-        self.webs_list = []
-        self.category_list = []
-        self.stopwords_list = []
-        self.algorithm_list = []
+        # self.webs_list = []
+        # self.category_list = []
+        # self.stopwords_list = []
+        # self.algorithm_list = []
 
         for i in self.algorithm_list:
-            self.comboBox_algoritmos_.addItem(i)
+            self.comboBox_algoritmos.addItem(i)
         for i in self.webs_list:
             self.comboBox_websites.addItem(i)
         for i in self.category_list:
             self.comboBox_categorias.addItem(i)
         for i in self.stopwords_list:
-            self.comboBox_stopwords_.addItem(i)
+            self.comboBox_stopwords.addItem(i)
+
         self.lineEdit_cat1.setText('Buenas')
         self.lineEdit_cat2.setText('Neutras')
         self.lineEdit_cat3.setText('Malas')
