@@ -1,6 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QFileDialog, QLabel,QDesktopWidget
+from PyQt5.QtWidgets import QFileDialog, QLabel
 
 import os
 import glob
@@ -26,10 +26,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from PyQt5.QtWidgets import QTableWidgetItem
 import re
 from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
-from Model import DB_Driver as DB
 
 from Views import AlgorithmDialog, AdminMenu as AM
-from Views import TrainWebMenu as TWM
 
 from Model import DB_Driver as DB
 
