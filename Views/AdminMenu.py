@@ -50,6 +50,8 @@ class AdminMenu(QMainWindow):
         self.label_formatError.setVisible(False)
         self.labelError1.setVisible(False)
 
+        self.password_error.setVisible(False)
+        self.user_error.setVisible(False)
 
     def buttonActions(self):
         self.pushButton_addUrl.clicked.connect(self.controller.validate)
