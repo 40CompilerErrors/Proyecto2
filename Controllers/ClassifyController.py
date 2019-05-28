@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QTableWidgetItem
 import glob
 import re
 from Views import ClassifyInputWindow as CIW, ClassifyOutputWindow as COW
-from Model import Model as MD;
+from Model import Model as MD
 
 
 from textblob import TextBlob
@@ -92,7 +92,7 @@ class ClassifyWebController:
         # Download from S3
         self.view.messages.setText("Downloading models from remote storage...")
 
-        MD.Model.downloadModels();
+        MD.Model().downloadModels();
 
         self.modelList = []
         while self.view.comboBox_modelos.count() > 0:

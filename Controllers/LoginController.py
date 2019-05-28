@@ -11,7 +11,7 @@ class LoginController:
 
     def user_access(self, username, password):
 
-        valid, role = US.validate(username,password)
+        valid, role = US.User().validate(username,password)
 
         if valid != True:
             if role == 1:
