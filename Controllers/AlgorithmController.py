@@ -26,14 +26,14 @@ class AlgorithmController:
             self.webcontroller.n_estimators = int(self.view.dialog_estimators_RF.text())
             self.errorestimators = False
         else:
-            self.view.label_errors.setText("Fallos en el número de arboles")
+            self.view.label_errors.setText("Number of trees error")
             self.errorestimators = True
             
         if(self.view.dialog_random_RF.text().isdigit()):
             self.webcontroller.random_state = int(self.view.dialog_random_RF.text())   
             self.errorrandom = False
         else:
-            self.view.label_errors.setText("Fallos en el random state")
+            self.view.label_errors.setText("Random state error")
             self.errorrandom = True
                   
         
@@ -44,21 +44,21 @@ class AlgorithmController:
                 self.webcontroller.max_depth = self.view.dialog_depth_RF.text()'''
             self.errordepth = False
         else:
-            self.view.label_errors.setText("Fallos en la profundidad máxima")
+            self.view.label_errors.setText("Max depth error")
             self.errordepth = True
             
         if(self.view.dialog_verbose_RF.text().isdigit()):
             self.webcontroller.verbose = int(self.view.dialog_verbose_RF.text())
             self.errorverbose = False
         else:
-            self.view.label_errors.setText("Fallos en la verbosidad")
+            self.view.label_errors.setText("Verbosity error")
             self.errorverbose = True
     
         if(self.view.dialog_oob_RF.text() == "True" or self.view.dialog_oob_RF.text() == "False"):
             self.webcontroller.oob_score = bool(self.view.dialog_oob_RF.text())
             self.erroroob = False
         else:
-            self.view.label_errors.setText("Fallo a la hora de determinar si usar muestras out-of-bag")
+            self.view.label_errors.setText("Out-of-Bag samples error")
             self.erroroob = True
             
         
@@ -80,7 +80,7 @@ class AlgorithmController:
             self.webcontroller.var_smoothing = float(self.view.dialog_NB.text())
             self.view.close()
         except ValueError:
-            self.view.label_errors.setText("Debe introducir un valor válido de float")
+            self.view.label_errors.setText("Value must be a float")
             self.view.label_errors.setVisible(True)
         
     def svm(self):
@@ -93,7 +93,7 @@ class AlgorithmController:
             self.webcontroller.random_state = int(self.view.dialog_random_SVM.text())   
             self.errorrandom = False
         else:
-            self.view.label_errors.setText("Fallos en el random state")
+            self.view.label_errors.setText("Random state error")
             self.errorrandom = True
 
 
@@ -101,14 +101,14 @@ class AlgorithmController:
             self.webcontroller.verbose = int(self.view.dialog_verbose_SVM.text())
             self.errorverbose = False
         else:
-            self.view.label_errors.setText("Fallos en la verbosidad")
+            self.view.label_errors.setText("Verbosity error")
             self.errorverbose = True
             
         if(self.view.dialog_shrinking_SVM.text() == "True" or self.view.dialog_shrinking_SVM.text() == "False"):
             self.webcontroller.shrinking = bool(self.view.dialog_shrinking_SVM.text())
             self.errorshrinking = False
         else:
-            self.view.label_errors.setText("Fallo a la hora de determinar si usar heurística shrinking")
+            self.view.label_errors.setText("Shrinking heuristic error")
             self.errorshrinking = True    
         
         try:
@@ -116,7 +116,7 @@ class AlgorithmController:
             self.webcontroller.max_iter = int(self.view.dialog_max_iter_SVM.text())   
             self.errormax = False
         except ValueError:
-            self.view.label_errors.setText("Fallos en el máximo número de iteraciones")
+            self.view.label_errors.setText("Max iteration error")
             self.errormax = True
 
         
