@@ -40,7 +40,7 @@
               <item>
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>Seleccione la pagina web:</string>
+                 <string>Select a web page.</string>
                 </property>
                </widget>
               </item>
@@ -54,7 +54,7 @@
               <item>
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>Añada una URL para sacar las reviews</string>
+                 <string>Insert an URL to extract the reviews.</string>
                 </property>
                </widget>
               </item>
@@ -64,7 +64,7 @@
               <item alignment="Qt::AlignHCenter">
                <widget class="QPushButton" name="addUrl_button">
                 <property name="text">
-                 <string>Añadir URL</string>
+                 <string>Add URL</string>
                 </property>
                </widget>
               </item>
@@ -73,7 +73,7 @@
                 <item>
                  <widget class="QLabel" name="label_7">
                   <property name="text">
-                   <string>O añada archivos en una carpeta</string>
+                   <string>Or add files from a folder.</string>
                   </property>
                  </widget>
                 </item>
@@ -83,7 +83,7 @@
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="text">
-                   <string>Añadir carpeta</string>
+                   <string>Add folder</string>
                   </property>
                   <property name="autoDefault">
                    <bool>false</bool>
@@ -151,17 +151,12 @@
              <widget class="QTableWidget" name="url_table">
               <column>
                <property name="text">
-                <string>ID</string>
+                <string>Path</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Reviews</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>URL</string>
+                <string>Review</string>
                </property>
               </column>
              </widget>
@@ -191,7 +186,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Seleccione un modelo:</string>
+               <string>Select a model:</string>
               </property>
              </widget>
             </item>
@@ -229,7 +224,7 @@
             <item>
              <widget class="QPushButton" name="getModelsButton">
               <property name="text">
-               <string>Descargar Modelos</string>
+               <string>Download Models</string>
               </property>
              </widget>
             </item>
@@ -244,7 +239,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Ejecutar clasificador</string>
+             <string>Execute Classifier</string>
             </property>
             <property name="icon">
              <iconset>
@@ -286,7 +281,7 @@
      <x>0</x>
      <y>0</y>
      <width>1002</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -22,6 +22,8 @@ class ClassifyInputWindow(QMainWindow):
         for i in self.webs_list:
             self.pages_combo.addItem(i)
 
+
+
     def buttonActions(self):
         pass
         self.addUrl_button.clicked.connect(self.controller.validate)

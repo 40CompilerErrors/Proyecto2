@@ -25,11 +25,13 @@ class ClassifyWebController:
     def __init__(self):
 
         self.linkList = []
+        self.pathList = []
         self.modelsList = []
         self.reviewList = []
         self.support = []
         self.contentList = []
         self.analysis_data = []
+        self.link = ''
         self.ruta_salida = ''
 
 
@@ -66,27 +68,13 @@ class ClassifyWebController:
             else:
                 self.view.messages.setText('Fallo con la ruta de Yelp.')
         else:
-            self.view.messages.setText('La ruta no es válida. Por favor inserte una ruta válida.')
+            self.view.messages.setText("The path isn't correct or you haven't introduced one. Please insert a correct path.")
 
     def addURL(self):
-        link = self.view.url_line.text()
-        self.linkList.append(link)
+        self.link = self.view.url_line.text()
+        self.linkList.append(self.link)
         self.view.messages.setText('Scrapping...')
-        review_number = self.scrapLink(link)
-        
-
-        # Add the current link to the table
-        rowPosition = self.view.url_table.rowCount()
-        self.view.url_table.insertRow(rowPosition)
-        item = QTableWidgetItem(f"{rowPosition}")
-        item.setFlags(QtCore.Qt.ItemIsEnabled)
-        item2 = QTableWidgetItem(str(review_number))
-        item2.setFlags(QtCore.Qt.ItemIsEnabled)
-        item3 = QTableWidgetItem(str(link))
-        item3.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.view.url_table.setItem(rowPosition, 0, item )
-        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_number)))
-        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(link)))
+        self.scrapLink(self.link)
         self.view.url_line.setText("")
 
     def downloadModels(self):
@@ -143,6 +131,19 @@ class ClassifyWebController:
         print("Finished scrapping URL")
         self.contentList += url_reviews
         self.view.messages.setText("Successfully scrapped " + url)
+        cont = 0
+        for i in range(0, len(self.contentList)):
+            rowPosition = self.view.url_table.rowCount()
+            self.view.url_table.insertRow(rowPosition)
+            self.view.url_table.resizeColumnsToContents()
+            item = QTableWidgetItem(str(f"{url}"))
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            item2 = QTableWidgetItem(str(self.contentList[cont]))
+            item2.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.view.url_table.setItem(rowPosition, 0, item)
+            self.view.url_table.setItem(rowPosition, 1,
+                                        item2)
+            cont = cont + 1
         return len(url_reviews)
 
 
@@ -153,7 +154,6 @@ class ClassifyWebController:
 
     def goBack(self):
         self.linkList = []
-        self.modelsList = []
         self.reviewList = []
         self.support = []
         self.contentList = []
@@ -258,7 +258,31 @@ class ClassifyWebController:
         pass
 
     def addFromFile(self):
-        dir = str(QFileDialog.getExistingDirectory(self.view, "Select Directory"))
+
+        self.route = QFileDialog.getExistingDirectory(self.view, "Select Directory")
+        self.pathList.append(self.route)
+        file_pattern = os.path.join(self.route, '*.csv')
+        file_list = glob.glob(file_pattern)
+        review_count = 0
+        for file in file_list:
+            with open(file) as csvfile:
+                readCSV = csv.reader(csvfile, delimiter=',')
+                for row in readCSV:
+                    review_count += 1
+                    self.contentList.append(row[1])
+                    rowPosition = self.view.url_table.rowCount()
+                    self.view.url_table.insertRow(rowPosition)
+                    self.view.url_table.resizeColumnsToContents()
+                    item = QTableWidgetItem(str(f"{self.route}"))
+                    item.setFlags(QtCore.Qt.ItemIsEnabled)
+                    item2 = QTableWidgetItem(str(row[1]))
+                    item2.setFlags(QtCore.Qt.ItemIsEnabled)
+                    self.view.url_table.setItem(rowPosition, 0, item)
+                    self.view.url_table.setItem(rowPosition, 1,
+                                                  item2)
+
+
+        """dir = str(QFileDialog.getExistingDirectory(self.view, "Select Directory"))
 
         self.contentList = REV.Review().loadCSV(dir)
         review_count = len(self.contentList)
@@ -267,7 +291,7 @@ class ClassifyWebController:
         self.view.url_table.insertRow(rowPosition)
         self.view.url_table.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
         self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_count)))
-        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(file)))
+        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(file)))"""
 
 
     def removeReviews(self):
