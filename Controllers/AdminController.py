@@ -85,10 +85,17 @@ class AdminController:
     def loadUsers(self):
         result = US.User().getUserList()
         listaUsers = []
+
         for i in result:
             listaUsers.append(i[0])
-
         self.view.comboBox.addItems(listaUsers)
+
+        for i in result:
+            rowPosition = self.view.userTable.rowCount()
+            self.view.userTable.insertRow(rowPosition)
+            item = QTableWidgetItem(i[0])
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.view.userTable.setItem(rowPosition, 0, item)
 
     def insertUser(self,user,password):
 

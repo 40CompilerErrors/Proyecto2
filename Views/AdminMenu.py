@@ -69,6 +69,7 @@ class AdminMenu(QMainWindow):
     def crearUsuario(self):
         newUser = self.lineEdit_3.text()
         newPassword = self.lineEdit_4.text()
+        
         if newUser.isalpha() and newPassword.isalpha():
              self.controller.insertUser(newUser, newPassword)
         else:
@@ -79,24 +80,28 @@ class AdminMenu(QMainWindow):
              self.password_error.setVisible(True)
        
 
-        self.tableWidget.setRowCount(0)
+        self.userTable.setRowCount(0)
         self.comboBox.clear()
-        result = self.controller.getUser()
-        listaUsers = []
-        for i in result:
-            listaUsers.append(i[0])
+        self.controller.loadUsers()
 
-        self.comboBox.addItems(listaUsers)
+        # result = self.controller.getUser()
+        # listaUsers = []
+        # for i in result:
+        #     listaUsers.append(i[0])
+        #
+        # self.comboBox.addItems(listaUsers)
 
     def borrar(self):
         oldUser = self.comboBox.currentText()
         self.controller.borrarUsuario(oldUser)
 
-        self.tableWidget.setRowCount(0)
+        self.userTable.setRowCount(0)
         self.comboBox.clear()
-        result = self.controller.getUser()
-        listaUsers = []
-        for i in result:
-            listaUsers.append(i[0])
+        self.controller.loadUsers()
 
-        self.comboBox.addItems(listaUsers)
+        # result = self.controller.getUser()
+        # listaUsers = []
+        # for i in result:
+        #     listaUsers.append(i[0])
+        #
+        # self.comboBox.addItems(listaUsers)

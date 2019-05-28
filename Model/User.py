@@ -45,8 +45,12 @@ class User:
         query = """INSERT INTO users (username, password_hash, isAdmin) VALUES (?, ?, 0)"""
         username = db.sanitizeInput(username)
         hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
-        db.cursor.execute(query,(username,hashed_password))
-        db.connection.commit()
+        try:
+            db.cursor.execute(query, (username, hashed_password))
+            db.connection.commit()
+        except:
+            print("ERROR: Query unsuccessful: register user")
+
 
         db.closeConnection()
 
