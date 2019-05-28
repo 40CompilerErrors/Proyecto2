@@ -21,7 +21,7 @@ class YelScrapper(AS.AbstractScrapper):
         max_pages = re.search(' [0-9]*</div>', max_pages).group()[1:-6]
         max_pages = int(max_pages)
 
-        print("NUMERO DE PAGINAS MAXIMO: " + max_pages)
+        print("NUMERO DE PAGINAS MAXIMO: " + str(max_pages))
         print("DENERIA SER INT: " + type(max_pages))
 
         while current_page <= max_pages:
