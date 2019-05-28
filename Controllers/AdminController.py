@@ -412,7 +412,7 @@ class AdminController:
             figura.savefig('./Resources/UIElements/Matriz.png')
             print("Imagen guardada")
 
-            switch_view(self,TOW.TrainOutputWindow)
+            self.switch_view(self,TOW.TrainOutputWindow)
 
             label = QLabel(self.view)
             pixmap = QPixmap('./Resources/UIElements/Matriz.png')

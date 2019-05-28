@@ -118,7 +118,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="boton_GuardarModelo_">
+         <widget class="QPushButton" name="boton_guardarModelo_">
           <property name="text">
            <string>Guardar modelo</string>
           </property>
