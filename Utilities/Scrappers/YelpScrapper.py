@@ -19,6 +19,7 @@ class YelScrapper(AS.AbstractScrapper):
 
         max_pages = soup.find('div', class_="page-of-pages")
         max_pages = re.search(' [0-9]*', max_pages.text).group()[1:]
+        print("DEBUGGING: " + str(max_pages))
         max_pages = int(max_pages)
 
         print("NUMERO DE PAGINAS MAXIMO: " + str(max_pages))
