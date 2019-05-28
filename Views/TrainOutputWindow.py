@@ -16,6 +16,7 @@ class TrainOutputWindow(QMainWindow):
 
         # self.initiateVariables()
         self.buttonActions()
+        self.label_guardarModelo_.setVisible(False)
 
     def buttonActions(self):
         self.boton_guardarModelo_.clicked.connect(self.controller.guardar_modelo)
