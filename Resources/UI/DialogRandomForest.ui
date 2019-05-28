@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Editor de Random Forest</string>
+    <string>Random Forest Editor </string>
    </property>
   </widget>
   <widget class="QLineEdit" name="dialog_estimators_RF">
@@ -182,7 +182,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Errores detectados</string>
+    <string>Detected Errors</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

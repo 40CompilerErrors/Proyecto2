@@ -153,14 +153,16 @@ class ClassifyWebController:
         self.view.show()
 
     def goBack(self):
-        self.linkList = []
-        self.reviewList = []
-        self.support = []
-        self.contentList = []
-        self.analysis_data = []
+        self.linkList.clear()
+        self.modelsList.clear()
+        self.reviewList.clear()
+        self.support.clear()
+        self.contentList.clear()
+        self.analysis_data.clear()
         self.ruta_salida = ''
 
         self.switch_view(CIW.ClassifyInputWindow)
+        self.showModels()
         
 
     def ejecutar_clasificador(self):

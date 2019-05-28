@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Editor de Naïve Bayes</string>
+    <string>Naïve Bayes Editor</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="dialog_NB">
@@ -88,7 +88,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Errores detectados</string>
+    <string>Detected Errors</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
