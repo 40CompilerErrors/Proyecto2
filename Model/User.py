@@ -59,8 +59,11 @@ class User:
 
         query = """DELETE FROM users WHERE username = %s"""
         username = db.sanitizeInput(username)
-        db.cursor.execute(query, (username,))
-        db.connection.commit()
+        try:
+            db.cursor.execute(query, (username,))
+            db.connection.commit()
+        except:
+            print("ERROR: Query unsuccessful: register user")
 
         db.closeConnection()
 
