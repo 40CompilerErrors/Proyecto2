@@ -47,6 +47,8 @@ class AdminController:
         self.pathList = []
         self.starList = []
         self.contentList = []
+        self.starList2 = []
+        self.contentList2 = []
         self.categoryList = []
         self.addedList = []
         self.labels = []
@@ -54,6 +56,7 @@ class AdminController:
         self.algorithm_name = ''
         self.stopword = ''
         self.route = ''
+        self.link = ''
         self.subdirectories = []
 
         self.n_estimators = 1000
@@ -120,7 +123,7 @@ class AdminController:
             item.setFlags(QtCore.Qt.ItemIsEnabled)
             self.view.tableWidget.setItem(rowPosition, 0, item)
 
-
+#---------------------------------------------------------------------------------------------------------
     def asignarVentana(self, ventanaEntrenamiento):
         self.ventanaEntrenamiento = ventanaEntrenamiento
 
@@ -152,13 +155,13 @@ class AdminController:
                 readCSV = csv.reader(csvfile, delimiter=',')
                 for row in readCSV:
                     review_count += 1
-                    self.starList.append(row[0])
-                    self.contentList.append(row[1])
+                    self.starList2.append(row[0])
+                    self.contentList2.append(row[1])
 
-        rowPosition = self.view.tableWidget_2.rowCount()
-        self.view.tableWidget_2.insertRow(rowPosition)
-        self.view.tableWidget_2.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-        self.view.tableWidget_2.setItem(rowPosition, 1, QTableWidgetItem(str(self.route)))
+        rowPosition = self.view.tableWidget.rowCount()
+        self.view.tableWidget.insertRow(rowPosition)
+        self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
+        self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(self.route)))
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
@@ -177,17 +180,20 @@ class AdminController:
             self.view.label_formatError.setVisible(True)
 
     def addURL(self):
-        link = self.view.lineEdit_URL.text()
-        self.linkList.append(link)
-        rowPosition = self.view.tableWidget.rowCount()
+        self.link = self.view.lineEdit_URL.text()
+        self.linkList.append(self.link)
+        self.scrapLinks()
+        self.view.lineEdit_URL.setText("")
+        self.linkList.clear()
+        """rowPosition = self.view.tableWidget.rowCount()
         self.view.tableWidget.insertRow(rowPosition)
         item = QTableWidgetItem(f"{rowPosition}")
         item.setFlags(QtCore.Qt.ItemIsEnabled)
         item2 = QTableWidgetItem(str(link))
         item2.setFlags(QtCore.Qt.ItemIsEnabled)
         self.view.tableWidget.setItem(rowPosition, 0, item)
-        self.view.tableWidget.setItem(rowPosition, 1, item2)
-        self.view.lineEdit_URL.setText("")
+        self.view.tableWidget.setItem(rowPosition, 1, item2)"""
+
         
         
     def switch_view(self,new_view):
@@ -227,23 +233,21 @@ class AdminController:
                 self.contentList += url_reviews
             cont = 0
             for i in range(0, len(self.contentList)):
-                rowPosition = self.view.reviewTable.rowCount()
-                self.view.reviewTable.insertRow(rowPosition)
-                self.view.reviewTable.resizeColumnsToContents()
-                item = QTableWidgetItem(f"{rowPosition}")
+                rowPosition = self.view.tableWidget.rowCount()
+                self.view.tableWidget.insertRow(rowPosition)
+                self.view.tableWidget.resizeColumnsToContents()
+                item = QTableWidgetItem(f"{self.link}")
                 item.setFlags(QtCore.Qt.ItemIsEnabled)
                 item2 = QTableWidgetItem(str(self.starList[cont]))
                 item2.setFlags(QtCore.Qt.ItemIsEnabled)
                 item3 = QTableWidgetItem(self.contentList[cont])
                 item3.setFlags(QtCore.Qt.ItemIsEnabled)
-                self.view.reviewTable.setItem(rowPosition, 0, item)
-                self.view.reviewTable.setItem(rowPosition, 1,
+                self.view.tableWidget.setItem(rowPosition, 0, item)
+                self.view.tableWidget.setItem(rowPosition, 1,
                                               item2)
-                self.view.reviewTable.setItem(rowPosition, 2,
+                self.view.tableWidget.setItem(rowPosition, 2,
                                               item3)
                 cont = cont + 1
-            self.view.frame_2.setVisible(True)
-            self.view.setFixedSize(1343, 724)
 
     def guardar_modelo(self):
 
