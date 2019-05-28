@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>644</width>
+    <width>653</width>
     <height>436</height>
    </rect>
   </property>
@@ -235,7 +235,7 @@
         <item>
          <widget class="QLabel" name="label_errors">
           <property name="text">
-           <string>Validation failed</string>
+           <string>Error de validación</string>
           </property>
          </widget>
         </item>
@@ -293,8 +293,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>644</width>
-     <height>23</height>
+     <width>653</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
