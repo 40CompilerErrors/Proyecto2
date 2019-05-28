@@ -9,7 +9,7 @@ class User:
     def validate(self, username, password):
 
         db = DB.DB_Driver()
-        db_hash, db_role = db.getUser(username)
+        db_hash, db_role = self.getUser(username)
 
         if db_hash == 0 and db_role == 0:
             return False, 0
@@ -25,7 +25,7 @@ class User:
 
     def getUser(self, username):
 
-        db = DB.DB_Driver
+        db = DB.DB_Driver()
 
         query = """SELECT password_hash, isAdmin FROM users WHERE username = ?"""
         clean_user = db.sanitizeInput(username)

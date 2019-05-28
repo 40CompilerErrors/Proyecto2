@@ -334,8 +334,6 @@ class AdminController:
         if not self.contentList:
             self.view.boton_clasificador_.setText('Porfavor realice Web Scraping antes de entrenar un modelo.')
         else:
-            self.view.boton_guardarModelo_.setVisible(True)
-            self.view.label_35.setVisible(True)
             self.view.boton_clasificador_.setText('Ejecutar entrenamiento')
             self.__starsToCategories()
 
@@ -346,7 +344,7 @@ class AdminController:
             X, y = self.contentList, self.labels
 
             documentos = []
-            self.stopword = str(self.view.comboBox_stopwords_.currentText())
+            self.stopword = str(self.view.comboBox_stopwords.currentText())
             for sen in range(0, len(X)):
                 # Elimina: carácteres especiales
                 documento = re.sub(r'\W', ' ', str(X[sen]))
@@ -414,7 +412,7 @@ class AdminController:
             figura.savefig('./Resources/UIElements/Matriz.png')
             print("Imagen guardada")
 
-            self.switch_view(self,TOW.TrainOutputWindow)
+            self.switch_view(TOW.TrainOutputWindow)
 
             label = QLabel(self.view)
             pixmap = QPixmap('./Resources/UIElements/Matriz.png')
@@ -437,6 +435,8 @@ class AdminController:
             print('False negative = ', false_negative)
             print('True negative = ', true_negative)
             print(self.precision)
+            
+            self.view.label_precision_.setText("Precisión de " + str(self.precision))
 
     def choose_algorithm(self):
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())

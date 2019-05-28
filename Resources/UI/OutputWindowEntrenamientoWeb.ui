@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>828</width>
-    <height>551</height>
+    <width>842</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,13 +58,29 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>20</height>
+          <height>10</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
        <layout class="QVBoxLayout" name="lay_"/>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>10</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <layout class="QHBoxLayout" name="layout_GuardarModelo_">
@@ -135,7 +151,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>828</width>
+     <width>842</width>
      <height>26</height>
     </rect>
    </property>
