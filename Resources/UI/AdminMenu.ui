@@ -32,11 +32,11 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
-        <widget class="QWidget" name="entrenamiento">
+        <widget class="QWidget" name="training">
          <attribute name="title">
-          <string>Entrenamiento</string>
+          <string>Training</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
@@ -452,9 +452,9 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="usuarios">
+        <widget class="QWidget" name="users">
          <attribute name="title">
-          <string>Usuarios</string>
+          <string>Users</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <property name="leftMargin">
@@ -502,21 +502,21 @@
                 <item>
                  <widget class="QLabel" name="label_9">
                   <property name="text">
-                   <string>Crear nuevo usuario : </string>
+                   <string>Create a new user:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="label_5">
                   <property name="text">
-                   <string>Rellena los siguientes campos.</string>
+                   <string>Fill in the fields</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="label_10">
                   <property name="text">
-                   <string>Nombre de Usuario :</string>
+                   <string>User name:</string>
                   </property>
                  </widget>
                 </item>
@@ -533,7 +533,7 @@
                 <item>
                  <widget class="QLabel" name="label_18">
                   <property name="text">
-                   <string>Contraseña :</string>
+                   <string>Password:</string>
                   </property>
                  </widget>
                 </item>
@@ -554,7 +554,7 @@
                 <item>
                  <widget class="QPushButton" name="pushButton">
                   <property name="text">
-                   <string>Crear usuario nuevo</string>
+                   <string>Create user</string>
                   </property>
                  </widget>
                 </item>
@@ -563,14 +563,14 @@
               <item>
                <widget class="QLabel" name="label_7">
                 <property name="text">
-                 <string>Borrar usuario :</string>
+                 <string>Delete an user:</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="label_8">
                 <property name="text">
-                 <string>Selecciona el usuario que quieres eliminar.</string>
+                 <string>Select the user to delete:</string>
                 </property>
                </widget>
               </item>
@@ -580,7 +580,7 @@
               <item>
                <widget class="QPushButton" name="pushButton_2">
                 <property name="text">
-                 <string>Eliminar usuario</string>
+                 <string>Delete user</string>
                 </property>
                </widget>
               </item>
