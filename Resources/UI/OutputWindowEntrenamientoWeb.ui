@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>852</width>
-    <height>564</height>
+    <height>568</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,17 +28,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Matriz de confusión</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_precision_">
-          <property name="text">
-           <string>TextLabel</string>
+           <string>Confusion Matrix</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -65,6 +55,16 @@
       </item>
       <item>
        <layout class="QVBoxLayout" name="lay_"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_precision_">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="verticalSpacer_2">
@@ -109,7 +109,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Volver atrás</string>
+           <string>Go back</string>
           </property>
          </widget>
         </item>
@@ -136,7 +136,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Inserte un nombre del modelo</string>
+               <string>Insert a model name</string>
               </property>
              </widget>
             </item>
@@ -146,7 +146,7 @@
             <item>
              <widget class="QPushButton" name="boton_guardarModelo_">
               <property name="text">
-               <string>Guardar modelo</string>
+               <string>Save model</string>
               </property>
              </widget>
             </item>
@@ -155,7 +155,7 @@
           <item>
            <widget class="QLabel" name="label_guardarModelo_">
             <property name="text">
-             <string>Guardado</string>
+             <string>Saved !</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -192,7 +192,7 @@
      <x>0</x>
      <y>0</y>
      <width>852</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

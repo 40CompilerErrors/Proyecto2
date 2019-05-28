@@ -27,7 +27,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Lista de usuarios existentes :</string>
+        <string>Existent users list</string>
        </property>
       </widget>
      </item>
@@ -55,21 +55,21 @@
      <item>
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Crear nuevo usuario : </string>
+        <string>Create a new user</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Rellena los siguientes campos.</string>
+        <string>Fill the following fields:</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Nombre de Usuario :</string>
+        <string>User name:</string>
        </property>
       </widget>
      </item>
@@ -79,7 +79,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Contraseña :</string>
+        <string>Password: </string>
        </property>
       </widget>
      </item>
@@ -93,7 +93,7 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Crear usuario nuevo</string>
+        <string>Create User</string>
        </property>
       </widget>
      </item>
@@ -112,14 +112,14 @@
      <item>
       <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>Borrar usuario :</string>
+        <string>Detele users:</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>Selecciona el usuario que quieres eliminar.</string>
+        <string>Select the user to delete:</string>
        </property>
       </widget>
      </item>
@@ -129,7 +129,7 @@
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>Eliminar usuario</string>
+        <string>Delete user</string>
        </property>
       </widget>
      </item>
@@ -145,7 +145,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Volver </string>
+     <string>Go back</string>
     </property>
    </widget>
   </widget>
