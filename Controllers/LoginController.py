@@ -1,8 +1,7 @@
-from Views import AdminMenu as AM, LoginMenu as MM
 from Controllers import ClassifyController as CWC, AdminController as AC
-from main import Main as m
-from Model import DB_Driver as DB
-import hashlib, uuid
+from Utilities import DB_Driver as DB
+import hashlib
+from Model import User as US
 
 
 class LoginController:
@@ -12,12 +11,17 @@ class LoginController:
 
     def user_access(self, username, password):
 
-        valid, role = self.__validate(username,password)
+        valid, role = US.validate(username,password)
 
         if valid != True:
-            return
+            if role == 1:
+                print("Validation failed: Password incorrect")
+                self.view.label_errors.setVisible(True)
+            else:
+                print("Validation failed: No user found")
+                self.view.label_errors.setVisible(True)
 
-        if valid and role == 0:
+        elif valid and role == 0:
             self.view.running = False
             classifier = CWC.ClassifyWebController()
             self.view.close()
@@ -29,25 +33,6 @@ class LoginController:
             self.view.close()
 
 
-    def __validate(self, username,password):
-
-        db = DB.DB_Driver()
-        db_hash, db_role = db.getUser(username)
-        db.closeConnection()
-
-        if db_hash == 0 and db_role == 0:
-            print("Validation failed: No user found")
-            self.view.label_errors.setVisible(True)
-            return False, 0
-
-        hashed_password = hashlib.sha512(password.encode('utf8')).hexdigest()
-
-        if not hashed_password == db_hash:
-            print("Validation failed: Password incorrect")
-            self.view.label_errors.setVisible(True)
-            return False, 0
-        else:
-            return True, db_role
 
 
 

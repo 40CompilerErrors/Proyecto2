@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import urllib.request, json
-from Model.Scrappers import AbstractScrapper as AS
+from Utilities.Scrappers import AbstractScrapper as AS
+
 
 class SteamScrapper(AS.AbstractScrapper):
 

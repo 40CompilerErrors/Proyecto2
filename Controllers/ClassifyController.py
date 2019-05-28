@@ -1,26 +1,23 @@
 import os
 import csv
-from threading import Thread
-from time import sleep
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5 import QtCore
 import pickle
-from nltk.corpus import stopwords
 import pandas as pd
 from nltk.stem.porter import *
 from PyQt5.QtWidgets import QTableWidgetItem
-import re
-import time
 import glob
-from tkinter.filedialog import askdirectory
 import re
 from Views import ClassifyInputWindow as CIW, ClassifyOutputWindow as COW
+from Model import Model as MD;
 
 
 from textblob import TextBlob
 
-from Model.DB_Driver import DB_Driver
-from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
+from Utilities.DB_Driver import DB_Driver
+from Utilities.Scrappers import MetacriticScrapper as MS, SteamScrapper as SS, YelpScrapper as YS
+from Utilities.Scrappers import AmazonScrapper as AS
+
 
 class ClassifyWebController:
 
@@ -41,7 +38,7 @@ class ClassifyWebController:
         self.amazonScrapper = AS.AmazonScrapper()
 
         self.view = CIW.ClassifyInputWindow(self)
-        self.obtainModels()
+        self.showModels()
         self.view.show()
         print(self.view)
 
@@ -94,17 +91,16 @@ class ClassifyWebController:
     def downloadModels(self):
         # Download from S3
         self.view.messages.setText("Downloading models from remote storage...")
-        db =  DB_Driver()
-        db.getModels()
-        db.closeConnection()
+
+        MD.Model.downloadModels();
 
         self.modelList = []
         while self.view.comboBox_modelos.count() > 0:
             self.view.comboBox_modelos.removeItem(0)
-        self.obtainModels()
+        self.showModels()
         self.view.messages.setText("Models downloaded successfully!")
 
-    def obtainModels(self):
+    def showModels(self):
         for model in os.listdir('./Resources/Models'):
             self.modelsList.append(model)
         self.view.comboBox_modelos.addItems(self.modelsList)

@@ -14,6 +14,7 @@ class TrainOutputWindow(QMainWindow):
 
         self.setWindowTitle('VentanaEntrenamiento')
 
+        # self.initiateVariables()
         self.buttonActions()
 
     def buttonActions(self):

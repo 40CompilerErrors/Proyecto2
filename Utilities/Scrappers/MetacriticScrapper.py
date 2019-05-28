@@ -1,11 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-import urllib.request, json
 
 # class="review-content"
 #?start=X where X = page_number*20
-from Model.Scrappers import AbstractScrapper as AS
+from Utilities.Scrappers import AbstractScrapper as AS
 
 
 class MetacriticScrapper(AS.AbstractScrapper):

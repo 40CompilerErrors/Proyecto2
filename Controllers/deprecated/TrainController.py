@@ -22,7 +22,8 @@ import numpy as np
 import itertools
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from Model import DB_Driver as DB
+from Utilities import DB_Driver as DB
+
 
 class TrainController:
 

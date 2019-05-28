@@ -1,6 +1,8 @@
+import sys
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QFileDialog, QLabel
+from PyQt5.QtWidgets import QFileDialog, QLabel, QApplication
 
 import os
 import glob
@@ -25,11 +27,14 @@ import itertools
 from sklearn.feature_extraction.text import TfidfVectorizer
 from PyQt5.QtWidgets import QTableWidgetItem
 import re
-from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
+from Utilities.Scrappers import MetacriticScrapper as MS, SteamScrapper as SS, YelpScrapper as YS
+from Utilities.Scrappers import AmazonScrapper as AS
 
 from Views import AlgorithmDialog, AdminMenu as AM, TrainOutputWindow as TOW
+from Model import User as US, Model as MD
 
-from Model import DB_Driver as DB
+from Utilities import DB_Driver as DB
+
 
 class AdminController:
 
@@ -65,8 +70,7 @@ class AdminController:
 
 
     def getUser(self):
-        driver =  DB.DB_Driver()
-        result = driver.getUserList()
+        result = US.User().getUserList()
 
         for i in result:
 
@@ -76,7 +80,6 @@ class AdminController:
             item.setFlags(QtCore.Qt.ItemIsEnabled)
             self.view.userTable.setItem(rowPosition, 0, item)
 
-        driver.closeConnection()
         return result
 
 
@@ -89,9 +92,10 @@ class AdminController:
         self.view.comboBox.addItems(listaUsers)
 
     def insertUser(self,user,password):
-        driver =  DB.DB_Driver()
-        driver.registerUser(user,password)
-        result = driver.getUserList()
+
+        US.User().registerUser(user,password)
+
+        result = US.User().getUserList()
         self.view.tableWidget.setRowCount(0)
 
         for i in result:
@@ -101,14 +105,11 @@ class AdminController:
             item = QTableWidgetItem(i[0])
             item.setFlags(QtCore.Qt.ItemIsEnabled)
             self.view.tableWidget.setItem(rowPosition, 0, item)
-
-
-        driver.closeConnection()
 
     def borrarUsuario(self,user):
-        driver =  DB.DB_Driver()
-        driver.deleteUser(user)
-        result = driver.getUserList()
+
+        US.User().deleteUser(user)
+        result = US.User().getUserList()
         self.view.tableWidget.setRowCount(0)
 
         for i in result:
@@ -119,8 +120,6 @@ class AdminController:
             item.setFlags(QtCore.Qt.ItemIsEnabled)
             self.view.tableWidget.setItem(rowPosition, 0, item)
 
-
-        driver.closeConnection()
 
     def asignarVentana(self, ventanaEntrenamiento):
         self.ventanaEntrenamiento = ventanaEntrenamiento
@@ -247,6 +246,8 @@ class AdminController:
             self.view.setFixedSize(1343, 724)
 
     def guardar_modelo(self):
+
+
         nombre_modelo = self.view.modelName_text_.text()
 
         if not nombre_modelo:
@@ -264,11 +265,8 @@ class AdminController:
                 pickle.dump(self.vectorizador, modelo_completo)
                 pickle.dump(self.labels, modelo_completo)
 
-            db = DB.DB_Driver()
+            MD.Model.uploadToS3(nombre_modelo)
 
-            db.uploadModel(nombre_modelo)
-
-            db.closeConnection()
             self.view.label_guardarModelo_.setText('¡Guardado!')
             self.view.label_guardarModelo_.setVisible(True)
 
@@ -534,5 +532,9 @@ class AdminController:
         '''
 if __name__ == "__main__":
     # execute only if run as a script
+    app = QApplication(sys.argv)
+
     test = AdminController()
     test.switch_view(TOW.TrainOutputWindow)
+
+

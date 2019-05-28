@@ -1,9 +1,7 @@
-import requests
 from bs4 import BeautifulSoup
 import re
-import urllib.request, json
-from Model.Scrappers import AbstractScrapper as AS
-from urllib.request import urlopen
+import urllib.request
+from Utilities.Scrappers import AbstractScrapper as AS
 import urllib.request
 # class="review-content"
 #?start=X where X = page_number*20
