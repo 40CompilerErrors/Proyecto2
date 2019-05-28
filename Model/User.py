@@ -3,7 +3,6 @@ import hashlib
 from Utilities import DB_Driver as DB
 
 
-
 class User:
 
     def validate(self, username, password):

@@ -1,23 +1,19 @@
 import os
 import csv
-from PyQt5.QtWidgets import QFileDialog
-from PyQt5 import QtCore
 import pickle
 import pandas as pd
 from nltk.stem.porter import *
-from PyQt5.QtWidgets import QTableWidgetItem
 import glob
 import re
-from Views import ClassifyInputWindow as CIW, ClassifyOutputWindow as COW
-from Model import Model as MD
-
-
 from textblob import TextBlob
 
-from Utilities.DB_Driver import DB_Driver
+from PyQt5.QtWidgets import QFileDialog,QTableWidgetItem
+from PyQt5 import QtCore
+
+from Views import ClassifyInputWindow as CIW, ClassifyOutputWindow as COW
+from Model import Model as MD, Review as REV
 from Utilities.Scrappers import MetacriticScrapper as MS, SteamScrapper as SS, YelpScrapper as YS
 from Utilities.Scrappers import AmazonScrapper as AS
-from Model import Review as REV
 
 
 class ClassifyWebController:
@@ -33,7 +29,6 @@ class ClassifyWebController:
         self.analysis_data = []
         self.link = ''
         self.ruta_salida = ''
-
 
         self.metacriticScrapper = MS.MetacriticScrapper()
         self.steamScrapper = SS.SteamScrapper()
@@ -93,24 +88,14 @@ class ClassifyWebController:
         for model in os.listdir('./Resources/Models'):
             self.modelsList.append(model)
         self.view.comboBox_modelos.addItems(self.modelsList)
-        #Need to make this work with S3
 
-    def obtainRoute(self):
-        self.ruta_salida = QFileDialog.getExistingDirectory()
-        self.view.directoryLine.setText(self.ruta_salida)
-
-        #Add saving files here
-
+    def saveResults(self):
+        REV.Review().saveCSV(self.result_DF)
+        print("GOT HERE")
 
     def scrapLink(self, url):
-        #For some reason it's REALLY not loading
         self.view.messages.setText("Scrapping URL: " + url)
         self.view.update()
-        # if not self.linkList:
-        #     # self.view.label_3.setVisible(True)
-        #     pass
-        # else:
-            # self.view.label_3.setVisible(False)
 
         print("Scrapping link: " + url)
         url_stars, url_reviews = [], []
@@ -160,6 +145,7 @@ class ClassifyWebController:
         self.contentList.clear()
         self.analysis_data.clear()
         self.ruta_salida = ''
+        self.result_DF = 0
 
         self.switch_view(CIW.ClassifyInputWindow)
         self.showModels()
@@ -256,8 +242,6 @@ class ClassifyWebController:
             self.result_DF = pd.DataFrame(elementLists,columns=headers)
             print(self.result_DF)
 
-    def saveResults(self):
-        pass
 
     def addFromFile(self):
 

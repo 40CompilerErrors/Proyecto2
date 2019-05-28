@@ -26,7 +26,7 @@ class ClassifyOutputWindow(QMainWindow):
         #     self.controller.switch_view(
 
     def buttonActions(self):
-        self.save_button.clicked.connect(self.controller.obtainRoute)
+        self.save_button.clicked.connect(self.controller.saveResults)
         self.backButton.clicked.connect(self.controller.goBack)
         # self.removeButton.clicked.connect(self.controller.removeReviews)
         # self.addFolderButton.clicked.connect(self.controller.addFromFile)

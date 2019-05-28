@@ -1,39 +1,35 @@
 import sys
+import os
+import glob
+import csv
+import pickle
+import itertools
 
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem.porter import *
+
+from PyQt5 import QtCore
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QFileDialog, QLabel, QApplication
 
-import os
-import glob
-import csv
-from PyQt5 import QtCore
-
-
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
-
-import nltk
-import matplotlib.pyplot as plt
-
-import pickle
-from nltk.corpus import stopwords
-from nltk.stem.porter import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+import matplotlib.pyplot as plt
+
 import numpy as np
-import itertools
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from PyQt5.QtWidgets import QTableWidgetItem
-import re
-from Utilities.Scrappers import MetacriticScrapper as MS, SteamScrapper as SS, YelpScrapper as YS
-from Utilities.Scrappers import AmazonScrapper as AS
 
+from Utilities.Scrappers import MetacriticScrapper as MS, SteamScrapper as SS, YelpScrapper as YS, AmazonScrapper as AS
 from Views import AlgorithmDialog, AdminMenu as AM, TrainOutputWindow as TOW
 from Model import User as US, Model as MD
-
-from Utilities import DB_Driver as DB
 
 
 class AdminController:
@@ -123,17 +119,12 @@ class AdminController:
             item.setFlags(QtCore.Qt.ItemIsEnabled)
             self.view.tableWidget.setItem(rowPosition, 0, item)
 
-#---------------------------------------------------------------------------------------------------------
+
+
+
     def asignarVentana(self, ventanaEntrenamiento):
         self.ventanaEntrenamiento = ventanaEntrenamiento
 
-        # Metodo empezado pero nunca acabado
-
-    '''def abrir_VEtiquetas(self):
-        ctrl = ControladorVEtiquetas.ControladorVEtiquetas_class()
-        ventanaAnadirEtiquetas = VentanaAnadirEtiquetas.VentanaAnadirEtiquetas_class(ctrl)
-        ctrl.asignarVentana(ventanaAnadirEtiquetas)
-        ventanaAnadirEtiquetas.show()'''
 
     def refrescar(self):
         opciones = self.opciones
@@ -212,16 +203,7 @@ class AdminController:
         self.scrapLinks()
         self.view.lineEdit_URL.setText("")
         self.linkList.clear()
-        """rowPosition = self.view.tableWidget.rowCount()
-        self.view.tableWidget.insertRow(rowPosition)
-        item = QTableWidgetItem(f"{rowPosition}")
-        item.setFlags(QtCore.Qt.ItemIsEnabled)
-        item2 = QTableWidgetItem(str(link))
-        item2.setFlags(QtCore.Qt.ItemIsEnabled)
-        self.view.tableWidget.setItem(rowPosition, 0, item)
-        self.view.tableWidget.setItem(rowPosition, 1, item2)"""
 
-        
         
     def switch_view(self,new_view):
         self.view.close()

@@ -2,6 +2,8 @@ import csv
 import glob
 import os
 
+from PyQt5.QtWidgets import QFileDialog
+
 
 class Review:
 
@@ -22,8 +24,10 @@ class Review:
 
         return rows
 
-    def saveCSV(selfs,dataframe,path=""):
+    def saveCSV(self,dataframe,path=""):
         if path == "":
-            pass #Select a path here
+            path = QFileDialog.getExistingDirectory()
+
+        dataframe.to_csv(os.path.join(path,"results.csv"))
 
         

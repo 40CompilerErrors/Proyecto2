@@ -1,6 +1,4 @@
 from Controllers import ClassifyController as CWC, AdminController as AC
-from Utilities import DB_Driver as DB
-import hashlib
 from Model import User as US
 
 

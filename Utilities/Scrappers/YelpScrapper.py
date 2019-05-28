@@ -11,25 +11,36 @@ class YelScrapper(AS.AbstractScrapper):
 
     def scrapURL(self, URL):
 
-        reviews = None
+        reviews = []
         current_page = 1
 
-        while True:
+        page = requests.get(URL + "?start=0")
+        soup = BeautifulSoup(page.content, 'html.parser')
+
+        max_pages = soup.find('div', class_="page-of-pages")
+        print("NUMERO DE PAGINAS MAXIMO: " + max_pages)
+        print("DENERIA SER INT: " + type(max_pages))
+
+        max_pages = re.search(' [0-9]*</div>', max_pages).group()[1:-6]
+        max_pages = int(max_pages)
+
+        while current_page <= max_pages:
             print("Currently searching page " + str(current_page))
             page = requests.get(URL + "?start=" + str((current_page-1) * 20))
             soup = BeautifulSoup(page.content, 'html.parser')
+
             searchResult = soup.find_all('div', class_="review-content")
+            last_search = []
+
             current_page += 1
-            if searchResult == []:
+            if searchResult == [] or searchResult == last_search:
                 print("No reviews on this page. Proceeding to review cleaning")
                 break
-
-            if reviews == None:
-                reviews = searchResult
             else:
                 reviews = reviews + searchResult
+                last_search = searchResult
+                searchResult.clear()
 
-        print(len(reviews))
         return self.__cleanupReviews(reviews)
 
     def __cleanupReviews(self,reviews):
