@@ -46,22 +46,22 @@ class ClassifyWebController:
             if re.search("https://www.metacritic.com/movie/.*", self.view.url_line.text()) or re.search("https://www.metacritic.com/game/.*/.*", self.view.url_line.text()) or re.search("https://www.metacritic.com/tv/.*/.*", self.view.url_line.text()) or re.search("https://www.metacritic.com/music/.*/.*", self.view.url_line.text()):
                 self.addURL()
             else:
-                self.view.messages.setText('Fallo con la ruta de Metacritic.')
+                self.view.messages.setText('Invalid Metacritic URL.')
         elif 'store.steampowered.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Steam':
             if re.search("store.steampowered.com/app/.*", self.view.url_line.text()):
                 self.addURL()
             else:
-                self.view.messages.setText('Fallo con la ruta de Steam.')
+                self.view.messages.setText('Invalid Steam URL.')
         elif 'https://www.amazon.com' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Amazon':
             if re.search("https://www.amazon.com/.*?/ref", self.view.url_line.text()):
                 self.addURL()
             else:
-                self.view.messages.setText('Fallo con la ruta de Amazon.')
+                self.view.messages.setText('Invalid Amazon URL.')
         elif 'https://www.yelp.' in self.view.url_line.text() and self.view.pages_combo.currentText() == 'Yelp':
             if re.search("yelp.*/biz/.*", self.view.url_line.text()):
                 self.addURL()
             else:
-                self.view.messages.setText('Fallo con la ruta de Yelp.')
+                self.view.messages.setText('Invalid Yelp URL.')
         else:
             self.view.messages.setText("The path isn't correct or you haven't introduced one. Please insert a correct path.")
 

@@ -169,28 +169,28 @@ class AdminController:
                 self.addURL()
             else:
                 self.view.label_formatError.setVisible(True)
-                self.view.label_formatError.setText('Fallo con la ruta de Metacritic.')
+                self.view.label_formatError.setText('Invalid Metacritic URL.')
         elif 'store.steampowered.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Steam':
             if re.search("store.steampowered.com/app/.*", self.view.lineEdit_URL.text()):
                 self.view.label_formatError.setVisible(False)
                 self.addURL()
             else:
                 self.view.label_formatError.setVisible(True)
-                self.view.label_formatError.setText('Fallo con la ruta de Steam.')
+                self.view.label_formatError.setText('Invalid Steam URL.')
         elif 'https://www.amazon.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Amazon':
             if re.search("https://www.amazon.com/.*?/ref", self.view.lineEdit_URL.text()):
                 self.view.label_formatError.setVisible(False)
                 self.addURL()
             else:
                 self.view.label_formatError.setVisible(True)
-                self.view.label_formatError.setText('Fallo con la ruta de Amazon.')
+                self.view.label_formatError.setText('Invalid Amazon URL.')
         elif 'https://www.yelp.' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Yelp':
             if re.search("yelp.*/biz/.*", self.view.lineEdit_URL.text()):
                 self.view.label_formatError.setVisible(False)
                 self.addURL()
             else:
                 self.view.label_formatError.setVisible(True)
-                self.view.label_formatError.setText('Fallo con la ruta de Yelp.')
+                self.view.label_formatError.setText('Invalid Yelp URL.')
         else:
             self.view.label_formatError.setVisible(True)
             self.view.label_formatError.setText('Invalid path, please insert a valid path.')
