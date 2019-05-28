@@ -69,14 +69,15 @@ class AdminMenu(QMainWindow):
     def createUser(self):
         newUser = self.lineEdit_3.text()
         newPassword = self.lineEdit_4.text()
-        
-        if newUser.isalpha() and newPassword.isalpha():
+        self.user_error.setVisible(False)
+        self.password_error.setVisible(False)
+        if newUser!="" and newPassword!="":
              self.controller.insertUser(newUser, newPassword)
-        else:
-             self.user_error.setText('No válido , introduce datos correctos.')
-             self.password_error.setText('No válido , introduce datos correctos.')
-             
+        elif newUser=="":
+             self.user_error.setText('Invalid user , please introduce a valid user.')
              self.user_error.setVisible(True)
+        elif newPassword=="":
+             self.password_error.setText('Invalid password , please introduce a valid password.')
              self.password_error.setVisible(True)
        
 
