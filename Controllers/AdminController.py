@@ -155,13 +155,23 @@ class AdminController:
                 readCSV = csv.reader(csvfile, delimiter=',')
                 for row in readCSV:
                     review_count += 1
-                    self.starList2.append(row[0])
-                    self.contentList2.append(row[1])
+                    self.starList.append(row[0])
+                    self.contentList.append(row[1])
+                    rowPosition = self.view.tableWidget.rowCount()
+                    self.view.tableWidget.insertRow(rowPosition)
+                    self.view.tableWidget.resizeColumnsToContents()
+                    item = QTableWidgetItem(f"{self.route}")
+                    item.setFlags(QtCore.Qt.ItemIsEnabled)
+                    item2 = QTableWidgetItem(str(row[0]))
+                    item2.setFlags(QtCore.Qt.ItemIsEnabled)
+                    item3 = QTableWidgetItem(str(row[1]))
+                    item3.setFlags(QtCore.Qt.ItemIsEnabled)
+                    self.view.tableWidget.setItem(rowPosition, 0, item)
+                    self.view.tableWidget.setItem(rowPosition, 1,
+                                                  item2)
+                    self.view.tableWidget.setItem(rowPosition, 2,
+                                                  item3)
 
-        rowPosition = self.view.tableWidget.rowCount()
-        self.view.tableWidget.insertRow(rowPosition)
-        self.view.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-        self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(self.route)))
 
     def validate(self):
         if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':            
@@ -257,7 +267,7 @@ class AdminController:
                 item.setFlags(QtCore.Qt.ItemIsEnabled)
                 item2 = QTableWidgetItem(str(self.starList[cont]))
                 item2.setFlags(QtCore.Qt.ItemIsEnabled)
-                item3 = QTableWidgetItem(self.contentList[cont])
+                item3 = QTableWidgetItem(str(self.contentList[cont]))
                 item3.setFlags(QtCore.Qt.ItemIsEnabled)
                 self.view.tableWidget.setItem(rowPosition, 0, item)
                 self.view.tableWidget.setItem(rowPosition, 1,
