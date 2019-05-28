@@ -68,22 +68,22 @@ class AdminController:
 
 
 
-    def getUser(self):
-        result = US.User().getUserList()
-
-        for i in result:
-
-            rowPosition = self.view.userTable.rowCount()
-            self.view.userTable.insertRow(rowPosition)
-            item = QTableWidgetItem(i[0])
-            item.setFlags(QtCore.Qt.ItemIsEnabled)
-            self.view.userTable.setItem(rowPosition, 0, item)
-
-        return result
+    # def getUser(self):
+    #     result = US.User().getUserList()
+    #
+    #     for i in result:
+    #
+    #         rowPosition = self.view.userTable.rowCount()
+    #         self.view.userTable.insertRow(rowPosition)
+    #         item = QTableWidgetItem(i[0])
+    #         item.setFlags(QtCore.Qt.ItemIsEnabled)
+    #         self.view.userTable.setItem(rowPosition, 0, item)
+    #
+    #     return result
 
 
     def loadUsers(self):
-        result = self.getUser()
+        result = US.User().getUserList()
         listaUsers = []
         for i in result:
             listaUsers.append(i[0])
@@ -93,38 +93,36 @@ class AdminController:
     def insertUser(self,user,password):
 
         US.User().registerUser(user,password)
+        self.loadUsers()
 
-        result = US.User().getUserList()
-        self.view.tableWidget.setRowCount(0)
-
-        for i in result:
-
-            rowPosition = self.view.tableWidget.rowCount()
-            self.view.tableWidget.insertRow(rowPosition)
-            item = QTableWidgetItem(i[0])
-            item.setFlags(QtCore.Qt.ItemIsEnabled)
-            self.view.tableWidget.setItem(rowPosition, 0, item)
+        # result = US.User().getUserList()
+        # self.view.tableWidget.setRowCount(0)
+        #
+        # for i in result:
+        #
+        #     rowPosition = self.view.tableWidget.rowCount()
+        #     self.view.tableWidget.insertRow(rowPosition)
+        #     item = QTableWidgetItem(i[0])
+        #     item.setFlags(QtCore.Qt.ItemIsEnabled)
+        #     self.view.tableWidget.setItem(rowPosition, 0, item)
 
     def borrarUsuario(self,user):
 
         US.User().deleteUser(user)
-        result = US.User().getUserList()
-        self.view.tableWidget.setRowCount(0)
-
-        for i in result:
-
-            rowPosition = self.view.tableWidget.rowCount()
-            self.view.tableWidget.insertRow(rowPosition)
-            item = QTableWidgetItem(i[0])
-            item.setFlags(QtCore.Qt.ItemIsEnabled)
-            self.view.tableWidget.setItem(rowPosition, 0, item)
-
-
-
+        self.loadUsers()
+        # result = US.User().getUserList()
+        # self.view.tableWidget.setRowCount(0)
+        #
+        # for i in result:
+        #
+        #     rowPosition = self.view.tableWidget.rowCount()
+        #     self.view.tableWidget.insertRow(rowPosition)
+        #     item = QTableWidgetItem(i[0])
+        #     item.setFlags(QtCore.Qt.ItemIsEnabled)
+        #     self.view.tableWidget.setItem(rowPosition, 0, item)
 
     def asignarVentana(self, ventanaEntrenamiento):
         self.ventanaEntrenamiento = ventanaEntrenamiento
-
 
     def refrescar(self):
         opciones = self.opciones
