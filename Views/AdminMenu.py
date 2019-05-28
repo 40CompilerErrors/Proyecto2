@@ -59,14 +59,14 @@ class AdminMenu(QMainWindow):
         self.comboBox_categorias.currentTextChanged.connect(self.controller.change_category_combo)
         self.boton_clasificador_.clicked.connect(self.controller.webscrapper_train)
         # self.boton_guardarModelo_.clicked.connect(self.controller.guardar_modelo)
-        self.boton_algoritmos_1.clicked.connect(self.controller.editar_algoritmo)
-        self.boton_ruta.clicked.connect(self.controller.addfromfile)
+        self.boton_algoritmos_1.clicked.connect(self.controller.editAlgorithm)
+        self.boton_ruta.clicked.connect(self.controller.addFromFile)
 
-        self.pushButton.clicked.connect(self.crearUsuario)
-        self.pushButton_2.clicked.connect(self.borrar)
+        self.pushButton.clicked.connect(self.createUser)
+        self.pushButton_2.clicked.connect(self.deleteUser)
 
 
-    def crearUsuario(self):
+    def createUser(self):
         newUser = self.lineEdit_3.text()
         newPassword = self.lineEdit_4.text()
         
@@ -84,24 +84,11 @@ class AdminMenu(QMainWindow):
         self.comboBox.clear()
         self.controller.loadUsers()
 
-        # result = self.controller.getUser()
-        # listaUsers = []
-        # for i in result:
-        #     listaUsers.append(i[0])
-        #
-        # self.comboBox.addItems(listaUsers)
 
-    def borrar(self):
+    def deleteUser(self):
         oldUser = self.comboBox.currentText()
-        self.controller.borrarUsuario(oldUser)
+        self.controller.deleteUser(oldUser)
 
         self.userTable.setRowCount(0)
         self.comboBox.clear()
         self.controller.loadUsers()
-
-        # result = self.controller.getUser()
-        # listaUsers = []
-        # for i in result:
-        #     listaUsers.append(i[0])
-        #
-        # self.comboBox.addItems(listaUsers)

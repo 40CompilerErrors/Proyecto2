@@ -270,17 +270,6 @@ class ClassifyWebController:
                                                   item2)
 
 
-        """dir = str(QFileDialog.getExistingDirectory(self.view, "Select Directory"))
-
-        self.contentList = REV.Review().loadCSV(dir)
-        review_count = len(self.contentList)
-
-        rowPosition = self.view.url_table.rowCount()
-        self.view.url_table.insertRow(rowPosition)
-        self.view.url_table.setItem(rowPosition, 0, QTableWidgetItem(f"{rowPosition}"))
-        self.view.url_table.setItem(rowPosition, 1, QTableWidgetItem(str(review_count)))
-        self.view.url_table.setItem(rowPosition, 2, QTableWidgetItem(str(file)))"""
-
 
     def removeReviews(self):
         self.view.messages.setText("Removing reviews...")

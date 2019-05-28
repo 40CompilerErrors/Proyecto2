@@ -102,45 +102,14 @@ class AdminController:
         US.User().registerUser(user,password)
         self.loadUsers()
 
-        # result = US.User().getUserList()
-        # self.view.tableWidget.setRowCount(0)
-        #
-        # for i in result:
-        #
-        #     rowPosition = self.view.tableWidget.rowCount()
-        #     self.view.tableWidget.insertRow(rowPosition)
-        #     item = QTableWidgetItem(i[0])
-        #     item.setFlags(QtCore.Qt.ItemIsEnabled)
-        #     self.view.tableWidget.setItem(rowPosition, 0, item)
 
-    def borrarUsuario(self,user):
+    def deleteUser(self, user):
 
         US.User().deleteUser(user)
         self.loadUsers()
-        # result = US.User().getUserList()
-        # self.view.tableWidget.setRowCount(0)
-        #
-        # for i in result:
-        #
-        #     rowPosition = self.view.tableWidget.rowCount()
-        #     self.view.tableWidget.insertRow(rowPosition)
-        #     item = QTableWidgetItem(i[0])
-        #     item.setFlags(QtCore.Qt.ItemIsEnabled)
-        #     self.view.tableWidget.setItem(rowPosition, 0, item)
 
-    def asignarVentana(self, ventanaEntrenamiento):
-        self.ventanaEntrenamiento = ventanaEntrenamiento
 
-    def refrescar(self):
-        opciones = self.opciones
-        self.ventanaEntrenamiento.opciones1.clear()
-        self.ventanaEntrenamiento.opciones1.addItems(opciones)
-        self.ventanaEntrenamiento.opciones2.clear()
-        self.ventanaEntrenamiento.opciones2.addItems(opciones)
-        self.ventanaEntrenamiento.opciones3.clear()
-        self.ventanaEntrenamiento.opciones3.addItems(opciones)
-
-    def addfromfile(self):
+    def addFromFile(self):
         self.route = QFileDialog.getExistingDirectory(self.view, "Select Directory")
         self.pathList.append(self.route)
         file_pattern = os.path.join(self.route, '*.csv')
@@ -488,7 +457,7 @@ class AdminController:
 
         # def save_model(self):
 
-    def editar_algoritmo(self):
+    def editAlgorithm(self):
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
         dialog = AlgorithmDialog.AlgorithmDialog(self.algorithm_name, self)
         dialog.show()
