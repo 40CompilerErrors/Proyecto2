@@ -164,20 +164,37 @@ class AdminController:
         self.view.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(str(self.route)))
 
     def validate(self):
-        if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':
-            self.addURL()
-            self.view.label_formatError.setVisible(False)
+        if 'https://www.metacritic.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Metacritic':            
+            if re.search("https://www.metacritic.com/movie/.*", self.view.lineEdit_URL.text()) or re.search("https://www.metacritic.com/game/.*/.*", self.view.lineEdit_URL.text()) or re.search("https://www.metacritic.com/tv/.*/.*", self.view.lineEdit_URL.text()) or re.search("https://www.metacritic.com/music/.*/.*", self.view.lineEdit_URL.text()):
+                self.view.label_formatError.setVisible(False)
+                self.addURL()
+            else:
+                self.view.label_formatError.setVisible(True)
+                self.view.label_formatError.setText('Fallo con la ruta de Metacritic.')
         elif 'store.steampowered.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Steam':
-            self.addURL()
-            self.view.label_formatError.setVisible(False)
+            if re.search("store.steampowered.com/app/.*", self.view.lineEdit_URL.text()):
+                self.view.label_formatError.setVisible(False)
+                self.addURL()
+            else:
+                self.view.label_formatError.setVisible(True)
+                self.view.label_formatError.setText('Fallo con la ruta de Steam.')
         elif 'https://www.amazon.com' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Amazon':
-            self.addURL()
-            self.view.label_formatError.setVisible(False)
+            if re.search("https://www.amazon.com/.*?/ref", self.view.lineEdit_URL.text()):
+                self.view.label_formatError.setVisible(False)
+                self.addURL()
+            else:
+                self.view.label_formatError.setVisible(True)
+                self.view.label_formatError.setText('Fallo con la ruta de Amazon.')
         elif 'https://www.yelp.' in self.view.lineEdit_URL.text() and self.view.comboBox_websites.currentText() == 'Yelp':
-            self.addURL()
-            self.view.label_formatError.setVisible(False)
+            if re.search("yelp.*/biz/.*", self.view.lineEdit_URL.text()):
+                self.view.label_formatError.setVisible(False)
+                self.addURL()
+            else:
+                self.view.label_formatError.setVisible(True)
+                self.view.label_formatError.setText('Fallo con la ruta de Yelp.')
         else:
             self.view.label_formatError.setVisible(True)
+            self.view.label_formatError.setText('La ruta no es válida. Por favor inserte una ruta válida.')
 
     def addURL(self):
         self.link = self.view.lineEdit_URL.text()
