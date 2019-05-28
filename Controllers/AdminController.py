@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import QTableWidgetItem
 import re
 from Model.Scrappers import MetacriticScrapper as MS, AmazonScrapper as AS, SteamScrapper as SS, YelpScrapper as YS
 
-from Views import AlgorithmDialog, AdminMenu as AM
+from Views import AlgorithmDialog, AdminMenu as AM, TrainOutputWindow as TOW
 
 from Model import DB_Driver as DB
 
@@ -189,6 +189,12 @@ class AdminController:
         self.view.tableWidget.setItem(rowPosition, 0, item)
         self.view.tableWidget.setItem(rowPosition, 1, item2)
         self.view.lineEdit_URL.setText("")
+        
+        
+    def switch_view(self,new_view):
+        self.view.close()
+        self.view = new_view(self)
+        self.view.show()
 
     def scrapLinks(self):
         metacriticScrapper = MS.MetacriticScrapper()
@@ -406,6 +412,8 @@ class AdminController:
             figura.savefig('./Resources/UIElements/Matriz.png')
             print("Imagen guardada")
 
+            switch_view(self,TOW.TrainOutputWindow)
+
             label = QLabel(self.view)
             pixmap = QPixmap('./Resources/UIElements/Matriz.png')
             label.setPixmap(pixmap)
@@ -527,3 +535,4 @@ class AdminController:
 if __name__ == "__main__":
     # execute only if run as a script
     test = AdminController()
+    test.switch_view(TOW.TrainOutputWindow)
