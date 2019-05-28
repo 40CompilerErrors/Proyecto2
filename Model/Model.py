@@ -1,6 +1,6 @@
 import os
 
-from Utilities.DB_Driver import DB_Driver as DB
+from Utilities import DB_Driver as DB
 
 
 class Model:

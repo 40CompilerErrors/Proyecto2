@@ -269,7 +269,7 @@ class AdminController:
                 pickle.dump(self.vectorizador, modelo_completo)
                 pickle.dump(self.labels, modelo_completo)
 
-            MD.Model.uploadToS3(nombre_modelo)
+            MD.Model().uploadToS3(nombre_modelo)
 
             self.view.label_guardarModelo_.setText('¡Guardado!')
             self.view.label_guardarModelo_.setVisible(True)
