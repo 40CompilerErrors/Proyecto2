@@ -154,10 +154,12 @@ class ClassifyWebController:
     def ejecutar_clasificador(self):
 
         if not self.modelsList:
-            self.view.boton_clasificador.setText("La lista de modelos esta vacía. porfavor cree algún modelo")
+            self.view.boton_clasificador.setText("The model list is empty, please create a model.")
+        elif not self.contentList:
+            self.view.messages.setText("You haven't selected any reviews, please select some reviews.")
         else:
             # self.view.label_6.setText('Elegir la ruta donde se guardarán los archivos clasificados:')
-            self.view.boton_clasificador.setText("Ejecutar clasificador")
+            self.view.boton_clasificador.setText("Execute classifier")
             print("Comienza la clasificación...")
             cont = 0
             con = 0

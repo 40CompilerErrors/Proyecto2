@@ -193,7 +193,7 @@ class AdminController:
                 self.view.label_formatError.setText('Fallo con la ruta de Yelp.')
         else:
             self.view.label_formatError.setVisible(True)
-            self.view.label_formatError.setText('La ruta no es válida. Por favor inserte una ruta válida.')
+            self.view.label_formatError.setText('Invalid path, please insert a valid path.')
 
     def addURL(self):
         self.link = self.view.lineEdit_URL.text()
@@ -540,26 +540,7 @@ class AdminController:
             self.view.label_14.setVisible(True)
             self.view.lineEdit_cat5.setVisible(True)
 
-        ''' IMPORTANTE, ESTO HAY QUE METERLO EN EL ENTRENADOR EN CUANTO PODAMOS
 
-        sno = nltk.stem.SnowballStemmer(self.view.comboBox_stopwords.currentText())
-        print('llego4')
-
-        for item in X:
-            item2 = item.decode('utf-8')
-            item2 = item2.lower()
-            item2 = word_tokenize(item2)
-            item2 = [w for w in item2 if not w in self.stopword]
-            frase_stemming = []
-            for w in item2:
-                if w not in self.stopword:
-                    frase_stemming.append(sno.stem(w))
-            item2 = frase_stemming
-            documentos.append(item2)
-        print('llego5')
-
-        documentos = [str (item) for item in documentos]
-        '''
 if __name__ == "__main__":
     # execute only if run as a script
     app = QApplication(sys.argv)

@@ -34,9 +34,9 @@
         <property name="currentIndex">
          <number>1</number>
         </property>
-        <widget class="QWidget" name="training">
+        <widget class="QWidget" name="entrenamiento">
          <attribute name="title">
-          <string>Training</string>
+          <string>Entrenamiento</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
@@ -452,9 +452,9 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="users">
+        <widget class="QWidget" name="usuarios">
          <attribute name="title">
-          <string>Users</string>
+          <string>Usuarios</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <property name="leftMargin">

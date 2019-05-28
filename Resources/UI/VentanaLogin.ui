@@ -69,7 +69,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Bienvenido a Golden Experience Classitrainer</string>
+           <string>Welcome to Golden Experience Classitrainer</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -115,7 +115,7 @@
             <item>
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>Usuario</string>
+               <string>User</string>
               </property>
              </widget>
             </item>
@@ -167,7 +167,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>Contraseña</string>
+             <string>Password</string>
             </property>
            </widget>
           </item>
@@ -235,7 +235,7 @@
         <item>
          <widget class="QLabel" name="label_errors">
           <property name="text">
-           <string>Error de validación</string>
+           <string>Validation error</string>
           </property>
          </widget>
         </item>
@@ -260,7 +260,7 @@
           <item>
            <widget class="QPushButton" name="login_button">
             <property name="text">
-             <string>Entrar</string>
+             <string>Enter</string>
             </property>
            </widget>
           </item>
@@ -294,7 +294,7 @@
      <x>0</x>
      <y>0</y>
      <width>653</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
