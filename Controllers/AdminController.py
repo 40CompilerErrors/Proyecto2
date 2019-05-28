@@ -289,10 +289,10 @@ class AdminController:
 
         if not nombre_modelo:
             self.view.label_guardarModelo_.setVisible(True)
-            self.view.label_guardarModelo_.setText('No eligio un nombre para el modelo, elija uno porfavor.')
+            self.view.label_guardarModelo_.setText("You didn't choose a name for the model. Please choose a name")
         elif not self.algorithm:
             self.view.label_guardarModelo_.setVisible(True)
-            self.view.label_guardarModelo_.setText('Porfavor realice el entrenamiento para guardar un modelo.')
+            self.view.label_guardarModelo_.setText('Please do a training to save the model.')
         else:
             self.view.label_guardarModelo_.setVisible(False)
             # Aqui guardamos el Modelo en formato pickle
@@ -304,7 +304,7 @@ class AdminController:
 
             MD.Model().uploadToS3(nombre_modelo)
 
-            self.view.label_guardarModelo_.setText('¡Guardado!')
+            self.view.label_guardarModelo_.setText('¡Saved!')
             self.view.label_guardarModelo_.setVisible(True)
 
     def __starsToCategories(self):
@@ -365,9 +365,9 @@ class AdminController:
 
     def webscrapper_train(self):
         if not self.contentList:
-            self.view.boton_clasificador_.setText('Porfavor realice Web Scraping antes de entrenar un modelo.')
+            self.view.boton_clasificador_.setText('Please perform webscraping before training.')
         else:
-            self.view.boton_clasificador_.setText('Ejecutar entrenamiento')
+            self.view.boton_clasificador_.setText('Execute Training')
             self.__starsToCategories()
 
             print("Ejecutando el entrenador...")
@@ -469,7 +469,7 @@ class AdminController:
             print('True negative = ', true_negative)
             print(self.precision)
             
-            self.view.label_precision_.setText("Precisión de " + str(self.precision))
+            self.view.label_precision_.setText("Accuracy of " + str(self.precision))
 
     def choose_algorithm(self):
         self.algorithm_name = str(self.view.comboBox_algoritmos.currentText())
@@ -499,8 +499,8 @@ class AdminController:
 
         if category_number == '2':
             self.categoryList = [self.view.lineEdit_cat1.text(), self.view.lineEdit_cat2.text()]
-            self.view.lineEdit_cat1.setText('Buenas')
-            self.view.lineEdit_cat2.setText('Malas')
+            self.view.lineEdit_cat1.setText('Good')
+            self.view.lineEdit_cat2.setText('Bad')
             self.view.label_12.setVisible(False)
             self.view.lineEdit_cat3.setVisible(False)
             self.view.label_13.setVisible(False)
@@ -510,9 +510,9 @@ class AdminController:
 
 
         elif category_number == '3':
-            self.view.lineEdit_cat1.setText('Buenas')
-            self.view.lineEdit_cat2.setText('Neutras')
-            self.view.lineEdit_cat3.setText('Malas')
+            self.view.lineEdit_cat1.setText('Good')
+            self.view.lineEdit_cat2.setText('Neutral')
+            self.view.lineEdit_cat3.setText('Bad')
             self.view.label_12.setVisible(True)
             self.view.lineEdit_cat3.setVisible(True)
             self.view.label_13.setVisible(False)
@@ -522,10 +522,10 @@ class AdminController:
 
 
         elif category_number == '4':
-            self.view.lineEdit_cat1.setText('Muy Buenas')
-            self.view.lineEdit_cat2.setText('Buenas')
-            self.view.lineEdit_cat3.setText('Malas')
-            self.view.lineEdit_cat4.setText('Muy Malas')
+            self.view.lineEdit_cat1.setText('Very good')
+            self.view.lineEdit_cat2.setText('Good')
+            self.view.lineEdit_cat3.setText('Bad')
+            self.view.lineEdit_cat4.setText('Very bad')
             self.view.label_12.setVisible(True)
             self.view.lineEdit_cat3.setVisible(True)
             self.view.label_13.setVisible(True)
@@ -535,11 +535,11 @@ class AdminController:
 
 
         elif category_number == '5':
-            self.view.lineEdit_cat1.setText('Muy Buenas')
-            self.view.lineEdit_cat2.setText('Buenas')
-            self.view.lineEdit_cat3.setText('Neutras')
-            self.view.lineEdit_cat4.setText('Malas')
-            self.view.lineEdit_cat5.setText('Muy Malas')
+            self.view.lineEdit_cat1.setText('Very good')
+            self.view.lineEdit_cat2.setText('Good')
+            self.view.lineEdit_cat3.setText('Neutral')
+            self.view.lineEdit_cat4.setText('Bad')
+            self.view.lineEdit_cat5.setText('Very bad')
             self.view.label_12.setVisible(True)
             self.view.lineEdit_cat3.setVisible(True)
             self.view.label_13.setVisible(True)
