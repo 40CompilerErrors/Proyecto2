@@ -43,21 +43,7 @@ class AdminController:
         self.loadUsers()
         self.view.show()
 
-        self.linkList = []
-        self.pathList = []
-        self.starList = []
-        self.contentList = []
-        self.starList2 = []
-        self.contentList2 = []
-        self.categoryList = []
-        self.addedList = []
-        self.labels = []
-        self.algorithm = ''
-        self.algorithm_name = ''
-        self.stopword = ''
-        self.route = ''
-        self.link = ''
-        self.subdirectories = []
+
 
         self.n_estimators = 1000
         self.random_state = 0
@@ -248,6 +234,25 @@ class AdminController:
                 self.view.tableWidget.setItem(rowPosition, 2,
                                               item3)
                 cont = cont + 1
+
+    def goBack(self):
+        self.linkList = []
+        self.pathList = []
+        self.starList = []
+        self.contentList = []
+        self.starList2 = []
+        self.contentList2 = []
+        self.categoryList = []
+        self.addedList = []
+        self.labels = []
+        self.algorithm = ''
+        self.algorithm_name = ''
+        self.stopword = ''
+        self.route = ''
+        self.link = ''
+        self.subdirectories = []
+
+        self.switch_view(AM.AdminMenu)
 
     def guardar_modelo(self):
 

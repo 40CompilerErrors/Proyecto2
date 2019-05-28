@@ -15,9 +15,6 @@ class ClassifyOutputWindow(QMainWindow):
         self.initiateVariables()
         self.buttonActions()
 
-    def goBack(self):
-        self.controller.switch_view(CIW.ClassifyInputWindow)
-
     def initiateVariables(self):
         pass
         # self.label_finalizado.setVisible(False)
@@ -30,7 +27,7 @@ class ClassifyOutputWindow(QMainWindow):
 
     def buttonActions(self):
         self.save_button.clicked.connect(self.controller.obtainRoute)
-        self.backButton.clicked.connect(self.goBack)
+        self.backButton.clicked.connect(self.controller.goBack)
         # self.removeButton.clicked.connect(self.controller.removeReviews)
         # self.addFolderButton.clicked.connect(self.controller.addFromFile)
         # self.getModelsButton.clicked.connect(self.controller.downloadModels)

@@ -20,7 +20,4 @@ class TrainOutputWindow(QMainWindow):
 
     def buttonActions(self):
         self.boton_guardarModelo_.clicked.connect(self.controller.guardar_modelo)
-        self.backButton.clicked.connect(self.goBack)
-        
-    def goBack(self):
-        self.controller.switch_view(AM.AdminMenu)
+        self.backButton.clicked.connect(self.controller.goBack)

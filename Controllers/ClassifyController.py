@@ -17,6 +17,7 @@ from textblob import TextBlob
 from Utilities.DB_Driver import DB_Driver
 from Utilities.Scrappers import MetacriticScrapper as MS, SteamScrapper as SS, YelpScrapper as YS
 from Utilities.Scrappers import AmazonScrapper as AS
+from Model import Review as REV
 
 
 class ClassifyWebController:
@@ -149,6 +150,17 @@ class ClassifyWebController:
         self.view.close()
         self.view = new_view(self)
         self.view.show()
+
+    def goBack(self):
+        self.linkList = []
+        self.modelsList = []
+        self.reviewList = []
+        self.support = []
+        self.contentList = []
+        self.analysis_data = []
+        self.ruta_salida = ''
+
+        self.switch_view(CIW.ClassifyInputWindow)
         
 
     def ejecutar_clasificador(self):
@@ -239,23 +251,17 @@ class ClassifyWebController:
                 cont = cont + 1
 
             headers = ["Label", "Polarity", "Subjectivity", "Body"]
-            dataframe = pd.DataFrame(elementLists,columns=headers)
-            print(dataframe)
+            self.result_DF = pd.DataFrame(elementLists,columns=headers)
+            print(self.result_DF)
 
-
+    def saveResults(self):
+        pass
 
     def addFromFile(self):
         dir = str(QFileDialog.getExistingDirectory(self.view, "Select Directory"))
-        file_pattern = os.path.join(dir, '*.csv')
-        file_list = glob.glob(file_pattern)
-        review_count = 0
 
-        for file in file_list:
-            with open(file) as csvfile:
-                readCSV = csv.reader(csvfile, delimiter=',')
-                for row in readCSV:
-                    review_count += 1
-                    self.contentList += row[1]
+        self.contentList = REV.Review().loadCSV(dir)
+        review_count = len(self.contentList)
 
         rowPosition = self.view.url_table.rowCount()
         self.view.url_table.insertRow(rowPosition)
