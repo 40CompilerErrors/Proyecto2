@@ -60,7 +60,7 @@
                 <item alignment="Qt::AlignHCenter">
                  <widget class="QLabel" name="label_15">
                   <property name="text">
-                   <string>Seleccione la página web que se va a utilizar:</string>
+                   <string>Select the web page you are going to use: </string>
                   </property>
                  </widget>
                 </item>
@@ -70,7 +70,7 @@
                 <item alignment="Qt::AlignHCenter">
                  <widget class="QLabel" name="label">
                   <property name="text">
-                   <string>Insertar la ruta que se usará para entrenamiento:</string>
+                   <string>Insert an URL path to scrap: </string>
                   </property>
                  </widget>
                 </item>
@@ -80,14 +80,14 @@
                 <item alignment="Qt::AlignHCenter">
                  <widget class="QPushButton" name="pushButton_addUrl">
                   <property name="text">
-                   <string>Añadir ruta</string>
+                   <string>Scrap URL</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="label_formatError">
                   <property name="text">
-                   <string>La ruta introducida no corresponde al formato pedido.</string>
+                   <string>The introduced path does not satisfy the required format.</string>
                   </property>
                  </widget>
                 </item>
@@ -96,7 +96,7 @@
                   <item>
                    <widget class="QLabel" name="label_28">
                     <property name="text">
-                     <string>O seleccione la carpeta en la que se encuentran las reviews</string>
+                     <string>Or select a folder with .csv files that contain reviews: </string>
                     </property>
                    </widget>
                   </item>
@@ -121,7 +121,7 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>Ruta</string>
+                     <string>Folder</string>
                     </property>
                     <property name="icon">
                      <iconset>
@@ -132,6 +132,13 @@
                  </layout>
                 </item>
                </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelError1">
+                <property name="text">
+                 <string>There hasn't been detected any URL. Please introduce an URL to proceed with the scrapping proccess.</string>
+                </property>
+               </widget>
               </item>
               <item>
                <spacer name="verticalSpacer_2">
@@ -163,7 +170,7 @@
                 <item>
                  <widget class="QLabel" name="label_3">
                   <property name="text">
-                   <string>Seleccionar cuantas categorías va a utilizar:</string>
+                   <string>Select how many categories you are going to use</string>
                   </property>
                  </widget>
                 </item>
@@ -173,7 +180,7 @@
                 <item>
                  <widget class="QLabel" name="label_4">
                   <property name="text">
-                   <string>Elegir el nombre de las categorías. Recuerde que debe organizarlas de mejor a peor.</string>
+                   <string>Choose the category names. Remember to sort them by best to worst.</string>
                   </property>
                  </widget>
                 </item>
@@ -182,7 +189,7 @@
                   <item alignment="Qt::AlignLeft">
                    <widget class="QLabel" name="label_6">
                     <property name="text">
-                     <string>Categoría 1</string>
+                     <string>Category 1</string>
                     </property>
                    </widget>
                   </item>
@@ -196,7 +203,7 @@
                   <item>
                    <widget class="QLabel" name="label_11">
                     <property name="text">
-                     <string>Categoría 2</string>
+                     <string>Category 2</string>
                     </property>
                    </widget>
                   </item>
@@ -210,7 +217,7 @@
                   <item>
                    <widget class="QLabel" name="label_12">
                     <property name="text">
-                     <string>Categoría 3</string>
+                     <string>Category 3</string>
                     </property>
                    </widget>
                   </item>
@@ -224,7 +231,7 @@
                   <item>
                    <widget class="QLabel" name="label_13">
                     <property name="text">
-                     <string>Categoría 4</string>
+                     <string>Category 4</string>
                     </property>
                    </widget>
                   </item>
@@ -238,7 +245,7 @@
                   <item>
                    <widget class="QLabel" name="label_14">
                     <property name="text">
-                     <string>Categoría 5</string>
+                     <string>Category 5</string>
                     </property>
                    </widget>
                   </item>
@@ -246,13 +253,6 @@
                    <widget class="QLineEdit" name="lineEdit_cat5"/>
                   </item>
                  </layout>
-                </item>
-                <item>
-                 <widget class="QLabel" name="labelError1">
-                  <property name="text">
-                   <string>No se han detectado URLs de paginas web, introduzca URLs para realizar el scraping</string>
-                  </property>
-                 </widget>
                 </item>
                </layout>
               </item>
@@ -286,7 +286,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Elegir el algoritmo a ejecutar en el entrenamiento:</string>
+                   <string>Choose an algorithm to use in the training:</string>
                   </property>
                  </widget>
                 </item>
@@ -306,7 +306,7 @@
                    <bool>true</bool>
                   </property>
                   <property name="text">
-                   <string>Editar parámetros del algoritmo</string>
+                   <string>Edit the algorithm parameters</string>
                   </property>
                  </widget>
                 </item>
@@ -325,7 +325,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Elegir el idioma del stopwords:</string>
+                   <string>Choose the stopwords language: </string>
                   </property>
                  </widget>
                 </item>
@@ -358,7 +358,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Eliminar rutas</string>
+                   <string>Delete paths</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -387,7 +387,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Ejecutar entrenamiento</string>
+                   <string>Execute Training</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -416,7 +416,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Listado de rutas</string>
+                 <string>Review list</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>

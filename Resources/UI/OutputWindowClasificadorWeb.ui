@@ -48,7 +48,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Resultados :</string>
+         <string>Results :</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -84,22 +84,22 @@
         </column>
         <column>
          <property name="text">
-          <string>Clasificación</string>
+          <string>Classification</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Polaridad</string>
+          <string>Polarity</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Subjetividad</string>
+          <string>Subjectivity</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Contenido</string>
+          <string>Content</string>
          </property>
         </column>
        </widget>
@@ -115,7 +115,7 @@
         <item>
          <widget class="QPushButton" name="backButton">
           <property name="text">
-           <string>Volver atras</string>
+           <string>Go back</string>
           </property>
          </widget>
         </item>
@@ -144,7 +144,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Guardar en...</string>
+           <string>Save as...</string>
           </property>
           <property name="icon">
            <iconset>
