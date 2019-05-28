@@ -69,7 +69,15 @@ class AdminMenu(QMainWindow):
     def crearUsuario(self):
         newUser = self.lineEdit_3.text()
         newPassword = self.lineEdit_4.text()
-        self.controller.insertUser(newUser, newPassword)
+        if newUser.isalpha() and newPassword.isalpha():
+             self.controller.insertUser(newUser, newPassword)
+        else:
+             self.user_error.setText('No válido , introduce datos correctos.')
+             self.password_error.setText('No válido , introduce datos correctos.')
+             
+             self.user_error.setVisible(True)
+             self.password_error.setVisible(True)
+       
 
         self.tableWidget.setRowCount(0)
         self.comboBox.clear()
